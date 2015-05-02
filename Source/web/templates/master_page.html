@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>CSS Portal - Layout</title>
-<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<link rel="stylesheet" type="text/css" href="../static/css/master_page.css" />
+  {% block head %}
+  <title>CSS Portal - Layout</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/master_page.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  {% endblock %}
 </head>
 <body>
     <div id="wrapper">
 
         <div id="navigation">
-            { % extends top_navbar.html % }
+            {% include "top_navbar.html" %}
         </div>
 
         <div id="contentliquid">
         	<div id="content">
-        	 <p>This is the contentliquid</p>
+          asdasd
       		 </div>
   		 </div>
 
         <div id="leftcolumn">
-      		 { % extends side_navbar.html % }
+          {% include "side_navbar.html" %}
         </div>
 
         <div id="footer">
-         {  % extends footer.html % }
-           
+
         </div>
 
     </div>

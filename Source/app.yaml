@@ -1,4 +1,4 @@
-application: BudgetBuddy
+application: budgetbuddy
 version: 1-1
 runtime: python27
 api_version: 1
@@ -12,10 +12,13 @@ handlers:
 - url: /static
   static_dir: web/static
 
-- url: /api/(.*)
-  #script: api.\1.app
+# - url: /api/(.*)
+#   #script: api.\1.app
 
-- url: /Budget[\/]?(.*)
+- url: /
+  script: web.pages.Home.app
+
+- url: /Budget  
   script: web.pages.Budget.app
 
 - url: /Login
@@ -23,9 +26,6 @@ handlers:
 
 - url: /Registration
   script: web.pages.Registration.app
-
-- url: /Home
-  script: web.pages.Home.app
 
 - url: /CreateBuget
   script: web.pages.CreateBuget.app
