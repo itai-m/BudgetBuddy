@@ -71,6 +71,7 @@
   font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
   zoom: 1;
   font-size: 12px;
+  height: 400px;
 }
 #sidebar:before {
   content: '';
@@ -94,8 +95,7 @@
   width: 200px;
 }
 #sidebar > ul > li > a {
-  border-right: 10px solid #1b9bff;
-  color: #ffffff;
+
 }
 #sidebar > ul > li > a:hover {
   color: #ffffff;

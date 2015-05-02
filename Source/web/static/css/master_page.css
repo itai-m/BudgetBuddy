@@ -37,10 +37,9 @@ p {
 
 #leftcolumn {
     float: left;
-    background: #CC33FF;
-    width: 150px;
-height: 400px;
+	height: 400px;
     margin-left: -100%;
+	margin-top: 15px;
 }
 
 #footer {

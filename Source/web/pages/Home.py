@@ -6,7 +6,7 @@ class IndexHandler(webapp2.RequestHandler):
 	def get(self):
 		template_params = {}
 		
-		html = template.render("web/templates/top_navbar.html", template_params)
+		html = template.render("web/templates/master_page.html", template_params)
 		self.response.write(html)
 
 app = webapp2.WSGIApplication([
