@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CSS Portal - Layout</title>
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="../static/css/master_page.css" />
+</head>
+<body>
+    <div id="wrapper">
+
+        <div id="navigation">
+            { % extends top_navbar.html % }
+        </div>
+
+        <div id="contentliquid">
+        	<div id="content">
+        	 <p>This is the contentliquid</p>
+      		 </div>
+  		 </div>
+
+        <div id="leftcolumn">
+      		 { % extends side_navbar.html % }
+        </div>
+
+        <div id="footer">
+         {  % extends footer.html % }
+           
+        </div>
+
+    </div>
+
+</body>
+
+</html>
