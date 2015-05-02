@@ -1,4 +1,3 @@
-
 from google.appengine.ext.webapp import template
 import webapp2
 
