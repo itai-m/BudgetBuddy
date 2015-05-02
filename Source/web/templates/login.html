@@ -1,20 +1,52 @@
 {% extends "master_page.html" %}
+
 {% block head %}
-{{block.super}}
-<link rel="stylesheet" href="../static/css/login.css">
-{% endblock %}
+  {{block.super}}
+  <title>BudgetBuddy- Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="login.css" />
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+{%endblock%}
+
 {% block content %}
-<div id="loginform">
-<div id="google" style="background-size: contain; background-image: url(../static/images/googleplus.png);"><div id="connect">Connect with Google</div></div>
-<div id="mainlogin">
-<div id="or">or</div>
-<h1>Login to BudgetBuddy</h1>
-<form action="#">
-<input id="login" type="text" placeholder="username or email" value="" required>
-<input id="login" type="password" placeholder="password" value="" required>
-<button id="login" type="submit"></button>
+<form class="form-horizontal">
+  <fieldset>
+    <!-- Form Name -->
+    <legend>Log In</legend>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for=""></label>
+      <div class="controls"><i class="fa fa-user fa-2x fa-fw"></i>&nbsp;
+       <input id="" name="" type="text" placeholder="User Name" class="input-xlarge">   
+     </div>
+   </div>
+
+   <!-- Password input-->
+   <div class="control-group">
+    <label class="control-label" for="password "></label>
+    <div class="controls"><i class="fa fa-lock fa-2x fa-fw"></i>&nbsp;
+     <input id="password" name="password" type="password" placeholder="Password" class="input-xlarge">
+   </div>
+ </div>
+
+ <!-- Button (Double) -->
+ <div class="control-group">
+   <label class="control-label" for="Login"></label>
+   <div class="controls">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button id="Login" name="Login" class="btn btn-success">Log In</button>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button id="Register" name="Register" class="btn btn-info">Register</button>
+  </div>
+</div>
+
+<p></p>
+<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <a href="#">Forgot Password? </a>
+</p>
+</fieldset>
 </form>
-<div id="note"><a id="login" href="#">Forgot your password?</a></div>
-</div>
-</div>
-{% endblock %}
+
+{%endblock%}
