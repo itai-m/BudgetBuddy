@@ -11,6 +11,12 @@ fieldset {
     padding-left: 0.75em;
     padding-right: 0.75em;
     border: 2px groove (internal value);
+	width: 300px;
 }
 
+#form-horizontal
+{
+	margin-left: 30%;
+	width: auto;
+}
 legend {padding:0}
