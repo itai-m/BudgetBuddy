@@ -1,6 +1,9 @@
 {% extends "master_page.html" %}
-{% block content %}
+{% block head %}
+{{block.super}}
 <link rel="stylesheet" href="../static/css/login.css">
+{% endblock %}
+{% block content %}
 <div id="loginform">
 <div id="google" style="background-size: contain; background-image: url(../static/images/googleplus.png);"><div id="connect">Connect with Google</div></div>
 <div id="mainlogin">
@@ -14,4 +17,4 @@
 <div id="note"><a id="login" href="#">Forgot your password?</a></div>
 </div>
 </div>
-{% end block %}
+{% endblock %}
