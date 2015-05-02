@@ -1,0 +1,17 @@
+{% extends "master_page.html" %}
+{% block content %}
+<link rel="stylesheet" href="../static/css/login.css">
+<div id="loginform">
+<div id="google" style="background-size: contain; background-image: url(../static/images/googleplus.png);"><div id="connect">Connect with Google</div></div>
+<div id="mainlogin">
+<div id="or">or</div>
+<h1>Login to BudgetBuddy</h1>
+<form action="#">
+<input id="login" type="text" placeholder="username or email" value="" required>
+<input id="login" type="password" placeholder="password" value="" required>
+<button id="login" type="submit"></button>
+</form>
+<div id="note"><a id="login" href="#">Forgot your password?</a></div>
+</div>
+</div>
+{% end block %}
