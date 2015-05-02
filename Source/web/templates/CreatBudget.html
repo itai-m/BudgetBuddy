@@ -1,0 +1,42 @@
+{% extends "master_page.html" %}
+  {% block head %} 
+  {{block.super}}
+  <link href='http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+  {% endblock %}
+
+  {% block content %} 
+  <div class='container'>
+    <div class='panel panel-primary dialog-panel'>
+      <div class='panel-body'>
+        <form class='form-horizontal' role='form'>
+          <div class='form-group'>
+            <label class='control-label col-md-2 col-md-offset-2' for='id_accomodation'>Budget Notification</label>
+            <div class='col-md-2'>
+              <select class='form-control' id='id_accomodation'>
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+              </select>
+            </div>
+          </div>
+          <div class='form-group'>
+            <label class='control-label col-md-2 col-md-offset-2' for='id_title'>Name</label>
+            <div class='col-md-8'>
+              <div class='col-md-2 indent-small'>
+                <div class='form-group internal'>
+                  <input class='form-control' id='BugetName' placeholder='Buget name' type='text'>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class='col-md-offset-4 col-md-3'>
+              <button class='btn-lg btn-primary' type='submit'>Creat Budget</button>
+              <button class='btn-lg btn-danger' style='float:right' type='submit'>Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {%endblock%}
