@@ -1,0 +1,57 @@
+application: BudgetBuddy
+version: 1-1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /static
+  static_dir: web/static
+
+- url: /api/(.*)
+  #script: api.\1.app
+
+- url: /Budget[\/]?(.*)
+  script: web.pages.Budget.app
+
+- url: /Login
+  script: web.pages.Login.app
+
+- url: /Registration
+  script: web.pages.Registration.app
+
+- url: /Home
+  script: web.pages.Home.app
+
+- url: /CreateBuget
+  script: web.pages.CreateBuget.app
+
+- url: /Info
+  script: web.pages.Info.app
+
+- url: /Help
+  script: web.pages.Help.app
+
+- url: /Admin
+  script: web.pages.Admin.app
+
+- url: /Budgets
+  script: web.pages.Budgets.app
+
+- url: /UserPage
+  script: web.pages.UserPage.app
+
+- url: /Settings
+  script: web.pages.Settings.app
+
+#cacthes everything that wasn't cought until now
+- url: /(.*)
+  script: web.pages.404.app
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
