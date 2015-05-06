@@ -12,9 +12,6 @@ handlers:
 - url: /static
   static_dir: web/static
 
-# - url: /api/(.*)
-#   #script: api.\1.app
-
 - url: /
   script: web.pages.Home.app
 
@@ -44,6 +41,9 @@ handlers:
 
 - url: /UserPage
   script: web.pages.UserPage.app
+
+- url: /Tags
+  script: web.pages.Tags.app
 
 - url: /Settings
   script: web.pages.Settings.app

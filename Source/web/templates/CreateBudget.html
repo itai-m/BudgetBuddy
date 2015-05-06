@@ -2,8 +2,7 @@
 
 {% block head %}
   {{block.super}}
-<link rel="stylesheet" type="text/css" href="../static/css/registration2.css" media="all" />
-
+<link href="../static/css/CreateBudget.css" rel="stylesheet" type="text/css"/>
 {%endblock%}
 
 {% block content %}
@@ -42,7 +41,7 @@
                         <input type="text" class="form-control input-lg" placeholder="Budgeteer name" />
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-lg" type="button">
-                                <i class="glyphicon glyphicon-search"></i>
+                               <i class="fa fa-search"></i>
                             </button>
                         </span>
                     </div>
@@ -53,7 +52,7 @@
                             <label for="radio1">Budget Partner</label>
                             &nbsp;&nbsp;
                             <input type="radio" name="radio" id="radio2" checked/>
-                            <label for="radio2">Budget Viewr</label>
+                            <label for="radio2">Budget Viewer</label>
                         </div>
                     <div>
                         <input type="submit" name="Add" id="Add" value="Add the Budgeteer" class="btn btn-primary">
@@ -79,7 +78,7 @@
                                     <tr>
                                         <td>1</td>
                                         <td>Itai</td>
-                                        <td>1</td>
+                                        <td>Budget Viewer</td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-cons">Remove</button>
                                             &nbsp;&nbsp;
@@ -96,7 +95,7 @@
             <div>
                 <label>Tags:</label>
                 <div>
-                     <iframe src="tags.html" width="200" height="200"></iframe>
+                     <iframe src="./Tags" width="500" height="200"></iframe>
                 </div>
             </div>
             <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right">
