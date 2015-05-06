@@ -1,51 +1,107 @@
 {% extends "master_page.html" %}
+
 {% block head %}
-    {{block.super}}
-{% endblock %}
+  {{block.super}}
+<link rel="stylesheet" type="text/css" href="../static/css/registration2.css" media="all" />
+
+{%endblock%}
 
 {% block content %}
-    <div class='container'>
-        <div class='panel panel-primary dialog-panel'>
-            <div class='panel-body'>
-                <form class='form-horizontal' role='form'>
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='Notification'>Budget Notification</label>
-                        <div class='col-md-2'>
-                            <select class='form-control' id='Notification'>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
-                        </div>
+<div class="container">
+     <h3>Create a Budget</h3>
+    <hr>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Budget Name</label>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control input-lg" placeholder="Budget name" />
                     </div>
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_title'>Budget Name</label>
-                        <div class='col-md-8'>
-                            <div class='col-md-2 indent-small'>
-                                <div class='form-group internal'>
-                                    <input class='form-control' id='BudgetName' placeholder='Budget name' type='text'>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='form-group'></div>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_title'>Shred with</label>
-                        <div class='col-md-8'>
-                            <div class='col-md-3 indent-small'>
-                                <div class='form-group internal'>
-                                    <input class='form-control' id='sherd1' placeholder='invite' type='text'>
-                                    <button class='btn-lg btn-primary' type='submit'>add more budgeteer</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='form-group'>
-                        <div class='col-md-offset-4 col-md-3'>
-                            <button class='btn-lg btn-primary' type='submit'>Creat Budget</button>
-                            <button class='btn-lg btn-danger' style='float:right' type='submit'>Cancel</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
+            <div class="form-group">
+                <label>Notifications</label>
+                <div class="input-group">
+                    <div class="row">
+                    <div class="panel panel-default modal-dialog">
+                        <div class="panel-body">
+                            <button class="btn btn-success">Notifications 1</button>
+                            <button class="btn btn-warning">Notifications 2</button>
+                            <button class="btn btn-danger">Notifications 3</button>
+                            <button class="btn btn-magick">Notifications 4</button>
+                            <button class="btn btn-primary">Notifications 5</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Add a Budgeteer</label>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control input-lg" placeholder="Budgeteer name" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="button">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div>
+                        <label>Permissions:</label>
+                        <div class="funkyradio-default">
+                            <input type="radio" name="radio" id="radio1" />
+                            <label for="radio1">Budget Partner</label>
+                            &nbsp;&nbsp;
+                            <input type="radio" name="radio" id="radio2" checked/>
+                            <label for="radio2">Budget Viewr</label>
+                        </div>
+                    <div>
+                        <input type="submit" name="Add" id="Add" value="Add the Budgeteer" class="btn btn-primary">
+                    </div>
+                </div>
+                    <br>
+                    <div class="container">
+                    <div class="row">
+                        <div class="panel panel-primary filterable">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Budgeteer</h3>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr class="filters">
+                                        <th>#</th>
+                                        <th>Budgeteer Nanme</th>
+                                        <th>Permissions</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Itai</td>
+                                        <td>1</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-cons">Remove</button>
+                                            &nbsp;&nbsp;
+                                            <button type="button" class="btn btn-success btn-cons">Edit</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <br>
+            <div>
+                <label>Tags:</label>
+                <div>
+                     <input type="submit" name="Tages" id="Tages" value="Pick Budget Tages" class="btn btn-primary">
+                </div>
+            </div>
+            <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right">
         </div>
     </div>
+</div>
+
 {%endblock%}
