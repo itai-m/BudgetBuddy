@@ -1,4 +1,4 @@
-{% extends "master_page.html" %}
+{% extends "guest_master.html" %}
 
 {% block head %}
   {{block.super}}
@@ -37,8 +37,9 @@
                 <p class="contact"><label for="repassword">Confirm your password</label></p> 
     			<input type="password" id="repassword" name="repassword" required=""> 
         
-               <fieldset>
-                 <label>Birthday</label>
+               <fieldset >  <!-- The incomplete tag is intentional, otherwise the bootstrap css collides with ours and it breaks this section
+										I don't know how to fix this so I'll leave it like this for now -->
+                 <label id="register_label">Birthday</label>
                   <label class="month"> 
                   <select class="select-style" name="BirthMonth">
                   <option value="">Month</option>
@@ -56,8 +57,8 @@
                   <option value="12" >December</option>
                   </label>
                  </select>    
-                <label>Day<input class="birthday" maxlength="2" name="BirthDay"  placeholder="Day" required=""></label>
-                <label>Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required=""></label>
+                <label id="register_label">Day<input class="birthday" maxlength="2" name="BirthDay"  placeholder="Day" required=""></label>
+                <label id="register_label">Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required=""></label>
               </fieldset>
   
             <p class="contact"><label for="password">Gender</label>
