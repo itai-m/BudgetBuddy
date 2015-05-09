@@ -1,0 +1,194 @@
+/* ---------- GENERAL ---------- */
+#add-entry-form * {
+  box-sizing: border-box;
+}
+#add-entry-form *:before, *:after {
+  box-sizing: border-box;
+}
+#add-entry-form {
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
+#add-entry-form {
+  background: #eaeaea;
+}
+
+#add-entry-form h3 {
+  margin: 0;
+}
+
+#add-entry-form a {
+  color: #999;
+  text-decoration: none;
+}
+
+#add-entry-form a:hover {
+  color: #1dabb8;
+}
+
+#add-entry-form fieldset {
+  border: none;
+  margin: 0;
+}
+
+#add-entry-form input {
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+#add-entry-form input:focus {
+  outline: none;
+}
+
+#add-entry-form input[type="submit"] {
+  cursor: pointer;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+  content: ' ';
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+
+.container {
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+/* ---------- add-entry-form ---------- */
+#add-entry-form {
+  width: 700px;
+}
+
+#add-entry-form h3 {
+  background-color: #282830;
+  border-radius: 5px 5px 0 0;
+  color: #fff;
+  font-size: 14px;
+  padding: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#add-entry-form fieldset {
+  background: #fff;
+  border-radius: 0 0 5px 5px;
+  padding: 20px;
+  position: relative;
+}
+
+#add-entry-form fieldset:before {
+  background-color: #fff;
+  content: "";
+  height: 8px;
+  left: 50%;
+  margin: -4px 0 0 -4px;
+  position: absolute;
+  top: 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  width: 8px;
+}
+
+#add-entry-form input {
+  font-size: 14px;
+}
+
+#add-entry-form #tag-select {
+  height: 20px;
+}
+
+#add-entry-form #desc-textbox {
+  border: 1px solid #dcdcdc;
+  padding: 12px 10px;
+  width: 100%;
+}
+
+#add-entry-form #price-textbox {
+    border: 1px solid #dcdcdc;
+  padding: 12px 10px;
+  width: 20%;
+  }
+#add-entry-form input[type="email"] {
+  border-radius: 3px 3px 0 0;
+}
+
+#add-entry-form input[type="password"] {
+  border-top: none;
+  border-radius: 0px 0px 3px 3px;
+}
+
+#add-entry-form input[type="submit"] {
+  background: #1dabb8;
+  border-radius: 3px;
+  color: #fff;
+  float: right;
+  font-weight: bold;
+
+  padding: 12px 20px;
+}
+
+#add-entry-form input[type="submit"]:hover {
+  background: #198d98;
+}
+
+#add-entry-form footer {
+  font-size: 12px;
+  margin-top: 16px;
+}
+
+.info {
+  background: #e5e5e5;
+  border-radius: 50%;
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  margin: 0 10px 0 0;
+  text-align: center;
+  width: 20px;
+}
+
+select {
+  border: 1px solid #dcdcdc;
+
+  width: 30%;
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -webkit-padding-end: 20px;
+  -moz-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  -moz-padding-start: 2px;
+  background: linear-gradient(to bottom, #E5E5E5, #F4F4F4);
+    background-image: linear-gradient(to bottom, #E5E5E5, #F4F4F4); /* Standard syntax; must be last */
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+option {
+  padding: 12px 10px;
+  background: linear-gradient(to bottom, #E5E5E5, #F4F4F4);
+ 
+}

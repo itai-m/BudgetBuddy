@@ -1,0 +1,40 @@
+{% extends "master_page.html" %}
+
+{% block head %}
+    {{block.super}}
+    <link href="../static/css/add_entry.css" rel="stylesheet" type="text/css"/>
+{%endblock%}
+
+{% block content %}
+
+
+  <div class="container">
+
+    <div id="add-entry-form">
+
+      <h3>Add a Budget Entry</h3>
+
+      <fieldset>
+
+        <form action="javascript:void(0);" method="get">
+
+          <input type="text" placeholder="Description" id="desc-textbox"><br><br> <!-- JS because of IE support; better: placeholder="Email" -->
+
+          <input type="text" placeholder="Price" id="price-textbox"> <!-- JS because of IE support; better: placeholder="Password" -->
+
+          <select>
+            <option selected disabled>Choose tag</option>
+            <option value="salad">Salad</option>
+            <option value="meat">Meat</option>
+            <option value="dessert">Dessert</option>
+            <option value="drink">Drink</option>
+        </select> 
+          <input type="submit" value="Add budget entry">
+
+        </form>
+
+      </fieldset>
+
+    </div> 
+  </div> 
+{%endblock%}
