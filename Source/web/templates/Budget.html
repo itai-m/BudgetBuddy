@@ -3,15 +3,15 @@
 {% block head %}
     {{block.super}}
     <link href="../static/css/budgets.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/budget.css" rel="stylesheet" type="text/css"/>
 {%endblock%}
 
 {% block content %}
 
     <table class="flatTable">
         <tr class="titleTr">
-            <td colspan="3"></td>
-            <td class="titleTd"><h3>Budget List</h3></td>
-            <td colspan="3"></td>
+            <td class="titleTd"><h3>Budget: BBQ</h3></td>
+            <td colspan="6"></td>
         </tr>
         <tr class="headingTr">
             <td>Description</td>
@@ -36,9 +36,133 @@
                 </div>
             </td>
         </tr>
-
+        <tr>
+            <td>Kebab</td>
+            <td>8$</td>
+            <td>Meat</td>
+            <td>Itai</td>
+            <td>12/03/2015</td>
+            <td class="controlTd">
+                <div class="settingsIcons">
+                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                    <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
+                </div>
+            </td>
+        </tr>
+                <tr>
+            <td>Steak</td>
+            <td>15$</td>
+            <td>Meat</td>
+            <td>Itai</td>
+            <td>12/03/2015</td>
+            <td class="controlTd">
+                <div class="settingsIcons">
+                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                    <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
+                </div>
+            </td>
+        </tr>
+                <tr>
+            <td>Coke 6x</td>
+            <td>7$</td>
+            <td>Drink</td>
+            <td>Rotem</td>
+            <td>12/03/2015</td>
+            <td class="controlTd">
+                <div class="settingsIcons">
+                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                    <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
+                </div>
+            </td>
+        </tr>
+                <tr>
+            <td>Chicken Wings</td>
+            <td>12$</td>
+            <td>Meat</td>
+            <td>Rotem</td>
+            <td>12/03/2015</td>
+            <td class="controlTd">
+                <div class="settingsIcons">
+                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                    <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
+                </div>
+            </td>
+        </tr>
+        </tr>
+        <tr>
+            <td>Pebble Cake</td>
+            <td>7$</td>
+            <td>Dessert</td>
+            <td>Liran</td>
+            <td>12/03/2015</td>
+            <td class="controlTd">
+                <div class="settingsIcons">
+                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                    <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Matcbocha</td>
+            <td>4$</td>
+            <td>Salad</td>
+            <td>Liran</td>
+            <td>12/03/2015</td>
+            <td class="controlTd">
+                <div class="settingsIcons">
+                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                    <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
+                </div>
+            </td>
+        </tr>
     </table>
 
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        var data_tags = google.visualization.arrayToDataTable([
+          ['Tag', 'Total Amount'],
+          ['Salad',     4+4],
+          ['Meat',      8+15+12],
+          ['Drink',     7],
+          ['Dessert',   7],
+        ]);
+
+        var data_users = google.visualization.arrayToDataTable([
+          ['User', 'Total Amount'],
+          ['Nadav',     4],
+          ['Itai',      8+15],
+          ['Rotem',     7+12],
+          ['Liran',   7+4],
+        ]);
+        var options_tags = {
+          title: 'Amount by tags'
+        };
+        var options_users = {
+          title: 'Amount by users'
+        };
+
+        var chart_tags = new google.visualization.PieChart(document.getElementById('piechart_tags'));
+        var chart_users = new google.visualization.PieChart(document.getElementById('piechart_users'));
+
+        chart_tags.draw(data_tags, options_tags);
+        chart_users.draw(data_users, options_users);
+      }
+    </script>
+  </head>
+    <div i="piechart_parent">
+        <div id="piechart_tags"></div>
+        <div id="piechart_users"></div>
+    </div>
     <div id="sForm" class="sForm sFormPadding">
         <span class="button close"><img src="http://i.imgur.com/nnzONel.png" alt="X"  class="" /></span>
         <h2 class="title">Add a New Record</h2>

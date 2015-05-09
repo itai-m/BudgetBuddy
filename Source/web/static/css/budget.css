@@ -1,0 +1,15 @@
+#piechat_parent {
+    overflow: hidden;
+    border: 1px solid red
+}
+#piechart_tags  {
+    float: right;
+    width: 50%;
+    height: 400px;
+    background: #888;
+}
+#piechart_users {
+    overflow: hidden;
+    height: 400px;
+    background: #ccc
+}
