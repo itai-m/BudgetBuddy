@@ -1,4 +1,5 @@
 
+
 * { padding: 0; margin: 0; }
 
 
@@ -11,12 +12,24 @@ fieldset {
     padding-left: 0.75em;
     padding-right: 0.75em;
     border: 2px groove (internal value);
-	width: 300px;
+    width: 300px;
 }
 
 #form-horizontal
 {
-	margin-left: 30%;
-	width: auto;
+    margin-left: 20%;
+    width: auto;
 }
 legend {padding:0}
+
+#login-form {
+    position:fixed;
+    top: 20%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+
+}
