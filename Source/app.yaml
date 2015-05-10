@@ -27,8 +27,11 @@ handlers:
 - url: /CreateBudget
   script: web.pages.CreateBudget.app
 
-- url: /Info
-  script: web.pages.Info.app
+- url: /PasswordRecovery
+  script: web.pages.PasswordRecovery.app
+
+- url: /AboutUs
+  script: web.pages.AboutUs.app
 
 - url: /Help
   script: web.pages.Help.app
