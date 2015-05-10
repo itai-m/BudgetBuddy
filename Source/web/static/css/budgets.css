@@ -68,10 +68,7 @@
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.1);
 }
-.open {
-  right: 0;
-  width: 400px !important;
-}
+
 .settingsIcons {
   position: absolute;
   top: 0;
