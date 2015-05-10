@@ -1,0 +1,106 @@
+{% extends "master_page.html" %}
+
+{% block head %}
+  {{block.super}}
+
+{%endblock%}
+
+{% block content %}
+<div class="container">
+     <h3>Edit a Budget</h3>
+    <hr>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Budget Name</label>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control input-lg" placeholder="Budget name" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Notifications</label>
+                <div class="input-group">
+                    <div class="row">
+                    <div class="panel panel-default modal-dialog">
+                        <div class="panel-body">
+                            <button class="btn btn-success">Notifications 1</button>
+                            <button class="btn btn-warning">Notifications 2</button>
+                            <button class="btn btn-danger">Notifications 3</button>
+                            <button class="btn btn-magick">Notifications 4</button>
+                            <button class="btn btn-primary">Notifications 5</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Add a Budgeteer</label>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control input-lg" placeholder="Budgeteer name" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="button">
+                               <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div>
+                        <label>Permissions:</label>
+                        <div class="funkyradio-default">
+                            <input type="radio" name="radio" id="radio1" />
+                            <label for="radio1">Budget Partner</label>
+                            &nbsp;&nbsp;
+                            <input type="radio" name="radio" id="radio2" checked/>
+                            <label for="radio2">Budget Viewer</label>
+                        </div>
+                    <div>
+                        <input type="submit" name="Add" id="Add" value="Add the Budgeteer" class="btn btn-primary">
+                    </div>
+                </div>
+                    <br>
+                    <div class="container">
+                    <div class="row">
+                        <div class="panel panel-primary filterable">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Budgeteer</h3>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr class="filters">
+                                        <th>#</th>
+                                        <th>Budgeteer Nanme</th>
+                                        <th>Permissions</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Itai</td>
+                                        <td>Budget Viewer</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-cons">Remove</button>
+                                            &nbsp;&nbsp;
+                                            <button type="button" class="btn btn-success btn-cons">Edit</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <br>
+            <div>
+                <label>Tags:</label>
+                <div>
+                     <iframe src="./Tags" width="500" height="200"></iframe>
+                </div>
+            </div>
+            <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right">
+        </div>
+    </div>
+</div>
+
+{%endblock%}
