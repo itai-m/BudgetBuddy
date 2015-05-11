@@ -29,8 +29,13 @@
             <option value="dessert">Dessert</option>
             <option value="drink">Drink</option>
         </select>
-          <input type="submit" value="Add budget entry">
-
+         <input type="submit" id="addBudgetEntry" value="Add Budget Entry">
+		<script type="text/javascript">
+			document.getElementById("addBudgetEntry").onclick = function () 
+			{
+				location.href = "Budget";
+			};
+		</script>
         </form>
 
       </fieldset>
