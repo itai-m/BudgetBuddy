@@ -1,0 +1,69 @@
+{% extends "master_page.html" %}
+
+{% block head %}
+    {{block.super}}
+	<link href="test.css" rel="stylesheet">
+	<script src="test.js"></script>
+    <link href="../static/css/view_budget.css" rel="stylesheet" type="text/css"/>
+{%endblock%}
+
+{% block content %}
+    <table class="flatTable">
+        <tr class="titleTr">
+
+            <td class="titleTd" colspan="7" style="text-align: center;"><h3>Budget List</h3></td>
+
+        </tr>
+        <tr class="headingTr">
+            <td>Description</td>
+            <td>Price</td>
+            <td>Tag</td>
+            <td>Added By</td>
+            <td>Date</td>
+			<td>Actions</td>
+        </tr>
+
+        <tr>
+            <td>Hummus</td>
+            <td>4$</td>
+            <td>Salad</td>
+            <td>Nadav</td>
+            <td>Feb 21,2013</td>
+            <td class="controlTd">
+                <div class="settingsIcons">
+                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                    <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
+    <div id="sForm" class="sForm sFormPadding">
+        <span class="button close"><img src="http://i.imgur.com/nnzONel.png" alt="X"  class="" /></span>
+        <h2 class="title">Add a New Record</h2>
+    </div>
+	<div id="abc">
+<!-- Popup Div Starts Here -->
+<div id="popupContact">
+<!-- Contact Us Form -->
+<form action="#" id="form" method="post" name="form">
+<img id="close" src="images/3.png" onclick ="div_hide()">
+<h2>Contact Us</h2>
+<hr>
+<input id="name" name="name" placeholder="Name" type="text">
+<input id="email" name="email" placeholder="Email" type="text">
+<textarea id="msg" name="message" placeholder="Message"></textarea>
+<a href="javascript:%20check_empty()" id="submit">Send</a>
+</form>
+</div>
+<!-- Popup Div Ends Here -->
+</div>
+<!-- Display Popup Button -->
+<h1>Click Button To Popup Form Using Javascript</h1>
+<button id="popup" onclick="div_show()">Popup</button>
+    <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+    <script src="../static/js/budgets.js"></script>
+
+{%endblock%}
