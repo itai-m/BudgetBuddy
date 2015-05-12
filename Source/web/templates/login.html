@@ -1,54 +1,54 @@
 {% extends "guest_master.html" %}
 
 {% block head %}
-  {{block.super}}
-  <title>BudgetBuddy - Login</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="../static/css/login.css" />
+    {{block.super}}
+    <title>BudgetBuddy - Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../static/css/login.css" />
 {%endblock%}
 
 {% block content %}
-<div id="login-form">
-<form class="form-horizontal" id="form-horizontal">
-  <fieldset>
-    <!-- Form Name -->
-    <center><br>
-    <legend><h2>Log In</h2></legend>
+    <div id="login-form">
+        <form class="form-horizontal" id="form-horizontal" action="Budget">
+            <fieldset>
+                <!-- Form Name -->
+                <center><br>
+                    <legend><h2>Log In</h2></legend>
 
-    <!-- Text input-->
-    <div class="control-group">
-      <label class="control-label" for=""></label>
-      <div class="controls"><i class="fa fa-user fa-2x fa-fw"></i>&nbsp;
-       <input id="" name="" type="text" placeholder="User Name" class="input-xlarge">   
-     </div>
-   </div>
+                    <!-- Text input-->
+                    <div class="control-group">
+                        <label class="control-label" for=""></label>
+                        <div class="controls"><i class="fa fa-user fa-2x fa-fw"></i>&nbsp;
+                            <input id="" name="" type="text" placeholder="User Name" class="input-xlarge">
+                        </div>
+                    </div>
 
-   <!-- Password input-->
-   <div class="control-group">
-    <label class="control-label" for="password "></label>
-    <div class="controls"><i class="fa fa-lock fa-2x fa-fw"></i>&nbsp;
-     <input id="password" name="password" type="password" placeholder="Password" class="input-xlarge">
-   </div>
- </div>
+                    <!-- Password input-->
+                    <div class="control-group">
+                        <label class="control-label" for="password "></label>
+                        <div class="controls"><i class="fa fa-lock fa-2x fa-fw"></i>&nbsp;
+                            <input id="password" name="password" type="password" placeholder="Password" class="input-xlarge">
+                        </div>
+                    </div>
 
- <!-- Button (Double) -->
- <div class="control-group">
-   <label class="control-label" for="Login"></label>
-   <div class="controls">
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="Budgets"><button onclick="window.location.href = 'Budgets';" id="Login" name="Login" class="btn btn-success">Log In</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <button id="Register" name="Register" class="btn btn-info">Register</button>
+                    <!-- Button (Double) -->
+                    <div class="control-group">
+                        <label class="control-label" for="Login"></label>
+                        <div class="controls">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="Budgets"><button onclick="window.location.href = 'Budgets';" id="Login" name="Login" class="btn btn-success">Log In</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button id="Register" name="Register" class="btn btn-info">Register</button>
 
-  </div>
-</div>
+                        </div>
+                    </div>
 
-<p></p>
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <a href="PasswordRecovery">Forgot Password? </a>
-</p>
-</center>
-</fieldset>
-</form>
-</div>
+                    <p></p>
+                    <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="PasswordRecovery">Forgot Password? </a>
+                    </p>
+                </center>
+            </fieldset>
+        </form>
+    </div>
 {%endblock%}
