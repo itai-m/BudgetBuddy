@@ -1,5 +1,5 @@
 from google.appengine.ext import ndb
-
+from BudgetModel import Budget
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
     password = ndb.StringProperty()
@@ -38,7 +38,16 @@ class Budgeteer(ndb.Model):
                 return bgt
         return None
 
-
-
-
-
+    @staticmethod
+    def getBudgetList(budgeteer):
+    '''
+    Receives a Budgeteer object, extracts the keylist, and converts it to a Budget object list.
+    
+    IN: budgeteer - Budgeteer object
+    OUT: Budget object list
+    '''
+        budgets = []
+        for key in budgeteer.budgetList:
+            budgets += Budget.budgetKeyToBudget(key)
+        return budgets
+    

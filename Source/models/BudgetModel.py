@@ -7,5 +7,8 @@ class Budget(ndb.Model):
     participantsAndPermission = ndb.StringProperty(repeated=True) #"liran123":5
     notifications = ndb.IntegerProperty()
 
+    @staticmethod
+    def budgetKeyToBudget(budgetKey):
+        return Budget.query(Budget.key == budgetKey)
 
 
