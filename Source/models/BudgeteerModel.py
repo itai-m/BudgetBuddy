@@ -14,16 +14,16 @@ class Budgeteer(ndb.Model):
 #added budget
 
     @staticmethod
-    def addBudgeteerAccount(BudgeteerToAdd):
-        if (Budgeteer.checkIfUserExists(BudgeteerToAdd.userName)) is not None:
-            BudgeteerToAdd.put()
-            return BudgeteerToAdd
+    def addBudgeteerAccount(budgeteerToAdd):
+        if (Budgeteer.checkIfUserExists(budgeteerToAdd.userName)) is not None:
+            budgeteerToAdd.put()
+            return budgeteerToAdd
         else:
             return None
 
     @staticmethod
-    def updateBudgeteerAccount(BudgeteerToEdit):
-        BudgeteerToEdit.put()
+    def updateBudgeteerAccount(budgeteerToEdit):
+        budgeteerToEdit.put()
 
     @staticmethod
     def checkIfUserExists(userName):
