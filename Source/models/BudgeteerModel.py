@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
 from BudgeteerNotificationModel import BudgeteerNotification
+from BudgetModel import Budget
 
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
@@ -13,7 +14,7 @@ class Budgeteer(ndb.Model):
     budgetsList = ndb.KeyProperty(kind='Budget',repeated=True) #list of budgets related to the user
     budgeteerSettingNotifyIfAddedToBudget = ndb.BooleanProperty() #Invited to a budget
     budgeteerSettingNotifyIfChangedEntry = ndb.BooleanProperty() #Remove\Add\Change entry
-#added budget
+
 
     @staticmethod
     def addBudgeteerAccount(budgeteerToAdd):
@@ -69,7 +70,16 @@ class Budgeteer(ndb.Model):
         return notifications
 
 
-
-
-
-
+    @staticmethod
+    def getBudgetList(budgeteer):
+    '''
+    Receives a Budgeteer object, extracts the keylist, and converts it to a Budget object list.
+    
+    IN: budgeteer - Budgeteer object
+    OUT: Budget object list
+    '''
+        budgets = []
+        for key in budgeteer.budgetList:
+            budgets += Budget.budgetKeyToBudget(key)
+        return budgets
+    
