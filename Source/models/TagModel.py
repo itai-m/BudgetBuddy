@@ -5,6 +5,6 @@ class Tag(ndb.Model):
 
 
     @staticmethod 
-    def getTagDesc(tagkey):
-        return Tag.query(Tag.key == tagkey)
+    def getTagDesc(tagKey):
+        return Tag.query(Tag.key == tagKey)
 

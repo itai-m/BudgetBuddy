@@ -8,5 +8,11 @@ class Entry(ndb.Model):
     tagId = ndb.KeyProperty()
 
 
+    @staticmethod 
+    def getEntry(entryKey):
+        return Entry.query(Entry.key == entryKey)
+
+
+
 
 
