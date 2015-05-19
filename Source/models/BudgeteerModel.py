@@ -72,12 +72,12 @@ class Budgeteer(ndb.Model):
 
     @staticmethod
     def getBudgetList(budgeteer):
-    '''
-    Receives a Budgeteer object, extracts the keylist, and converts it to a Budget object list.
+        '''
+        Receives a Budgeteer object, extracts the keylist, and converts it to a Budget object list.
     
-    IN: budgeteer - Budgeteer object
-    OUT: Budget object list
-    '''
+        IN: budgeteer - Budgeteer object
+        OUT: Budget object list
+        '''
         budgets = []
         for key in budgeteer.budgetList:
             budgets += Budget.budgetKeyToBudget(key)
