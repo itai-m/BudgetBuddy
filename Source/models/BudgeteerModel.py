@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from BudgeteerNotificationModel import BudgeteerNotification
 
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
@@ -10,12 +11,13 @@ class Budgeteer(ndb.Model):
     gender = ndb.StringProperty() #char. m for male, f for female
     notifications = ndb.KeyProperty(kind='BudgeteerNotification')
     budgetsList = ndb.KeyProperty(kind='Budget',repeated=True) #list of budgets related to the user
-
+    budgeteerSettingNotifyIfAddedToBudget = ndb.BooleanProperty() #Invited to a budget
+    budgeteerSettingNotifyIfChangedEntry = ndb.BooleanProperty() #Remove\Add\Change entry
 #added budget
 
     @staticmethod
     def addBudgeteerAccount(budgeteerToAdd):
-        if (Budgeteer.checkIfUserExists(budgeteerToAdd.userName)) is not None:
+        if (Budgeteer.getBudgeteer(budgeteerToAdd)) is None:
             budgeteerToAdd.put()
             return budgeteerToAdd
         else:
@@ -26,17 +28,46 @@ class Budgeteer(ndb.Model):
         budgeteerToEdit.put()
 
     @staticmethod
-    def checkIfUserExists(userName):
-        for bgt in Budgeteer.query():
-            if (bgt.userName == userName):
-                return bgt
+    def getBudgeteer(budgeteerToAdd):
+
+        if Budgeteer.getBudgeteerByEmail(budgeteerToAdd.email):
+            return Budgeteer.getBudgeteerByEmail(budgeteerToAdd.email)
+
+        elif Budgeteer.getBudgeteerByUserName(budgeteerToAdd.userName):
+           return Budgeteer.getBudgeteerByUserName(budgeteerToAdd.userName)
+
         return None
 
+    @staticmethod
+    def getBudgeteerByUserName(userName):
+        return Budgeteer.query(Budgeteer.userName==userName).get()
+        pass
+
+    @staticmethod
+    def getBudgeteerByEmail(email):
+        return Budgeteer.query(Budgeteer.email==email).get()
+        pass
+
+
+    @staticmethod
     def checkLogIn(userName,password):
-        for bgt in Budgeteer.query():
-            if ((bgt.userName == userName) and (bgt.password == password)):
-                return bgt
-        return None
+        if Budgeteer.query(ndb.AND(Budgeteer.userName==userName,Budgeteer.password==password)).get():
+            return True
+        return False
+
+    @staticmethod
+    def retrievePassword(email):
+        if Budgeteer.getBudgeteerByEmail(email):
+            return Budgeteer.getBudgeteerByEmail(email).password
+        return False
+
+    @staticmethod
+    def getNotificationList():
+        notifications = list()
+        for notificationKey in Budgeteer.notifications:
+            notifications.append(BudgeteerNotification.getNotificationByKey(notificationKey))
+        return notifications
+
 
 
 
