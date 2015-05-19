@@ -10,7 +10,6 @@ class Budgeteer(ndb.Model):
     email = ndb.StringProperty()
     birthday = ndb.DateProperty()
     gender = ndb.StringProperty() #char. m for male, f for female
-    notifications = ndb.KeyProperty(kind='BudgeteerNotification')
     budgetsList = ndb.KeyProperty(kind='Budget',repeated=True) #list of budgets related to the user
     budgeteerSettingNotifyIfAddedToBudget = ndb.BooleanProperty() #Invited to a budget
     budgeteerSettingNotifyIfChangedEntry = ndb.BooleanProperty() #Remove\Add\Change entry
@@ -63,14 +62,6 @@ class Budgeteer(ndb.Model):
         return False
 
     @staticmethod
-    def getNotificationList():
-        notifications = list()
-        for notificationKey in Budgeteer.notifications:
-            notifications.append(BudgeteerNotification.getNotificationByKey(notificationKey))
-        return notifications
-
-
-    @staticmethod
     def getBudgetList(budgeteer):
         '''
         Receives a Budgeteer object, extracts the keylist, and converts it to a Budget object list.
@@ -83,3 +74,13 @@ class Budgeteer(ndb.Model):
             budgets += Budget.budgetKeyToBudget(key)
         return budgets
     
+    @staticmethod
+    def getNotificationsList(budgeteer):
+
+        notificationsList = []
+
+        for notification in BudgeteerNotification.getNotifications():
+            if budgeteer.key == notification.dst: #dst saves the destination budgeteer key
+                notificationsList += notification
+
+        return notificationsList
