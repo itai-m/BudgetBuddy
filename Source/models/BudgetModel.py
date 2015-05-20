@@ -1,8 +1,11 @@
 from google.appengine.ext import ndb
 from TagModel import Tag
+from EntryModel import Entry
 import json
 
 class Budget(ndb.Model):
+    budgetName = ndb.StringProperty()
+    creationDate = ndb.DateProperty()
     tagsList = ndb.KeyProperty(kind='Tag',repeated=True) #list of tag id
     entryList = ndb.KeyProperty(kind='Entry',repeated=True) #list of entry id
     participantsAndPermission = ndb.StringProperty(repeated=True) # "liran123":5 
@@ -19,8 +22,10 @@ class Budget(ndb.Model):
         OUT: List of tag strings
         '''
         tagList = []
-        for tagKey in budget.tagsList:
-            tagList += Tag.getTagDesc(tagKey)
+        for singleBudget in Budget.query(Budget.key==budget.key):
+            for tagKey in singleBudget.tagsList:
+                tagList += Tag.getTagDesc(tagKey)
+
         return tagList
     
     def getEntryList(budget):
@@ -31,14 +36,17 @@ class Budget(ndb.Model):
         OUT: List of Entry objects
         '''
         entryList = []
-        for entryKey in budget.entryList:
-            entryList += Entry.getEntry(entryKey)
+        for singleBudget in Budget.query(Budget.key==budget.key):
+            for entryKey in singleBudget.entryList:
+                entryList += Entry.getEntry(entryKey)
+
         return entryList
     
-    def getParticipantsAndPremissionsDict(budget):
+    def getParticipantsAndPermissionsDict(budget):
         partAndPermDict = {}
-        for entry in budget.participantsAndPermission:
-            partAndPermDict.update(dict(json.loads(entry)))
+        for singleBudget in Budget.query(Budget.key==budget.key):
+            for entry in singleBudget.participantsAndPermission:
+                partAndPermDict.update(dict(json.loads(entry)))
         return partAndPermDict
             
             
