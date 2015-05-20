@@ -1,20 +1,34 @@
-from __builtin__ import staticmethod
 from google.appengine.ext import ndb
 from TagModel import Tag
 from EntryModel import Entry
+from BudgeteerModel import Budgeteer
 import json
 
 class Budget(ndb.Model):
     budgetName = ndb.StringProperty()
     creationDate = ndb.DateProperty()
     tagsList = ndb.KeyProperty(kind='Tag',repeated=True) #list of tag id
-    entryList = ndb.KeyProperty(kind='Entry',repeated=True) #list of entry id
-    participantsAndPermission = ndb.StringProperty(repeated=True) # "liran123":5 
+    entryList = ndb.KeyProperty(kind='Entry',repeated=True) #list of limited available tags. decided by manager
+    participantsAndPermission = ndb.StringProperty(repeated=True) # "liranObjectKey":"Manager"
+
+
+    @staticmethod
+    def addBudget(budget):
+        budget.put()
+        Budget.addBudgetToBudgeteers(budget)
+
+    @staticmethod
+    def addBudgetToBudgeteers(budget):
+        participantsDict=Budget.getParticipantsAndPermissionsDict(budget)
+        for budgeteerKey in participantsDict.keys():
+            bgt = Budgeteer.getBudgeteerByKey(budgeteerKey)
+            Budgeteer.addBudgetToBudgetList(bgt,budget)
 
     @staticmethod
     def budgetKeyToBudget(budgetKey):
         return Budget.query(Budget.key == budgetKey)
-    
+
+    @staticmethod
     def getTagList(budget):
         '''
         Receives a Budget object, and extracts the tags associated with it
@@ -37,7 +51,7 @@ class Budget(ndb.Model):
         budget.entryList = entryListToAddTheKey
         budget.put()
 
-
+    @staticmethod
     def getEntryList(budget):
         '''
         Receives a Budget object, and extracts the entries associated with it
@@ -50,14 +64,14 @@ class Budget(ndb.Model):
             for entryKey in singleBudget.entryList:
                 entryList += Entry.getEntry(entryKey)
         return entryList
-    
+    @staticmethod
     def getParticipantsAndPermissionsDict(budget):
         partAndPermDict = {}
         for singleBudget in Budget.query(Budget.key==budget.key):
             for entry in singleBudget.participantsAndPermission:
                 partAndPermDict.update(dict(json.loads(entry)))
         return partAndPermDict
-    
+    @staticmethod
     def deleteBudget(budget):
         # Delete all keys
         budget = Budget.get(budget.key)
@@ -66,12 +80,9 @@ class Budget(ndb.Model):
         # Go through all the participants and remove the key from their list (?)
         # Remove budget from datastore
         budget.key.delete()
-        
+    @staticmethod
     def addTagToBudget(tag,budget):       
         tagListToAddTheKey = Budget.getTagList(tag)
         tagListToAddTheKey.append(tag.key)
         budget.tagList = tagListToAddTheKey
         budget.put()
-        
-        
-            

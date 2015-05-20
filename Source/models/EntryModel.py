@@ -1,6 +1,5 @@
 from google.appengine.ext import ndb
 
-
 class Entry(ndb.Model):
     description = ndb.StringProperty()
     amount = ndb.FloatProperty()

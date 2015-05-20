@@ -7,8 +7,6 @@ class BudgeteerNotification(ndb.Model):
     dstBudgeteer = ndb.KeyProperty()
     type = ndb.StringProperty()
 
-
-
     @staticmethod
     def getNotifications():
         return BudgeteerNotification.query()

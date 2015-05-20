@@ -25,27 +25,12 @@ class Budgeteer(ndb.Model):
         budgeteerToEdit.put()
 
     @staticmethod
-    def budgeteerUserNameExist(usernName):
-        if Budgeteer.query(Budgeteer.userName==userName).get():
-            return True
-        return False
-        
-    @staticmethod
-    def budgeteerEmailExist(email):
-        if Budgeteer.query(Budgeteer.userName==email).get():
-            return True
-        return False
-    
-    @staticmethod
     def getBudgeteerByUserName(userName):
         return Budgeteer.query(Budgeteer.userName==userName).get()
         
-
     @staticmethod
     def getBudgeteerByEmail(email):
         return Budgeteer.query(Budgeteer.email==email).get()
-        
-
 
     @staticmethod
     def logIn(userName,password):
@@ -81,3 +66,15 @@ class Budgeteer(ndb.Model):
                 notificationsList += notification
 
         return notificationsList
+
+    @staticmethod
+    def addBudgetToBudgetList(budgeteer,budget):
+
+        budgetList = Budgeteer.getBudgetList(budgeteer)
+        budgetList.append(budget.key)
+        budgeteer.budgetList=budgetList
+        budgeteer.put()
+
+    @staticmethod
+    def getBudgeteerByKey(budgeteerKey):
+        return Budgeteer.query(Budgeteer.key==budgeteerKey)

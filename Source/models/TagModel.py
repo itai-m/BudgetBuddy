@@ -7,8 +7,8 @@ class Tag(ndb.Model):
     @staticmethod 
     def getTag(tagKey):
         return Tag.query(Tag.key == tagKey)
-    
-    @statidmethod
+
+    @staticmethod
     def addTag(tag):
         tag.put()
     
