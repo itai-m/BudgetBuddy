@@ -16,44 +16,41 @@ class Budgeteer(ndb.Model):
 
 
     @staticmethod
-    def addBudgeteerAccount(budgeteerToAdd):
-        if (Budgeteer.getBudgeteer(budgeteerToAdd)) is None:
-            budgeteerToAdd.put()
-            return budgeteerToAdd
-        else:
-            return None
-
+    def registerBudgeteer(budgeteer):
+        budgeteer.put()
+        return budgeteer
+    
     @staticmethod
     def updateBudgeteerAccount(budgeteerToEdit):
         budgeteerToEdit.put()
 
     @staticmethod
-    def getBudgeteer(budgeteerToAdd):
-
-        if Budgeteer.getBudgeteerByEmail(budgeteerToAdd.email):
-            return Budgeteer.getBudgeteerByEmail(budgeteerToAdd.email)
-
-        elif Budgeteer.getBudgeteerByUserName(budgeteerToAdd.userName):
-           return Budgeteer.getBudgeteerByUserName(budgeteerToAdd.userName)
-
-        return None
-
+    def budgeteerUserNameExist(usernName):
+        if Budgeteer.query(Budgeteer.userName==userName).get():
+            return True
+        return False
+        
+    @staticmethod
+    def budgeteerEmailExist(email):
+        if Budgeteer.query(Budgeteer.userName==email).get():
+            return True
+        return False
+    
     @staticmethod
     def getBudgeteerByUserName(userName):
         return Budgeteer.query(Budgeteer.userName==userName).get()
-        pass
+        
 
     @staticmethod
     def getBudgeteerByEmail(email):
         return Budgeteer.query(Budgeteer.email==email).get()
-        pass
+        
 
 
     @staticmethod
-    def checkLogIn(userName,password):
-        if Budgeteer.query(ndb.AND(Budgeteer.userName==userName,Budgeteer.password==password)).get():
-            return True
-        return False
+    def logIn(userName,password):
+        return Budgeteer.query(ndb.AND(Budgeteer.userName==userName,Budgeteer.password==password)).get()
+
 
     @staticmethod
     def retrievePassword(email):
