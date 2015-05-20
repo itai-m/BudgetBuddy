@@ -38,7 +38,7 @@ class Budget(ndb.Model):
         tagList = []
         for singleBudget in Budget.query(Budget.key==budget.key):
             for tagKey in singleBudget.tagsList:
-                tagList += Tag.getTag(tagKey)
+                tagList.append(Tag.getTag(tagKey))
         return tagList
 
     @staticmethod
@@ -61,7 +61,7 @@ class Budget(ndb.Model):
         entryList = []
         for singleBudget in Budget.query(Budget.key==budget.key):
             for entryKey in singleBudget.entryList:
-                entryList += Entry.getEntry(entryKey)
+                entryList.append(Entry.getEntryByKey(entryKey))
         return entryList
     @staticmethod
     def getParticipantsAndPermissionsDict(budget):

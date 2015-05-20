@@ -59,6 +59,7 @@ handlers:
 
 - url: /AddEntry
   script: web.pages.AddEntry.app
+
 - url: /EditEntry
   script: web.pages.EditEntry.app
 #cacthes everything that wasn't cought until now

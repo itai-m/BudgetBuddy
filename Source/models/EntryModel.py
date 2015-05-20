@@ -14,7 +14,7 @@ class Entry(ndb.Model):
     
     @staticmethod 
     def getEntryByKey(entryKey):
-        return Entry.query(Entry.key == entryKey)
+        return Entry.query(Entry.key == entryKey).get()
     
     @staticmethod
     def deleteEntry(entryKey):

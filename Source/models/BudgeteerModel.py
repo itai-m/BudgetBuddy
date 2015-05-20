@@ -66,7 +66,7 @@ class Budgeteer(ndb.Model):
         budgetList = []
         for singleBudget in Budgeteer.query(Budgeteer.key==budgeteer.key):
             for budgetKey in singleBudget.budgetList:
-                budgetList += Budgeteer.getBudgetByKey(budgetKey)
+                budgetList.append(Budget.getBudgetByKey(budgetKey))
         return budgetList
 
     
@@ -77,7 +77,7 @@ class Budgeteer(ndb.Model):
 
         for notification in BudgeteerNotification.getNotifications():
             if budgeteer.key == notification.dst: #dst saves the destination budgeteer key
-                notificationsList += notification
+                notificationsList.append(notification)
 
         return notificationsList
 
