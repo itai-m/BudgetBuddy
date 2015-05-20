@@ -83,11 +83,13 @@ class Budgeteer(ndb.Model):
 
     @staticmethod
     def addBudgetToBudgetList(budgeteer,budget):
-
-        budgetList = Budgeteer.getBudgetList(budgeteer)
-        budgetList.append(budget.key)
-        budgeteer.budgetList=budgetList
+        budgeteer.budgetList.append(budget.key)
         budgeteer.put()
+        # budgetList = Budgeteer.getBudgetList(budgeteer)
+        #budgetList.append(budget.key)
+
+        #budgeteer.budgetList=budgetList
+        #budgeteer.put()
 
     @staticmethod
     def getBudgeteerByKey(budgeteerKey):

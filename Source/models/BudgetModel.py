@@ -73,12 +73,12 @@ class Budget(ndb.Model):
     @staticmethod
     def deleteBudget(budget):
         # Delete all keys
-        budget = Budget.get(budget.key)
+        budgetToDelete = Budget.query(Budget.key==budget.key).get()
         for entryKey in budget.entryList:
             Entry.deleteEntry(entryKey)
         # Go through all the participants and remove the key from their list (?)
         # Remove budget from datastore
-        budget.key.delete()
+        budgetToDelete.key.delete()
     @staticmethod
     def addTagToBudget(tag,budget):       
         tagListToAddTheKey = Budget.getTagList(tag)
