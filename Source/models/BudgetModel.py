@@ -67,4 +67,11 @@ class Budget(ndb.Model):
         # Remove budget from datastore
         budget.key.delete()
         
+    def addTagToBudget(tag,budget):       
+        tagListToAddTheKey = Budget.getTagList(tag)
+        tagListToAddTheKey.append(tag.key)
+        budget.tagList = tagListToAddTheKey
+        budget.put()
+        
+        
             
