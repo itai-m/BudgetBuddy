@@ -12,8 +12,8 @@ class Budget(ndb.Model):
     participantsAndPermission = ndb.StringProperty(repeated=True) # "liran123":5 
 
     @staticmethod
-    def budgetKeyToBudget(budgetKey):
-        return Budget.query(Budget.key == budgetKey)
+    def getBudgetByKey(budgetKey):
+        return Budget.query(Budget.key == budgetKey).get()
     
     def getTagList(budget):
         '''
@@ -25,7 +25,7 @@ class Budget(ndb.Model):
         tagList = []
         for singleBudget in Budget.query(Budget.key==budget.key):
             for tagKey in singleBudget.tagsList:
-                tagList += Tag.getTagDesc(tagKey)
+                tagList += Tag.getTag(tagKey)
         return tagList
 
     @staticmethod
