@@ -10,7 +10,7 @@ class Budgeteer(ndb.Model):
     email = ndb.StringProperty()
     birthday = ndb.DateProperty()
     gender = ndb.StringProperty() #char. m for male, f for female
-    budgetsList = ndb.KeyProperty(kind='Budget',repeated=True) #list of budgets related to the user
+    budgetList = ndb.KeyProperty(kind='Budget',repeated=True) #list of budgets related to the user
     budgeteerSettingNotifyIfAddedToBudget = ndb.BooleanProperty() #Invited to a budget
     budgeteerSettingNotifyIfChangedEntry = ndb.BooleanProperty() #Remove\Add\Change entry
 
@@ -24,6 +24,18 @@ class Budgeteer(ndb.Model):
     def updateBudgeteerAccount(budgeteerToEdit):
         budgeteerToEdit.put()
 
+    @staticmethod
+    def budgeteerUserNameExist(userName):
+        if Budgeteer.query(Budgeteer.userName==userName).get():
+            return True
+        return False
+        
+    @staticmethod
+    def budgeteerEmailExist(email):
+        if Budgeteer.query(Budgeteer.userName==email).get():
+            return True
+        return False
+    
     @staticmethod
     def getBudgeteerByUserName(userName):
         return Budgeteer.query(Budgeteer.userName==userName).get()
@@ -51,10 +63,12 @@ class Budgeteer(ndb.Model):
         IN: budgeteer - Budgeteer object
         OUT: Budget object list
         '''
-        budgets = []
-        for key in budgeteer.budgetList:
-            budgets += Budget.budgetKeyToBudget(key)
-        return budgets
+        budgetList = []
+        for singleBudget in Budgeteer.query(Budgeteer.key==budgeteer.key):
+            for budgetKey in singleBudget.budgetList:
+                budgetList += Budgeteer.getBudgetByKey(budgetKey)
+        return budgetList
+
     
     @staticmethod
     def getNotificationsList(budgeteer):

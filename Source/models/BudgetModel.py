@@ -25,10 +25,9 @@ class Budget(ndb.Model):
             Budgeteer.addBudgetToBudgetList(bgt,budget)
 
     @staticmethod
-    def budgetKeyToBudget(budgetKey):
-        return Budget.query(Budget.key == budgetKey)
+    def getBudgetByKey(budgetKey):
+        return Budget.query(Budget.key == budgetKey).get()
 
-    @staticmethod
     def getTagList(budget):
         '''
         Receives a Budget object, and extracts the tags associated with it
@@ -39,7 +38,7 @@ class Budget(ndb.Model):
         tagList = []
         for singleBudget in Budget.query(Budget.key==budget.key):
             for tagKey in singleBudget.tagsList:
-                tagList += Tag.getTagDesc(tagKey)
+                tagList += Tag.getTag(tagKey)
         return tagList
 
     @staticmethod
