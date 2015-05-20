@@ -25,7 +25,6 @@ class Budget(ndb.Model):
         for singleBudget in Budget.query(Budget.key==budget.key):
             for tagKey in singleBudget.tagsList:
                 tagList += Tag.getTagDesc(tagKey)
-
         return tagList
     
     def getEntryList(budget):
@@ -39,7 +38,6 @@ class Budget(ndb.Model):
         for singleBudget in Budget.query(Budget.key==budget.key):
             for entryKey in singleBudget.entryList:
                 entryList += Entry.getEntry(entryKey)
-
         return entryList
     
     def getParticipantsAndPermissionsDict(budget):
@@ -48,5 +46,14 @@ class Budget(ndb.Model):
             for entry in singleBudget.participantsAndPermission:
                 partAndPermDict.update(dict(json.loads(entry)))
         return partAndPermDict
-            
+    
+    def deleteBudget(budget):
+        # Delete all keys
+        budget = Budget.get(budget.key)
+        for entryKey in budget.entryList:
+            Entry.deleteEntry(entryKey)
+        # Go through all the participants and remove the key from their list (?)
+        # Remove budget from datastore
+        budget.key.delete()
+        
             

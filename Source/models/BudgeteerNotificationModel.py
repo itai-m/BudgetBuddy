@@ -25,3 +25,7 @@ class BudgeteerNotification(ndb.Model):
             }
             return p
         return None
+    
+    @staticmethod
+    def insertNotification(budgeteerNotification):
+        budgeteerNotification.put()

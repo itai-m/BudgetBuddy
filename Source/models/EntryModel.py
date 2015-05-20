@@ -11,6 +11,12 @@ class Entry(ndb.Model):
     @staticmethod 
     def getEntry(entryKey):
         return Entry.query(Entry.key == entryKey)
+    
+    @staticmethod
+    def deleteEntry(entryKey):
+        entryKey.delete()
+        # TODO: Check if deletes all references to that object in the database
+        
 
 
 
