@@ -5,12 +5,13 @@ class Tag(ndb.Model):
 
 
     @staticmethod 
-    def getTagDesc(tagKey):
+    def getTag(tagKey):
         return Tag.query(Tag.key == tagKey)
     
     @statidmethod
-    def insertTag(tag):
+    def addTag(tag):
         tag.put()
     
+    @staticmethod
     def removeTag(tag):
         tag.key.delete()

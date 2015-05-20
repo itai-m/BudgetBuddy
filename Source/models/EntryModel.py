@@ -12,8 +12,9 @@ class Entry(ndb.Model):
     def addEntry(entry):
         entry.put()
         return entry.key
+    
     @staticmethod 
-    def getEntry(entryKey):
+    def getEntryByKey(entryKey):
         return Entry.query(Entry.key == entryKey)
     
     @staticmethod
