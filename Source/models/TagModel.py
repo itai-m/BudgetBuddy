@@ -7,4 +7,3 @@ class Tag(ndb.Model):
     @staticmethod 
     def getTagDesc(tagKey):
         return Tag.query(Tag.key == tagKey)
-

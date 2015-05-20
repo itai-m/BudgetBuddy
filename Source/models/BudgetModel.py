@@ -1,3 +1,4 @@
+from __builtin__ import staticmethod
 from google.appengine.ext import ndb
 from TagModel import Tag
 from EntryModel import Entry
@@ -27,7 +28,17 @@ class Budget(ndb.Model):
                 tagList += Tag.getTagDesc(tagKey)
 
         return tagList
-    
+
+    @staticmethod
+    def addEntryToBudget(entry,budget):
+        #checked
+        entryKey = Entry.addEntry(entry)
+        entryListToAddTheKey = Budget.getEntryList(budget)
+        entryListToAddTheKey.append(entryKey)
+        budget.entryList = entryListToAddTheKey
+        budget.put()
+
+
     def getEntryList(budget):
         '''
         Receives a Budget object, and extracts the entries associated with it
