@@ -1,7 +1,17 @@
 from google.appengine.ext import ndb
-from BudgeteerNotificationModel import BudgeteerNotification
-from BudgetModel import Budget
-
+import BudgeteerNotificationModel
+import BudgetModel
+'''
+    Functionality tests:
+        [ ] Username Exist
+        [ ] Email Exist
+        [ ] Get Budgeteer by Email
+        [ ] Get BudgeteerID By Username
+        [ ] Get Budgeteer By BudegteerID
+        [ ] Register a Budgeteer
+        [ ] Update Budgeteer
+        [ ] Login
+'''
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
     password = ndb.StringProperty()
@@ -10,7 +20,7 @@ class Budgeteer(ndb.Model):
     email = ndb.StringProperty()
     birthday = ndb.DateProperty()
     gender = ndb.StringProperty()  # char. m for male, f for female
-    budgetList = ndb.KeyProperty(kind=Budget, repeated=True)  # list of budgets related to the user
+    budgetList = ndb.KeyProperty(kind=BudgeModel.Budget, repeated=True)  # list of budgets related to the user
     budgeteerSettingNotifyIfAddedToBudget = ndb.BooleanProperty()  # Invited to a budget
     budgeteerSettingNotifyIfChangedEntry = ndb.BooleanProperty()  # Remove\Add\Change entry
 
@@ -107,7 +117,7 @@ class Budgeteer(ndb.Model):
         '''
         budgetList = []
         for budgetKey in budgeteer.budgetList:
-            budgetList.append(Budget.getBudgetByID(budgetKey.id()))
+            budgetList.append(BudgetModel.Budget.getBudgetByID(budgetKey.id()))
         return budgetList
     
     @staticmethod
@@ -118,7 +128,7 @@ class Budgeteer(ndb.Model):
         :return: list of Notification objects associated with the budgeteer given.
         '''
         notificationList = []
-        for notification in BudgeteerNotification.getNotificationsByDstKey(budgeteer.key):
+        for notification in BudgeteerNotificationModel.BudgeteerNotification.getNotificationsByDstKey(budgeteer.key):
                 notificationList.append(notification)
         return notificationList
 

@@ -1,14 +1,15 @@
 from google.appengine.ext import ndb
-from TagModel import Tag
-from EntryModel import Entry
-from BudgeteerModel import Budgeteer
+import TagModel
+import EntryModel
+import BudgeteerModel
+
 import json
 
 class Budget(ndb.Model):
     budgetName = ndb.StringProperty()
     creationDate = ndb.DateProperty()
-    tagList = ndb.KeyProperty(kind=Tag, repeated=True)  # list of tag id
-    entryList = ndb.KeyProperty(kind=Entry, repeated=True)  # list of limited available tags. decided by manager
+    tagList = ndb.KeyProperty(kind=TagModel.Tag, repeated=True)  # list of tag id
+    entryList = ndb.KeyProperty(kind=EntryModel.Entry, repeated=True)  # list of limited available tags. decided by manager
     participantsAndPermission = ndb.StringProperty(repeated=True)  # "liranObjectKey.id()":"Manager"
 
     @staticmethod
@@ -31,8 +32,8 @@ class Budget(ndb.Model):
         '''
         participantsDict = Budget.getParticipantsAndPermissionsDict(budget)
         for budgeteerId in participantsDict.keys():
-            budgeteer = Budgeteer.getBudgeteerById(budgeteerId)
-            Budgeteer.addBudgetToBudgetList(budgeteer, budget)
+            budgeteer = BudgeteerModel.Budgeteer.getBudgeteerById(budgeteerId)
+            BudgeteerModel.Budgeteer.addBudgetToBudgetList(budgeteer, budget)
         return budget.key.id()
 
     @staticmethod
@@ -62,7 +63,7 @@ class Budget(ndb.Model):
         '''
         tagList = []
         for tagKey in budget.tagList:
-            tagList.append(Tag.getTagByKey(tagKey))
+            tagList.append(TagModel.Tag.getTagByKey(tagKey))
         return tagList
 
     @staticmethod
@@ -74,7 +75,7 @@ class Budget(ndb.Model):
         '''
         entryList = []
         for entryKey in budget.entryList:
-            entryList.append(Entry.getEntryByKey(entryKey))
+            entryList.append(EntryModel.Entry.getEntryByKey(entryKey))
         return entryList
 
     @staticmethod
@@ -99,11 +100,11 @@ class Budget(ndb.Model):
         '''
         # Delete all keys
         for entryKey in budget.entryList:
-            Entry.removeEntry(entryKey)
+            EntryModel.Entry.removeEntry(entryKey)
         # Go through all the participants and remove the key from their list (?)
         participantIdList = Budget.getAssociatedBudgeteers(budget)
         for participantId in participantIdList:
-            Budgeteer.removeBudgetByKey(participantId, budget.key)
+            BudgeteerModel.Budgeteer.removeBudgetByKey(participantId, budget.key)
         # Remove budget from datastore
         budget.key.delete()
 
@@ -137,7 +138,7 @@ class Budget(ndb.Model):
         :param budget: Budget object to insert the Entry into.
         :return: Entry ID.
         '''
-        entryKey = Entry.addEntryToDatastore(entry)
+        entryKey = EntryModel.Entry.addEntryToDatastore(entry)
         budget.entryList.append(entryKey)
         budget.put()
         return entryKey.id()
@@ -151,7 +152,7 @@ class Budget(ndb.Model):
         :return: budget ID.
         '''
         budget.entryList.remove(entryKey)
-        Entry.removeEntry(entryKey)
+        EntryModel.Entry.removeEntry(entryKey)
         budget.put()
         return budget.key.id()
 
