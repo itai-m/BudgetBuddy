@@ -1,29 +1,26 @@
 from google.appengine.ext import ndb
 
 class BudgeteerNotification(ndb.Model):
-
     #src invited dst to share a budget
     srcBudgeteer = ndb.KeyProperty()
     dstBudgeteer = ndb.KeyProperty()
     type = ndb.StringProperty()
 
     @staticmethod
-    def getNotifications():
-        return BudgeteerNotification.query()
+    def getNotificationsByDstId(dstId):
+        '''
+        Receives a budgeteer id, returns all the notifications that has the same destination ID.
+        :param dstId: The Id of the destination budgeteer.
+        :return: List (query) of all the destination ids that equals to the received dstId
+        '''
+        return BudgeteerNotification.query(BudgeteerNotification.dstBudgeteer.id() == dstId)
 
-
-    @staticmethod
-    def notificationToDict(notificationDstKey):
-        notification = BudgeteerNotification.query(BudgeteerNotification.key==notificationDstKey).get()
-        if notification:
-            p = {
-                "src" : notification.srcBudgeteer,
-                "dst" : notification.dstBudgeteer,
-                "type" : notification.type
-            }
-            return p
-        return None
-    
     @staticmethod
     def addNotification(budgeteerNotification):
+        '''
+        Gets a notification and inserts it to the datastore.
+        :param budgeteerNotification: Notification object.
+        :return: The notification object ID after being put in the Datastore.
+        '''
         budgeteerNotification.put()
+        return budgeteerNotification.key.id()
