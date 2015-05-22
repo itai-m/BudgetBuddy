@@ -7,10 +7,14 @@ import BudgetModel
         [X] Email Exist
         [X] Get Budgeteer by Email
         [X] Get BudgeteerID By Username
-        [ ] Get Budgeteer By BudegteerID
+        [X] Get Budgeteer By BudegteerID
         [X] Register a Budgeteer
-        [ ] Update Budgeteer
+        [X] Update Budgeteer
         [X] Login
+        [ ] Get Budget List
+        [ ] Get Notification List
+        [ ] addBudgetToBudgetList
+        [ ] removeBudgetByKey
 '''
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
@@ -44,7 +48,7 @@ class Budgeteer(ndb.Model):
         :return: budgeteer key id.
         '''
         budgeteerToEdit.put()
-        return budgeteerToEdit().key.id()
+        return budgeteerToEdit.key.id()
 
     @staticmethod
     def budgeteerUserNameExist(userName):
@@ -75,7 +79,10 @@ class Budgeteer(ndb.Model):
         :param userName: The budgeteer username string.
         :return: budgeteer key id.
         '''
-        return Budgeteer.query(Budgeteer.userName == userName).get().key.id()
+        budgeteerToReturn = Budgeteer.query(Budgeteer.userName == userName).get()
+        if budgeteerToReturn:
+            return budgeteerToReturn.key.id()
+        return None
         
     @staticmethod
     def getBudgeteerIdByEmail(email):
@@ -84,7 +91,10 @@ class Budgeteer(ndb.Model):
         :param email: The budgeteer email string.
         :return: budgeteer object id if email exist, None if not.
         '''
-        return Budgeteer.query(Budgeteer.email == email).get().key.id()
+        budgeteerToReturn = Budgeteer.query(Budgeteer.email == email).get()
+        if budgeteerToReturn:
+            return budgeteerToReturn.key.id()
+        return None
 
     @staticmethod
     def logIn(userName,password):
@@ -95,7 +105,10 @@ class Budgeteer(ndb.Model):
         :return: None if the username-password combination is not found.
                  Budgeteer key id if the combination is found.
         '''
-        return Budgeteer.query(ndb.AND(Budgeteer.userName == userName, Budgeteer.password == password)).get().key.id()
+        budgeteerToReturn = Budgeteer.query(ndb.AND(Budgeteer.userName == userName, Budgeteer.password == password)).get()
+        if budgeteerToReturn:
+            return budgeteerToReturn.key.id()
+        return None
 
     @staticmethod
     def retrievePassword(email):
@@ -151,7 +164,7 @@ class Budgeteer(ndb.Model):
         :param budgeteerID: budgeteer id.
         :return: budgeteer object associated with that id.
         '''
-        return Budgeteer.query(Budgeteer.key == budgeteerId).get()
+        return Budgeteer.get_by_id(budgeteerId)
 
     @staticmethod
     def removeBudgetByKey(particpantId, budgetKey):
