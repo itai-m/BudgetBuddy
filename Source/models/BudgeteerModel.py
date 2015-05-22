@@ -17,80 +17,133 @@ class Budgeteer(ndb.Model):
 
     @staticmethod
     def registerBudgeteer(budgeteer):
+        '''
+        This function assumes that the Username and Email provided in the budgeteer object does not already exist.
+        :param budgeteer: Budgeteer object, contains all the budgeteer information needed to register
+                          budgeteer, such as name, username, password, email, birthday, notification settings.
+        :return: returns the budgeteer key id.
+        '''
         budgeteer.put()
-        return budgeteer
+        return budgeteer.key.id()
     
     @staticmethod
     def updateBudgeteerAccount(budgeteerToEdit):
+        '''
+        Receives a budgeteer and replaces the current object data with the received data.
+        (Identical to Register budgteer function)
+        :param budgeteerToEdit: Budgeteer object that contains all the budgeteer updated data.
+        :return: budgeteer key id.
+        '''
         budgeteerToEdit.put()
+        return budgeteerToEdit().key.id()
 
     @staticmethod
     def budgeteerUserNameExist(userName):
+        '''
+        Validator function for the Registration procedure.
+        :param userName: string contains the username.
+        :return: Boolean variable, True if username exists, false if not.
+        '''
         if Budgeteer.query(Budgeteer.userName==userName).get():
             return True
         return False
         
     @staticmethod
     def budgeteerEmailExist(email):
+        '''
+        Validator function for the Registration procedure.
+        :param email: string contains the email.
+        :return: Boolean variable, True if email exists, false if not.
+        '''
         if Budgeteer.query(Budgeteer.userName==email).get():
             return True
         return False
     
     @staticmethod
-    def getBudgeteerByUserName(userName):
-        return Budgeteer.query(Budgeteer.userName==userName).get()
+    def getBudgeteerIdByUserName(userName):
+        '''
+        Converts userName to budgeteer ID.
+        :param userName: The budgeteer username string.
+        :return: budgeteer key id.
+        '''
+        return Budgeteer.query(Budgeteer.userName==userName).get().key.id()
         
     @staticmethod
     def getBudgeteerByEmail(email):
+        '''
+        Converts email to budgeteer.
+        :param email: The budgeteer email string.
+        :return: budgeteer object if email exist, None if not.
+        '''
         return Budgeteer.query(Budgeteer.email==email).get()
 
     @staticmethod
     def logIn(userName,password):
-        return Budgeteer.query(ndb.AND(Budgeteer.userName==userName,Budgeteer.password==password)).get()
+        '''
+        Compares the budgeteer password and budgeteer username against the datastore.
+        :param userName: budgeteer username.
+        :param password: budgeteer password.
+        :return: None if the username-password combination is not found.
+                 Budgeteer key id if the combination is found.
+        '''
+        return Budgeteer.query(ndb.AND(Budgeteer.userName==userName,Budgeteer.password==password)).get().key.id()
 
 
     @staticmethod
     def retrievePassword(email):
-        if Budgeteer.getBudgeteerByEmail(email):
-            return Budgeteer.getBudgeteerByEmail(email).password
-        return False
+        '''
+        Given an email string, returns the password string.
+        :param email: Email string.
+        :return: Password associated with the email if exists, None if not.
+        '''
+        budgeteer = Budgeteer.getBudgeteerByEmail(email)
+        if budgeteer:
+            return budgeteer.password
+        return None
+
 
     @staticmethod
     def getBudgetList(budgeteer):
         '''
-        Receives a Budgeteer object, extracts the keylist, and converts it to a Budget object list.
-    
-        IN: budgeteer - Budgeteer object
-        OUT: Budget object list
+        :param budgeteer: Budgeteer object.
+        :return: List of Budget objects.
         '''
         budgetList = []
-        for singleBudget in Budgeteer.query(Budgeteer.key==budgeteer.key):
-            for budgetKey in singleBudget.budgetList:
-                budgetList.append(Budget.getBudgetByKey(budgetKey))
+        for budgetId in budgeteer.budgetList:
+            budgetList.append(Budget.getBudgetByID(budgetId))
         return budgetList
 
     
     @staticmethod
     def getNotificationsList(budgeteer):
-
+        '''
+        Receives a budgeteer, returns a Notification object list associated with that budgeteer.
+        :param budgeteer: Budgeteer object.
+        :return: list of Notification objects associated with the budgeteer given.
+        '''
         notificationsList = []
-
         for notification in BudgeteerNotification.getNotifications():
-            if budgeteer.key == notification.dst: #dst saves the destination budgeteer key
+            if budgeteer.key.id() == notification.dst:
                 notificationsList.append(notification)
-
         return notificationsList
 
     @staticmethod
     def addBudgetToBudgetList(budgeteer,budget):
-        budgeteer.budgetList.append(budget.key)
+        '''
+        Adds a budget to the budgeteer budgetList.
+        :param budgeteer: Budgeteer object, append the budget id to this budgeteer.budgetList.
+        :param budget: take this budget.key.id() and add to the budgeteer.budgetList.
+        :return: budgeteer.key.id().
+        '''
+        budgeteer.budgetList.append(budget.key.id())
         budgeteer.put()
-        # budgetList = Budgeteer.getBudgetList(budgeteer)
-        #budgetList.append(budget.key)
-
-        #budgeteer.budgetList=budgetList
-        #budgeteer.put()
+        return budgeteer.key.id()
 
     @staticmethod
-    def getBudgeteerByKey(budgeteerKey):
-        return Budgeteer.query(Budgeteer.key==budgeteerKey)
+    def getBudgeteerByKey(budgeteerId):
+        '''
+        Converts a budgeteer ID to a budgeteer object.
+        :param budgeteerKey: budgeteer id.
+        :return: budgeteer object associated with that id.
+        '''
+        return Budgeteer.query(Budgeteer.key.id() == budgeteerId).get()

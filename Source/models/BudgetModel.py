@@ -25,7 +25,7 @@ class Budget(ndb.Model):
             Budgeteer.addBudgetToBudgetList(bgt,budget)
 
     @staticmethod
-    def getBudgetByKey(budgetKey):
+    def getBudgetByID(budgetKey):
         return Budget.query(Budget.key == budgetKey).get()
 
     def getTagList(budget):
