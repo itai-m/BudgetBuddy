@@ -4,13 +4,13 @@ import BudgetModel
 '''
     Functionality tests:
         [X] Username Exist
-        [ ] Email Exist
-        [ ] Get Budgeteer by Email
-        [ ] Get BudgeteerID By Username
+        [X] Email Exist
+        [X] Get Budgeteer by Email
+        [X] Get BudgeteerID By Username
         [ ] Get Budgeteer By BudegteerID
         [X] Register a Budgeteer
         [ ] Update Budgeteer
-        [ ] Login
+        [X] Login
 '''
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
@@ -78,13 +78,13 @@ class Budgeteer(ndb.Model):
         return Budgeteer.query(Budgeteer.userName == userName).get().key.id()
         
     @staticmethod
-    def getBudgeteerByEmail(email):
+    def getBudgeteerIdByEmail(email):
         '''
         Converts email to budgeteer.
         :param email: The budgeteer email string.
-        :return: budgeteer object if email exist, None if not.
+        :return: budgeteer object id if email exist, None if not.
         '''
-        return Budgeteer.query(Budgeteer.email == email).get()
+        return Budgeteer.query(Budgeteer.email == email).get().key.id()
 
     @staticmethod
     def logIn(userName,password):
@@ -104,9 +104,9 @@ class Budgeteer(ndb.Model):
         :param email: Email string.
         :return: Password associated with the email if exists, None if not.
         '''
-        budgeteer = Budgeteer.getBudgeteerByEmail(email)
+        budgeteer = Budgeteer.getBudgeteerIdByEmail(email)
         if budgeteer:
-            return budgeteer.password
+            return Budgeteer.get_by_id(budgeteer).password
         return None
 
     @staticmethod
@@ -117,7 +117,7 @@ class Budgeteer(ndb.Model):
         '''
         budgetList = []
         for budgetKey in budgeteer.budgetList:
-            budgetList.append(BudgetModel.Budget.getBudgetByID(budgetKey.id()))
+            budgetList.append(BudgetModel.Budget.getBudgetById(budgetKey.id()))
         return budgetList
     
     @staticmethod
@@ -151,7 +151,7 @@ class Budgeteer(ndb.Model):
         :param budgeteerID: budgeteer id.
         :return: budgeteer object associated with that id.
         '''
-        return Budgeteer.query(Budgeteer.key.id() == budgeteerId).get()
+        return Budgeteer.query(Budgeteer.key == budgeteerId).get()
 
     @staticmethod
     def removeBudgetByKey(particpantId, budgetKey):
