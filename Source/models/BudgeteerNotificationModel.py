@@ -7,13 +7,13 @@ class BudgeteerNotification(ndb.Model):
     type = ndb.StringProperty()
 
     @staticmethod
-    def getNotificationsByDstId(dstId):
+    def getNotificationsByDstKey(dstKey):
         '''
         Receives a budgeteer id, returns all the notifications that has the same destination ID.
         :param dstId: The Id of the destination budgeteer.
         :return: List (query) of all the destination ids that equals to the received dstId
         '''
-        return BudgeteerNotification.query(BudgeteerNotification.dstBudgeteer.id() == dstId)
+        return BudgeteerNotification.query(BudgeteerNotification.dstBudgeteer == dstKey)
 
     @staticmethod
     def addNotification(budgeteerNotification):

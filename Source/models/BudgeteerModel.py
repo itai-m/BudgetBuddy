@@ -118,7 +118,7 @@ class Budgeteer(ndb.Model):
         :return: list of Notification objects associated with the budgeteer given.
         '''
         notificationList = []
-        for notification in BudgeteerNotification.getNotificationsByDstId(budgeteer.key.id()):
+        for notification in BudgeteerNotification.getNotificationsByDstKey(budgeteer.key):
                 notificationList.append(notification)
         return notificationList
 
