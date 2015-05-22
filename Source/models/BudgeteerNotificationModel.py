@@ -10,8 +10,8 @@ class BudgeteerNotification(ndb.Model):
     def getNotificationsByDstKey(dstKey):
         '''
         Receives a budgeteer id, returns all the notifications that has the same destination ID.
-        :param dstId: The Id of the destination budgeteer.
-        :return: List (query) of all the destination ids that equals to the received dstId
+        :param dstKey: The Id of the destination budgeteer.
+        :return: List (query) of all the Budgeteer (DstKey) notification that equals to the received dstKey
         '''
         return BudgeteerNotification.query(BudgeteerNotification.dstBudgeteer == dstKey)
 
