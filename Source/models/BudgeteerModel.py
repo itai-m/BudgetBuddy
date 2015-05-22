@@ -29,7 +29,7 @@ class Budgeteer(ndb.Model):
     def updateBudgeteerAccount(budgeteerToEdit):
         '''
         Receives a budgeteer and replaces the current object data with the received data.
-        (Identical to Register budgteer function)
+        (Identical to Register budgeteer function)
         :param budgeteerToEdit: Budgeteer object that contains all the budgeteer updated data.
         :return: budgeteer key id.
         '''
@@ -118,8 +118,7 @@ class Budgeteer(ndb.Model):
         :return: list of Notification objects associated with the budgeteer given.
         '''
         notificationList = []
-        for notification in BudgeteerNotification.getNotifications():
-            if budgeteer.key.id() == notification.dst.id():
+        for notification in BudgeteerNotification.getNotificationByDstID(budgeteer.key.id()):
                 notificationList.append(notification)
         return notificationList
 
@@ -128,7 +127,7 @@ class Budgeteer(ndb.Model):
         '''
         Adds a budget to the budgeteer budgetList.
         :param budgeteer: Budgeteer object, append the budget id to this budgeteer.budgetList.
-        :param budget: take this budget.key.id() and add to the budgeteer.budgetList.
+        :param budget: take this budget.key and add to the budgeteer.budgetList.
         :return: budgeteer.key.id().
         '''
         budgeteer.budgetList.append(budget.key)
@@ -139,7 +138,7 @@ class Budgeteer(ndb.Model):
     def getBudgeteerByID(budgeteerId):
         '''
         Converts a budgeteer ID to a budgeteer object.
-        :param budgeteerKey: budgeteer id.
+        :param budgeteerID: budgeteer id.
         :return: budgeteer object associated with that id.
         '''
         return Budgeteer.query(Budgeteer.key.id() == budgeteerId).get()
