@@ -10,7 +10,7 @@ class Tag(ndb.Model):
         :param tagKey: tag key.
         :return: Tag object.
         '''
-        return Tag.query(Tag.key == tagKey).get()
+        return tagKey.get()
 
     @staticmethod
     def addTagToDatastore(tag):
@@ -30,3 +30,4 @@ class Tag(ndb.Model):
         :return: None
         '''
         tag.key.delete()
+        return None

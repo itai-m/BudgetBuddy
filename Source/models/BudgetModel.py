@@ -36,13 +36,22 @@ class Budget(ndb.Model):
         return budget.key.id()
 
     @staticmethod
-    def getBudgetByID(budgetId):
+    def getBudgetById(budgetId):
         '''
         Converts budget Id to budget.
         :param budgetId: id of the Budget object.
         :return: Budget object associated with the ID if exists, None if not.
         '''
         return Budget.query(Budget.key.id() == budgetId).get()
+
+    @staticmethod
+    def getBudgetByKey(budgetKey):
+        '''
+        Converts budget key to budget.
+        :param budgetKey: key of the Budget object.
+        :return: Budget object associated with the key if exists, None if not.
+        '''
+        return budgetKey.get()
 
     @staticmethod
     def getTagList(budget):

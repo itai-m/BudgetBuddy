@@ -34,7 +34,7 @@ class Entry(ndb.Model):
         :param entryKey: entry key.
         :return: Entry object.
         '''
-        return Entry.query(Entry.key == entryKey).get()
+        return entryKey.get()
     
     @staticmethod
     def removeEntry(entryKey):
@@ -44,6 +44,7 @@ class Entry(ndb.Model):
         :return: returns None
         '''
         entryKey.delete()
+        return None
 
 
 
