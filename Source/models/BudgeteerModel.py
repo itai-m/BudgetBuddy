@@ -9,10 +9,10 @@ class Budgeteer(ndb.Model):
     lastName = ndb.StringProperty()
     email = ndb.StringProperty()
     birthday = ndb.DateProperty()
-    gender = ndb.StringProperty() #char. m for male, f for female
-    budgetList = ndb.KeyProperty(kind='Budget',repeated=True) #list of budgets related to the user
-    budgeteerSettingNotifyIfAddedToBudget = ndb.BooleanProperty() #Invited to a budget
-    budgeteerSettingNotifyIfChangedEntry = ndb.BooleanProperty() #Remove\Add\Change entry
+    gender = ndb.StringProperty()  # char. m for male, f for female
+    budgetList = ndb.KeyProperty(kind='Budget',repeated=True)  # list of budgets related to the user
+    budgeteerSettingNotifyIfAddedToBudget = ndb.BooleanProperty()  # Invited to a budget
+    budgeteerSettingNotifyIfChangedEntry = ndb.BooleanProperty()  # Remove\Add\Change entry
 
     @staticmethod
     def registerBudgeteer(budgeteer):
@@ -119,24 +119,24 @@ class Budgeteer(ndb.Model):
         '''
         notificationList = []
         for notification in BudgeteerNotification.getNotifications():
-            if budgeteer.key.id() == notification.dst:
+            if budgeteer.key.id() == notification.dst.id():
                 notificationList.append(notification)
         return notificationList
 
     @staticmethod
-    def addBudgetToBudgetList(budgeteer,budget):
+    def addBudgetToBudgetList(budgeteer, budget):
         '''
         Adds a budget to the budgeteer budgetList.
         :param budgeteer: Budgeteer object, append the budget id to this budgeteer.budgetList.
         :param budget: take this budget.key.id() and add to the budgeteer.budgetList.
         :return: budgeteer.key.id().
         '''
-        budgeteer.budgetList.append(budget.key.id())
+        budgeteer.budgetList.append(budget.key)
         budgeteer.put()
         return budgeteer.key.id()
 
     @staticmethod
-    def getBudgeteerByKey(budgeteerId):
+    def getBudgeteerByID(budgeteerId):
         '''
         Converts a budgeteer ID to a budgeteer object.
         :param budgeteerKey: budgeteer id.

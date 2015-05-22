@@ -21,7 +21,7 @@ class Budget(ndb.Model):
     def addBudgetToBudgeteers(budget):
         participantsDict=Budget.getParticipantsAndPermissionsDict(budget)
         for budgeteerKey in participantsDict.keys():
-            bgt = Budgeteer.getBudgeteerByKey(budgeteerKey)
+            bgt = Budgeteer.getBudgeteerByID(budgeteerKey)
             Budgeteer.addBudgetToBudgetList(bgt,budget)
 
     @staticmethod
