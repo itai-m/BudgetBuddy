@@ -3,12 +3,12 @@ import BudgeteerNotificationModel
 import BudgetModel
 '''
     Functionality tests:
-        [ ] Username Exist
+        [X] Username Exist
         [ ] Email Exist
         [ ] Get Budgeteer by Email
         [ ] Get BudgeteerID By Username
         [ ] Get Budgeteer By BudegteerID
-        [ ] Register a Budgeteer
+        [X] Register a Budgeteer
         [ ] Update Budgeteer
         [ ] Login
 '''
@@ -64,7 +64,7 @@ class Budgeteer(ndb.Model):
         :param email: string contains the email.
         :return: Boolean variable, True if email exists, false if not.
         '''
-        if Budgeteer.query(Budgeteer.userName == email).get():
+        if Budgeteer.query(Budgeteer.email == email).get():
             return True
         return False
     
