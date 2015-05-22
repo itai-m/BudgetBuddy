@@ -5,13 +5,28 @@ class Tag(ndb.Model):
 
     @staticmethod
     def getTagByKey(tagKey):
+        '''
+        Receives a tag key, returns a Tag object.
+        :param tagKey: tag key.
+        :return: Tag object.
+        '''
         return Tag.query(Tag.key == tagKey).get()
 
     @staticmethod
-    def addTag(tag):
+    def addTagToDatastore(tag):
+        '''
+        Adds a tag to the Datastore, and returns the key.
+        :param tag: Tag object.
+        :return: Key to the datastore entry of the tag object.
+        '''
         tag.put()
-        return tag.key.id()
+        return tag.key
     
     @staticmethod
     def removeTag(tag):
+        '''
+        Removes a tag from the datastore.
+        :param tag: Tag object.
+        :return: None
+        '''
         tag.key.delete()
