@@ -82,7 +82,7 @@ class Budget(ndb.Model):
         return partAndPermDict
 
     @staticmethod
-    def deleteBudget(budget):
+    def removeBudget(budget):
         '''
         Deletes a budget from the datastore.
         :param budget: Budget to delete.
@@ -90,7 +90,7 @@ class Budget(ndb.Model):
         '''
         # Delete all keys
         for entryKey in budget.entryList:
-            Entry.deleteEntry(entryKey)
+            Entry.removeEntry(entryKey)
         # Go through all the participants and remove the key from their list (?)
         participantIdList = Budget.getAssociatedBudgeteers(budget)
         for participantId in participantIdList:
@@ -128,7 +128,7 @@ class Budget(ndb.Model):
         :param budget: Budget object to insert the Entry into.
         :return: Entry ID.
         '''
-        entryKey = Entry.addEntry(entry)
+        entryKey = Entry.addEntryToDatastore(entry)
         budget.entryList.append(entryKey)
         budget.put()
         return entryKey.id()
@@ -142,7 +142,7 @@ class Budget(ndb.Model):
         :return: budget ID.
         '''
         budget.entryList.remove(entryKey)
-        Entry.deleteEntry(entryKey)
+        Entry.removeEntry(entryKey)
         budget.put()
         return budget.key.id()
 

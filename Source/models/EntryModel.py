@@ -8,23 +8,43 @@ class Entry(ndb.Model):
     tagId = ndb.KeyProperty()
 
     @staticmethod
-    def addEntry(entry):
+    def addEntryToDatastore(entry):
+        '''
+        Receives an entry object, and adds it to the Datastore.
+        :param entry: Entry object to be added.
+        :return: Entry key after the submission to datastore.
+        '''
         entry.put()
         return entry.key
 
     @staticmethod
     def updateEntry(updatedEntry):
+        '''
+        updates an entry object.
+        :param updatedEntry: Entry object.
+        :return: id of the entry object.
+        '''
         updatedEntry.put()
-        return updatedEntry.key
+        return updatedEntry.key.id()
     
     @staticmethod 
     def getEntryByKey(entryKey):
+        '''
+        Receives an entry key, and returns the entry object.
+        :param entryKey: entry key.
+        :return: Entry object.
+        '''
         return Entry.query(Entry.key == entryKey).get()
     
     @staticmethod
-    def deleteEntry(entryKey):
+    def removeEntry(entryKey):
+        '''
+        Removes an Entry from the Datastore.
+        :param entryKey: key of the Entry obejct to remove.
+        :return: returns None
+        '''
         entryKey.delete()
-        # TODO: Check if deletes all references to that object in the database
+
 
 
 
