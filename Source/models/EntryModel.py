@@ -11,6 +11,11 @@ class Entry(ndb.Model):
     def addEntry(entry):
         entry.put()
         return entry.key
+
+    @staticmethod
+    def updateEntry(updatedEntry):
+        updatedEntry.put()
+        return updatedEntry.key
     
     @staticmethod 
     def getEntryByKey(entryKey):
@@ -20,7 +25,6 @@ class Entry(ndb.Model):
     def deleteEntry(entryKey):
         entryKey.delete()
         # TODO: Check if deletes all references to that object in the database
-        
 
 
 
