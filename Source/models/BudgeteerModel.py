@@ -10,7 +10,7 @@ class Budgeteer(ndb.Model):
     email = ndb.StringProperty()
     birthday = ndb.DateProperty()
     gender = ndb.StringProperty()  # char. m for male, f for female
-    budgetList = ndb.KeyProperty(kind='Budget',repeated=True)  # list of budgets related to the user
+    budgetList = ndb.KeyProperty(kind=Budget, repeated=True)  # list of budgets related to the user
     budgeteerSettingNotifyIfAddedToBudget = ndb.BooleanProperty()  # Invited to a budget
     budgeteerSettingNotifyIfChangedEntry = ndb.BooleanProperty()  # Remove\Add\Change entry
 
@@ -118,7 +118,7 @@ class Budgeteer(ndb.Model):
         :return: list of Notification objects associated with the budgeteer given.
         '''
         notificationList = []
-        for notification in BudgeteerNotification.getNotificationByDstID(budgeteer.key.id()):
+        for notification in BudgeteerNotification.getNotificationsByDstId(budgeteer.key.id()):
                 notificationList.append(notification)
         return notificationList
 
