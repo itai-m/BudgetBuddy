@@ -4,7 +4,7 @@ class Tag(ndb.Model):
     description = ndb.StringProperty()
 
     @staticmethod
-    def getTag(tagKey):
+    def getTagByKey(tagKey):
         return Tag.query(Tag.key == tagKey).get()
 
     @staticmethod

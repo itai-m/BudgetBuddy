@@ -7,81 +7,153 @@ import json
 class Budget(ndb.Model):
     budgetName = ndb.StringProperty()
     creationDate = ndb.DateProperty()
-    tagsList = ndb.KeyProperty(kind='Tag',repeated=True) #list of tag id
-    entryList = ndb.KeyProperty(kind='Entry',repeated=True) #list of limited available tags. decided by manager
+    tagList = ndb.KeyProperty(kind=Tag,repeated=True) #list of tag id
+    entryList = ndb.KeyProperty(kind=Entry,repeated=True) #list of limited available tags. decided by manager
     participantsAndPermission = ndb.StringProperty(repeated=True) # "liranObjectKey":"Manager"
 
 
     @staticmethod
     def addBudget(budget):
+        '''
+        Receives a Budget, and adds it to the datastore, and also to all the associated budgeteers
+        :param budget: Budget object
+        :return: Budget object id after submission.
+        '''
         budget.put()
         Budget.addBudgetToBudgeteers(budget)
+        return budget.key.id()
 
     @staticmethod
     def addBudgetToBudgeteers(budget):
+        '''
+        Receives a budget, and add the budget id to all the budgeteers in the participants list.
+        :param budget: Budget object.
+        :return: budget object id.
+        '''
         participantsDict=Budget.getParticipantsAndPermissionsDict(budget)
-        for budgeteerKey in participantsDict.keys():
-            bgt = Budgeteer.getBudgeteerByID(budgeteerKey)
-            Budgeteer.addBudgetToBudgetList(bgt,budget)
+        for budgeteerId in participantsDict.keys():
+            budgeteer = Budgeteer.getBudgeteerById(budgeteerId)
+            Budgeteer.addBudgetToBudgetList(budgeteer, budget)
 
     @staticmethod
-    def getBudgetByID(budgetKey):
-        return Budget.query(Budget.key == budgetKey).get()
+    def getBudgetByID(budgetId):
+        '''
+        Converts budget Id to budget.
+        :param budgetId: id of the Budget object.
+        :return: Budget object associated with the ID if exists, None if not.
+        '''
+        return Budget.query(Budget.key.id() == budgetId).get()
 
     def getTagList(budget):
         '''
         Receives a Budget object, and extracts the tags associated with it
-        
-        IN: Budget object
-        OUT: List of tag strings
+        :param budget: Budget object
+        :return: List of Tag objects
         '''
         tagList = []
-        for singleBudget in Budget.query(Budget.key==budget.key):
-            for tagKey in singleBudget.tagsList:
-                tagList.append(Tag.getTag(tagKey))
+        for tagKey in budget.tagList:
+            tagList.append(Tag.getTagByKey(tagKey))
         return tagList
-
-    @staticmethod
-    def addEntryToBudget(entry,budget):
-        #checked
-        entryKey = Entry.addEntry(entry)
-        entryListToAddTheKey = Budget.getEntryList(budget)
-        entryListToAddTheKey.append(entryKey)
-        budget.entryList = entryListToAddTheKey
-        budget.put()
 
     @staticmethod
     def getEntryList(budget):
         '''
         Receives a Budget object, and extracts the entries associated with it
-        
-        IN: Budget object
-        OUT: List of Entry objects
+        :param budget: Budget object
+        :return: List of Entry objects
         '''
         entryList = []
-        for singleBudget in Budget.query(Budget.key==budget.key):
-            for entryKey in singleBudget.entryList:
-                entryList.append(Entry.getEntryByKey(entryKey))
+        for entryKey in budget.entryList:
+            entryList.append(Entry.getEntryByKey(entryKey))
         return entryList
+
     @staticmethod
     def getParticipantsAndPermissionsDict(budget):
+        '''
+        Gets a budget object, and converts the participantsAndPermission to dictionary
+        of [Key]=Value pairs as: [ParticipantID]=PermissionLevel
+        :param budget:
+        :return: Dictionary of [ParticipantID]=PermissionLevel
+        '''
         partAndPermDict = {}
-        for singleBudget in Budget.query(Budget.key==budget.key):
-            for entry in singleBudget.participantsAndPermission:
-                partAndPermDict.update(dict(json.loads(entry)))
+        for entry in budget.participantsAndPermission:
+            partAndPermDict.update(dict(json.loads(entry)))
         return partAndPermDict
+
     @staticmethod
     def deleteBudget(budget):
+        '''
+        Deletes a budget from the datastore.
+        :param budget: Budget to delete.
+        :return: None.
+        '''
         # Delete all keys
-        budgetToDelete = Budget.query(Budget.key==budget.key).get()
         for entryKey in budget.entryList:
             Entry.deleteEntry(entryKey)
         # Go through all the participants and remove the key from their list (?)
+        participantIdList = Budget.getAssociatedBudgeteers(budget)
+        for participantId in participantIdList:
+            Budgeteer.removeBudgetByKey(participantId, budget.key)
         # Remove budget from datastore
-        budgetToDelete.key.delete()
+        budget.key.delete()
+
     @staticmethod
-    def addTagToBudget(tag,budget):       
-        tagListToAddTheKey = Budget.getTagList(tag)
-        tagListToAddTheKey.append(tag.key)
-        budget.tagList = tagListToAddTheKey
+    def addTagToBudget(tagKey,budget):
+        '''
+        :param tag: Tag to add
+        :param budget: Budget to add tag to
+        :return: budget id.
+        '''
+        budget.tagList.append(tagKey)
         budget.put()
+        return budget.key.id()
+
+    @staticmethod
+    def removeTagFromBudget(tagKey, budget):
+        '''
+        :param tag: Tag to remove
+        :param budget: Budget to remove tag from
+        :return: budget id.
+        '''
+        budget.tagList.remove(tagKey)
+        budget.put()
+        return budget.key.id()
+
+    @staticmethod
+    def addEntryToBudget(entry,budget):
+        '''
+        Receives an entry object, and adds it to the input budget.
+        :param entry: Entry object to add to the Budget.
+        :param budget: Budget object to insert the Entry into.
+        :return: Entry ID.
+        '''
+        entryKey = Entry.addEntry(entry)
+        budget.entryList.append(entryKey)
+        budget.put()
+        return entryKey.id()
+
+    @staticmethod
+    def RemoveEntryFromBudget(entry, budget):
+        '''
+        Receives an entry object, and removes it from input budget.
+        :param entry: Entry object to remove from the Budget.
+        :param budget: Budget object to remove the entry from.
+        :return: budget ID.
+        '''
+        budget.entryList.remove(entry.key)
+        Entry.deleteEntry(entry.key)
+        budget.put()
+        return budget.key.id()
+
+    @staticmethod
+    def getAssociatedBudgeteers(budget):
+        '''
+        Receives a budget and returns a list of the budgeteer ids associated with that budget.
+        :param budget: Budget object
+        :return: List of budgeteer ids associated with the buddget.
+        '''
+        participantIdList = []
+        dict = Budget.getParticipantsAndPermissionsDict(budget)
+        for participantId in dict.keys():
+            participantIdList.append(participantId)
+        return participantIdList

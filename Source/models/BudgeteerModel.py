@@ -135,10 +135,23 @@ class Budgeteer(ndb.Model):
         return budgeteer.key.id()
 
     @staticmethod
-    def getBudgeteerByID(budgeteerId):
+    def getBudgeteerById(budgeteerId):
         '''
         Converts a budgeteer ID to a budgeteer object.
         :param budgeteerID: budgeteer id.
         :return: budgeteer object associated with that id.
         '''
         return Budgeteer.query(Budgeteer.key.id() == budgeteerId).get()
+
+    @staticmethod
+    def removeBudgetByKey(particpantId, budgetKey):
+        '''
+        Removes budget key from the budget list.
+        :param particpantId: the Id of the budgeteer whose list we gonna modify.
+        :param budgetKey: The key of the budget to remove.
+        :return: budgeteer id.
+        '''
+        budgeteer = Budgeteer.getBudgeteerById(particpantId)
+        budgeteer.budgetList.remove(budgetKey)
+        budgeteer.put()
+        return budgeteer.key.id()
