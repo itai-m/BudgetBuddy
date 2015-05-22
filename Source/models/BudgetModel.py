@@ -7,10 +7,9 @@ import json
 class Budget(ndb.Model):
     budgetName = ndb.StringProperty()
     creationDate = ndb.DateProperty()
-    tagList = ndb.KeyProperty(kind=Tag,repeated=True) #list of tag id
-    entryList = ndb.KeyProperty(kind=Entry,repeated=True) #list of limited available tags. decided by manager
-    participantsAndPermission = ndb.StringProperty(repeated=True) # "liranObjectKey":"Manager"
-
+    tagList = ndb.KeyProperty(kind=Tag, repeated=True)  # list of tag id
+    entryList = ndb.KeyProperty(kind=Entry, repeated=True)  # list of limited available tags. decided by manager
+    participantsAndPermission = ndb.StringProperty(repeated=True)  # "liranObjectKey.id()":"Manager"
 
     @staticmethod
     def addBudget(budget):
@@ -30,10 +29,11 @@ class Budget(ndb.Model):
         :param budget: Budget object.
         :return: budget object id.
         '''
-        participantsDict=Budget.getParticipantsAndPermissionsDict(budget)
+        participantsDict = Budget.getParticipantsAndPermissionsDict(budget)
         for budgeteerId in participantsDict.keys():
             budgeteer = Budgeteer.getBudgeteerById(budgeteerId)
             Budgeteer.addBudgetToBudgetList(budgeteer, budget)
+        return budget.key.id()
 
     @staticmethod
     def getBudgetByID(budgetId):
@@ -44,6 +44,7 @@ class Budget(ndb.Model):
         '''
         return Budget.query(Budget.key.id() == budgetId).get()
 
+    @staticmethod
     def getTagList(budget):
         '''
         Receives a Budget object, and extracts the tags associated with it
@@ -98,9 +99,9 @@ class Budget(ndb.Model):
         budget.key.delete()
 
     @staticmethod
-    def addTagToBudget(tagKey,budget):
+    def addTagKeyToBudget(tagKey,budget):
         '''
-        :param tag: Tag to add
+        :param tagKey: Tag key to add
         :param budget: Budget to add tag to
         :return: budget id.
         '''
@@ -109,9 +110,9 @@ class Budget(ndb.Model):
         return budget.key.id()
 
     @staticmethod
-    def removeTagFromBudget(tagKey, budget):
+    def removeTagKeyFromBudget(tagKey, budget):
         '''
-        :param tag: Tag to remove
+        :param tagKey: Tag key to remove
         :param budget: Budget to remove tag from
         :return: budget id.
         '''
@@ -133,15 +134,15 @@ class Budget(ndb.Model):
         return entryKey.id()
 
     @staticmethod
-    def RemoveEntryFromBudget(entry, budget):
+    def RemoveEntryFromBudget(entryKey, budget):
         '''
         Receives an entry object, and removes it from input budget.
-        :param entry: Entry object to remove from the Budget.
+        :param entryKey: Entry object key to remove from the Budget.
         :param budget: Budget object to remove the entry from.
         :return: budget ID.
         '''
-        budget.entryList.remove(entry.key)
-        Entry.deleteEntry(entry.key)
+        budget.entryList.remove(entryKey)
+        Entry.deleteEntry(entryKey)
         budget.put()
         return budget.key.id()
 
