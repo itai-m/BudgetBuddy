@@ -107,21 +107,21 @@ class Budgeteer(ndb.Model):
         '''
         budgetList = []
         for budgetKey in budgeteer.budgetList:
-            budgetList.append(Budget.getBudgetByKey(budgetKey).id())
+            budgetList.append(Budget.getBudgetByID(budgetKey.id()))
         return budgetList
     
     @staticmethod
-    def getNotificationsList(budgeteer):
+    def getNotificationList(budgeteer):
         '''
         Receives a budgeteer, returns a Notification object list associated with that budgeteer.
         :param budgeteer: Budgeteer object.
         :return: list of Notification objects associated with the budgeteer given.
         '''
-        notificationsList = []
+        notificationList = []
         for notification in BudgeteerNotification.getNotifications():
             if budgeteer.key.id() == notification.dst:
-                notificationsList.append(notification)
-        return notificationsList
+                notificationList.append(notification)
+        return notificationList
 
     @staticmethod
     def addBudgetToBudgetList(budgeteer,budget):
