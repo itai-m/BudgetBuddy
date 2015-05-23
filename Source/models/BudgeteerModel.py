@@ -11,10 +11,10 @@ import BudgetModel
         [X] Register a Budgeteer
         [X] Update Budgeteer
         [X] Login
-        [ ] Get Budget List
+        [X] Get Budget List
         [ ] Get Notification List
-        [ ] addBudgetToBudgetList
-        [ ] removeBudgetByKey
+        [X] Add Budget To Budget List
+        [ ] Remove Budget By Key
 '''
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
@@ -164,7 +164,7 @@ class Budgeteer(ndb.Model):
         :param budgeteerID: budgeteer id.
         :return: budgeteer object associated with that id.
         '''
-        return Budgeteer.get_by_id(budgeteerId)
+        return Budgeteer.get_by_id(long(budgeteerId))
 
     @staticmethod
     def removeBudgetByKey(particpantId, budgetKey):

@@ -1,15 +1,31 @@
 from google.appengine.ext import ndb
-import TagModel
-import EntryModel
-import BudgeteerModel
 
+import TagModel, EntryModel, BudgeteerModel
 import json
+
+'''
+    Functionality tests:
+        [X] Add Budget
+        [X] Add Budget To Budgeteers
+        [X] Get Budget By ID
+        [X] Get Budget By Key
+        [ ] Get Tag List
+        [ ] Get Entry List
+        [ ] Get Participants and Permission Dictionary
+        [ ] Remove Budget
+        [ ] Add Tag Key To Budget
+        [ ] Remove Tag Key From Budget
+        [ ] Add Entry To Budget
+        [ ] Remove Entry To Budget
+        [ ] Get Associated Budgeteers
+        [ ] Remove Budgeteer From Participants and permission List
+'''
 
 class Budget(ndb.Model):
     budgetName = ndb.StringProperty()
     creationDate = ndb.DateProperty()
     tagList = ndb.KeyProperty(kind=TagModel.Tag, repeated=True)  # list of tag id
-    entryList = ndb.KeyProperty(kind=EntryModel.Entry, repeated=True)  # list of limited available tags. decided by manager
+    entryList = ndb.KeyProperty(kind=EntryModel.Entry, repeated=True)  # list of limited available tags.
     participantsAndPermission = ndb.StringProperty(repeated=True)  # "liranObjectKey.id()":"Manager"
 
     @staticmethod
@@ -43,7 +59,7 @@ class Budget(ndb.Model):
         :param budgetId: id of the Budget object.
         :return: Budget object associated with the ID if exists, None if not.
         '''
-        return Budget.query(Budget.key.id() == budgetId).get()
+        return Budget.get_by_id(budgetId)
 
     @staticmethod
     def getBudgetByKey(budgetKey):
@@ -168,3 +184,25 @@ class Budget(ndb.Model):
         for participantId in dict.keys():
             participantIdList.append(participantId)
         return participantIdList
+
+    @staticmethod
+    def removeBudgeteerFromBudget(budgeteerId, budget):
+        '''
+        Receives a budget and budgeteerId in order to remove the budgeteerId from the participants and permission
+        :param budgeteerId: Budgeteer id to remove from list
+        :param budget: Budget object.
+        :return: budget object id.
+        '''
+        participantsDict = Budget.getParticipantsAndPermissionsDict(budget)
+        for budgeteerIdInList in participantsDict.keys():
+            if budgeteerIdInList == budgeteerId:
+                BudgeteerModel.Budgeteer.removeBudgetByKey(budgeteerId, budget.key)
+                del participantsDict[budgeteerIdInList]  # removes from dictionary
+
+        dictToStringList = []
+        for dic in participantsDict:
+            dictToStringList.append(json.dumps(dic))
+
+        budget.participantsAndPermission = dictToStringList
+        budget.put()
+        return budget.key.id()
