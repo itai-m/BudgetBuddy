@@ -14,7 +14,7 @@ import BudgetModel
         [X] Get Budget List
         [ ] Get Notification List
         [X] Add Budget To Budget List
-        [ ] Remove Budget By Key
+        [X] Remove Budget By Key
 '''
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()

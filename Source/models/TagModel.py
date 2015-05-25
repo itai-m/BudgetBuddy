@@ -1,5 +1,14 @@
 from google.appengine.ext import ndb
 
+
+'''
+    Functionality tests:
+        [X] Get Tag By Key
+        [X] Add Tag To DS
+        [X] Remove Tag From DS
+'''
+
+
 class Tag(ndb.Model):
     description = ndb.StringProperty()
 

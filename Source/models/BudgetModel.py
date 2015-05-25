@@ -11,17 +11,17 @@ import json
         [X] Add Budget To Budgeteers
         [X] Get Budget By ID
         [X] Get Budget By Key
-        [ ] Get Tag List
-        [ ] Get Entry List
-        [ ] Get Participants and Permission Dictionary
-        [ ] Remove Budget
-        [ ] Add Tag Key To Budget
-        [ ] Remove Tag Key From Budget
-        [ ] Add Entry To Budget
-        [ ] Remove Entry To Budget
-        [ ] Get Associated Budgeteers
-        [ ] Remove Budgeteer From Participants and permission List
-        [ ] Get Permission By Budgeteer ID
+        [X] Get Participants and Permission Dictionary
+        [X] Get Associated Budgeteers
+        [X] Get Permission By Budgeteer ID
+        [X] Remove Budgeteer From Participants and permission List
+        [X] Remove Budget
+        [X] Add Tag Key To Budget
+        [X] Get Tag List
+        [X] Remove Tag Key From Budget
+        [X] Add Entry To Budget
+        [X] Get Entry List
+        [X] Remove Entry To Budget
 '''
 
 class Budget(ndb.Model):

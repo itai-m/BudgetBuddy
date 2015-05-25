@@ -1,5 +1,13 @@
 from google.appengine.ext import ndb
 
+'''
+    Functionality tests:
+        [X] Get Entry By Key
+        [X] Add Entry To DS
+        [X] Update Entry
+        [X] Remove Entry
+'''
+
 class Entry(ndb.Model):
     description = ndb.StringProperty()
     amount = ndb.FloatProperty()
