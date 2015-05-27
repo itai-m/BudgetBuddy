@@ -9,6 +9,14 @@ class IndexHandler(webapp2.RequestHandler):
 
     def get(self):
 
+        budgeteerId = None
+        if self.request.cookies.get('budgeteerIdToken'):    #the cookie that should contain the access token!
+            budgeteerId = Budgeteer.getBudgeteerById(self.request.cookies.get('budgeteerIdToken'))
+            if budgeteerId:
+                self.redirect('/Budgets')
+
+
+
         template_params = {}
         html = template.render("web/templates/login.html", template_params)
         self.response.write(html)
@@ -25,9 +33,8 @@ class LoginCheckHandler(webapp2.RequestHandler):
             self.response.write('Wrong Username Or Password')
             return
 
-        self.response.set_cookie('our_token', str(budgeteerId))
-        self.response.write(json.dumps({'status':'OK'}))
-        self.redirect('/Budgets')
+        self.response.set_cookie('budgeteerIdToken', str(budgeteerId))
+
 
 app = webapp2.WSGIApplication([
     ('/Login', IndexHandler),

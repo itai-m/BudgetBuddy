@@ -13,10 +13,13 @@ function submitLogin() {
 		type:'GET',
 		dataType:'json',
 		data:{username:username, password:password},
-		success:function(data, status, xhr) {
-			location.reload();
+		success:function(data, status, xhr)
+		{
+			document.location.href = '/Budgets';
+			//location.reload();
 		},
-		error:function(xhr, status, error) {
+		error:function(xhr, status, error)
+		{
 			alert(xhr.responseText);
 			console.error(xhr, status, error);
 		}
