@@ -1,9 +1,11 @@
 /**
  * Created by liran.ben-gida on 5/27/2015.
  */
+
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
 });
+
 
 function submitLogin() {
 	var username = $('#loginUN').val();
