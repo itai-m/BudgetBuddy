@@ -24,6 +24,9 @@ handlers:
 - url: /LoginCheck
   script: web.pages.Login.app
 
+- url: /Logout
+  script: web.pages.Login.app
+
 - url: /Registration
   script: web.pages.Registration.app
 
