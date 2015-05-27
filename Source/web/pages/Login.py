@@ -13,8 +13,7 @@ class IndexHandler(webapp2.RequestHandler):
         if self.request.cookies.get('budgeteerIdToken'):    #the cookie that should contain the access token!
             budgeteerId = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
             if budgeteerId:
-                return
-                #self.redirect('/Budgets')
+                self.redirect('/Budgets')
 
         template_params = {}
         html = template.render("web/templates/login.html", template_params)
