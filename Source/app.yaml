@@ -27,6 +27,9 @@ handlers:
 - url: /Registration
   script: web.pages.Registration.app
 
+- url: /RegistrationCheck
+  script: web.pages.Registration.app
+
 - url: /CreateBudget
   script: web.pages.CreateBudget.app
 
