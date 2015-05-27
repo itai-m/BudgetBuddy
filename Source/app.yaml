@@ -21,6 +21,9 @@ handlers:
 - url: /Login
   script: web.pages.Login.app
 
+- url: /LoginCheck
+  script: web.pages.Login.app
+
 - url: /Registration
   script: web.pages.Registration.app
 

@@ -1,11 +1,35 @@
 from google.appengine.ext.webapp import template
 import webapp2
+from models.BudgeteerModel import Budgeteer
+import json
+
 
 
 class IndexHandler(webapp2.RequestHandler):
+
     def get(self):
+
         template_params = {}
         html = template.render("web/templates/login.html", template_params)
         self.response.write(html)
 
-app = webapp2.WSGIApplication([('/Login', IndexHandler)], debug=True)
+class LoginCheckHandler(webapp2.RequestHandler):
+
+    def get(self):
+        username = self.request.get('username')
+        password = self.request.get('password')
+        budgeteerId = Budgeteer.logIn(username, password)
+
+        if not budgeteerId :
+            self.error(403)
+            self.response.write('Wrong Username Or Password')
+            return
+
+        self.response.set_cookie('our_token', str(budgeteerId))
+        self.response.write(json.dumps({'status':'OK'}))
+        self.redirect('/Budgets')
+
+app = webapp2.WSGIApplication([
+    ('/Login', IndexHandler),
+    ('/LoginCheck', LoginCheckHandler)
+], debug=True)
