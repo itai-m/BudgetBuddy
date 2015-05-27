@@ -25,13 +25,16 @@ class LoginCheckHandler(webapp2.RequestHandler):
         username = self.request.get('username')
         password = self.request.get('password')
         budgeteerId = Budgeteer.logIn(username, password)
-
+        print budgeteerId
         if not budgeteerId :
             self.error(403)
             self.response.write('Wrong Username Or Password')
             return
 
+        self.error(200)
+        self.response.write(json.dumps({'status':'OK'}))
         self.response.set_cookie('budgeteerIdToken', str(budgeteerId))
+        return
 
 
 class LogoutHandler(webapp2.RequestHandler):
