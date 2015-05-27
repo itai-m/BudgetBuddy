@@ -2,7 +2,7 @@
  * Created by liran.ben-gida on 5/27/2015.
  */
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
-	$('#login').on('click', submitLogin);
+	$('#loginBtn').on('click', submitLogin);
 });
 
 function submitLogin() {
@@ -15,8 +15,10 @@ function submitLogin() {
 		data:{username:username, password:password},
 		success:function(data, status, xhr)
 		{
-			document.location.href = '/Budgets';
 			//location.reload();
+			document.location.href = '/Budgets';
+			//window.location='/Budgets';
+
 		},
 		error:function(xhr, status, error)
 		{

@@ -11,11 +11,10 @@ class IndexHandler(webapp2.RequestHandler):
 
         budgeteerId = None
         if self.request.cookies.get('budgeteerIdToken'):    #the cookie that should contain the access token!
-            budgeteerId = Budgeteer.getBudgeteerById(self.request.cookies.get('budgeteerIdToken'))
+            budgeteerId = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
             if budgeteerId:
-                self.redirect('/Budgets')
-
-
+                return
+                #self.redirect('/Budgets')
 
         template_params = {}
         html = template.render("web/templates/login.html", template_params)
@@ -36,7 +35,14 @@ class LoginCheckHandler(webapp2.RequestHandler):
         self.response.set_cookie('budgeteerIdToken', str(budgeteerId))
 
 
+class LogoutHandler(webapp2.RequestHandler):
+    def get(self):
+        if self.request.cookies.get('budgeteerIdToken'):
+                self.response.delete_cookie('budgeteerIdToken')
+        self.redirect('/Login')
+
 app = webapp2.WSGIApplication([
     ('/Login', IndexHandler),
-    ('/LoginCheck', LoginCheckHandler)
+    ('/LoginCheck', LoginCheckHandler),
+    ('/Logout', LogoutHandler)
 ], debug=True)
