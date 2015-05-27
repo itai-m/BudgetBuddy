@@ -39,7 +39,7 @@ handlers:
 - url: /EditBudget
   script: web.pages.EditBudget.app
 
-- url: /PasswordRecovery
+- url: /PasswordRecovery[\/]?(.*)
   script: web.pages.PasswordRecovery.app
 
 - url: /AboutUs

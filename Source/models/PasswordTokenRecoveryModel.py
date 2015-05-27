@@ -5,13 +5,13 @@ import BudgeteerModel
 
 class PasswordTokenRecovery(ndb.Model):
     token = ndb.StringProperty()
-    budgeteerId = ndb.KeyProperty()
+    budgeteerKey = ndb.KeyProperty()
 
     @staticmethod
     def addTokenToDataStore(budgeteerId):
         tok = PasswordTokenRecovery()
         tok.token = PasswordTokenRecovery.generateToken(budgeteerId)
-        tok.budgeteerId = budgeteerId
+        tok.budgeteerKey = BudgeteerModel.Budgeteer.getBudgeteerById(budgeteerId).key
         tok.put()
         return tok.key.id()
 
@@ -22,12 +22,22 @@ class PasswordTokenRecovery(ndb.Model):
         return m.hexdigest()
 
     @staticmethod
-    def resetPassword(budgeteerId, tokenId):
-        rst = PasswordTokenRecovery.query(PasswordTokenRecovery.token == tokenId, PasswordTokenRecovery.budgeteerId == budgeteerId).get()
+    def getTokenByBudgeteerId(budgeteerId):
+        budgeteerKey = BudgeteerModel.Budgeteer.getBudgeteerById(budgeteerId).key
+        if not budgeteerKey:
+            return None
+        tok = PasswordTokenRecovery.query(PasswordTokenRecovery.budgeteerKey == budgeteerKey).get()
+        if tok:
+            return tok.token
+        return None
+
+    @staticmethod
+    def resetPassword(tokenId):
+        rst = PasswordTokenRecovery.query(PasswordTokenRecovery.token == tokenId).get()
         if rst:
             PasswordTokenRecovery.removeToken(rst)
-            return True
-        return False
+            return rst.budgeteerKey.id()
+        return None
 
     @staticmethod
     def removeToken(token):
