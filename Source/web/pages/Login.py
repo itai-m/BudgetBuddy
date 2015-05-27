@@ -9,8 +9,7 @@ class IndexHandler(webapp2.RequestHandler):
 
     def get(self):
 
-        budgeteerId = None
-        if self.request.cookies.get('budgeteerIdToken'):    #the cookie that should contain the access token!
+        if self.request.cookies.get('budgeteerIdToken'):
             budgeteerId = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
             if budgeteerId:
                 self.redirect('/Budgets')
@@ -26,12 +25,13 @@ class LoginCheckHandler(webapp2.RequestHandler):
         password = self.request.get('password')
         budgeteerId = Budgeteer.logIn(username, password)
 
-        if not budgeteerId :
+        if not budgeteerId:
             self.error(403)
             self.response.write('Wrong Username Or Password')
             return
 
         self.response.set_cookie('budgeteerIdToken', str(budgeteerId))
+        self.response.write(json.dumps({'status':'OK'}))
 
 
 class LogoutHandler(webapp2.RequestHandler):
