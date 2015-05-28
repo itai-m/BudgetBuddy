@@ -12,7 +12,8 @@ class IndexHandler(webapp2.RequestHandler):
         if not budgeteerId:
             self.redirect('/Login')
             return
-        template_params = {}
+        template_params = dict()
+        template_params['userName'] = budgeteerId.userName
         html = template.render("web/templates/add_entry.html", template_params)
         self.response.write(html)
 

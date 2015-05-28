@@ -1,5 +1,6 @@
 from google.appengine.ext.webapp import template
 import webapp2
+from models.BudgeteerModel import Budgeteer
 
 
 class IndexHandler(webapp2.RequestHandler):
