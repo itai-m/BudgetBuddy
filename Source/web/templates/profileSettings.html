@@ -1,92 +1,90 @@
 {% extends "master_page.html" %}
 
 {% block head %}
-  {{block.super}}
-<title> BudgetBuddy - Profile Settings</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    {{block.super}}
+    <title> BudgetBuddy - Profile Settings</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <link rel="stylesheet" type="text/css" href="../static/css/profileSettings1.css" media="all" />
     <link rel="stylesheet" type="text/css" href="../static/css/profileSettings2.css" media="all" />
 {%endblock%}
 
 {% block content %}
-<div class="container">
+    <div class="container">
 
-      <header>
-        <h1 style="color:#4b8df9">Edit Acount Information</h1>
-      </header>  
+        <header>
+            <h1 style="color:#4b8df9">Edit Acount Information</h1>
+        </header>
 
-      <div  class="form">
-        <form id="contactform"> 
-          <p class="contact"><label for="name">First Name</label></p> 
-          <input id="FirstName" name="FirstName" placeholder="First Name" required="" tabindex="1" type="text"> 
+        <div  class="form">
+            <form id="contactform">
+                <p class="contact"><label for="name">First Name</label></p>
+                <input id="FirstName" name="FirstName" placeholder="First Name" required="" tabindex="1" type="text" value="{{ firstName }}">
 
-              <p class="contact"><label for="name">Last Name</label></p> 
-          <input id="LastName" name="LastName" placeholder="Last Name" required="" tabindex="1" type="text"> 
-           
-           
-          <p class="contact"><label for="email">Email</label></p> 
-          <input id="email" name="email" placeholder="example@domain.com" required="" type="email"> 
-                
-                <p class="contact"><label for="password">Old password</label></p> 
-          <input type="password" id="password" name="password" required=""> 
-                          <p class="contact"><label for="password">New password</label></p> 
-          <input type="password" id="password" name="password" required=""> 
-                <p class="contact"><label for="repassword">Confirm your password</label></p> 
-          <input type="password" id="repassword" name="repassword" required=""> <br>
-        
-               <fieldsetDate>
-                 <label>Birthday</label>
-                  <label class="month"> 
-                  <select class="select-style" name="BirthMonth">
-                  <option value="" disabled selected style='display:none;'>Month</option>
-                  <option  value="01">January</option>
-                  <option value="02">February</option>
-                  <option value="03" >March</option>
-                  <option value="04">April</option>
-                  <option value="05">May</option>
-                  <option value="06">June</option>
-                  <option value="07">July</option>
-                  <option value="08">August</option>
-                  <option value="09">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12" >December</option>
-                  </label>
-                 </select>    
-                <label>Day<input class="birthday" maxlength="2" name="BirthDay"  placeholder="Day" required=""></label>
-                <label>Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required=""></label>
-              </fieldsetDate>
-  
-            <p class="contact"><label for="password">Gender</label>
-            <select class="select-style gender" name="gender">
-                <option value="" disabled selected style='display:none;'>I am..</option>
-                <option value="m">Male</option>
-                <option value="f">Female</option>
-                <option value="others">Other</option>
-            </select><br><br>
+                <p class="contact"><label for="name">Last Name</label></p>
+                <input id="LastName" name="LastName" placeholder="Last Name" required="" tabindex="1" type="text" value="{{ lastName }}">
+
+
+                <p class="contact"><label for="email">Email</label></p>
+                <input id="email" name="email" placeholder="example@domain.com" required="" type="email" value="{{ email }}">
+
+                <p class="contact"><label for="password">Old password</label></p>
+                <input type="password" id="password" name="password" required="">
+                <p class="contact"><label for="password">New password</label></p>
+                <input type="password" id="password" name="password" required="">
+                <p class="contact"><label for="repassword">Confirm your password</label></p>
+                <input type="password" id="repassword" name="repassword" required=""> <br>
+
+                <fieldsetDate>
+                    <label>Birthday</label>
+                    <label class="month">
+                        <select class="select-style" name="BirthMonth">
+                            <option value="" disabled selected style='display:none;'>Month</option>
+                            <option  value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03" >March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12" >December</option>
+                    </label>
+                    </select>
+                    <label>Day<input class="birthday" maxlength="2" name="BirthDay"  placeholder="Day" required=""></label>
+                    <label>Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required=""></label>
+                </fieldsetDate>
+
+                <p class="contact"><label for="password">Gender</label>
+                    <select class="select-style gender" name="gender">
+                        <option value="" disabled selected style='display:none;'>I am..</option>
+
+                        <option value="m" {% if gender == 'm'  %} selected {% endif %}>Male {{ gender }}</option>
+                        <option value="f" {% if gender == 'f'  %} selected {% endif %}>Female</option>
+                        <option value="others">Other</option>
+                    </select><br><br>
 
                     <!-- Multiple Checkboxes -->
-   
-            <label >Mail Notifications</label>  
 
-              <div>
-               <label><input type="checkbox" value=""> Notify me when Budgeteer add me to budget </label>
-              </div>
+                    <label >Mail Notifications</label>
 
-             <div>
-              <label><input type="checkbox" value=""> Notify me when entry in my budgets changed </label>
-              </div>
+                <div>
+                    <label><input type="checkbox" value=""> Notify me when Budgeteer add me to budget </label>
+                </div>
 
-            <div>
-             <label><input type="checkbox" value=""> Notify me when</label>
-            </div>
+                <div>
+                    <label><input type="checkbox" value=""> Notify me when entry in my budgets changed </label>
+                </div>
 
-            <br>
-           <input class="buttom" name="submit" id="submit" tabindex="5" value="Confirm" type="submit">
-   </form> 
-</div>      
-</div>
+
+                <br>
+                <input class="buttom" name="submit" id="submit" tabindex="5" value="Confirm" type="submit">
+            </form>
+        </div>
+    </div>
 
 {%endblock%}
