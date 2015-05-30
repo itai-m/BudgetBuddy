@@ -37,6 +37,13 @@ function submitLogin() {
 	}
 }
 
+function submitNewEntry()
+{
+	var description = $('#desc-textbox').val();
+	var price = $('#price-textbox').val();
+	var tagname = $('#tag-combobox').val();
+	
+}
 function submitRegistration() {
     var FirstName = $('FirstName').val();
     var LastName = $('LastName').val();
