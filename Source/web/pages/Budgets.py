@@ -14,8 +14,11 @@ class IndexHandler(webapp2.RequestHandler):
             self.redirect('/Login')
             return
 
+        template.register_template_library('web.templatetags.filter_app')
         template_params = dict()
         template_params['userName'] = budgeteer.userName
+        template_params['budgetList'] = Budgeteer.getBudgetList(budgeteer)
+
         html = template.render("web/templates/budgets.html", template_params)
         self.response.write(html)
 
