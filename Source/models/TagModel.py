@@ -22,6 +22,16 @@ class Tag(ndb.Model):
         return tagKey.get()
 
     @staticmethod
+    def getTagKeyByName(tagname):
+        '''
+        Receives a tag name (supposed to be unique), returns the tag key.
+        :param tagname: Tag name.
+        :return: key of input tagname.
+        '''
+        tag = Tag.query(Tag.description == tagname).get()
+        return tag.key
+
+    @staticmethod
     def addTagToDatastore(tag):
         '''
         Adds a tag to the Datastore, and returns the key.

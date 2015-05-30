@@ -13,7 +13,7 @@ class Entry(ndb.Model):
     amount = ndb.FloatProperty()
     addedBy = ndb.KeyProperty()
     creationDate = ndb.DateProperty()
-    tagId = ndb.KeyProperty()
+    tagKey = ndb.KeyProperty()
 
     @staticmethod
     def addEntryToDatastore(entry):

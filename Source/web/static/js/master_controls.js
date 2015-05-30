@@ -41,7 +41,33 @@ function submitNewEntry()
 {
 	var description = $('#desc-textbox').val();
 	var price = $('#price-textbox').val();
-	var tagname = $('#tag-combobox').val();
+	var tagname = $('#tag-combobox option:selected').text();
+	var budgetId = $('#budgetId').val();
+
+	if (false)
+	{
+		alert("There appears to be a field missing from the form.");
+	}
+	else
+	{
+		$.ajax({
+		url:'/SubmitEntry',
+		type:'GET',
+		dataType:'json',
+		data:{description: description, price:price, tagname: tagname, budgetId: budgetId},
+		success:function(data, status, xhr)
+		{
+			document.location.href = '/Budgets';
+
+		},
+		error:function(xhr, status, error)
+		{
+			alert(xhr.responseText);
+			console.error(xhr, status, error);
+		}
+		});
+	}
+
 	
 }
 function submitRegistration() {
