@@ -24,12 +24,11 @@
 
           <select>
             <option selected disabled>Choose tag</option>
-            <option value="salad">Salad</option>
-            <option value="meat">Meat</option>
-            <option value="dessert">Dessert</option>
-            <option value="drink">Drink</option>
+			{% for tagName in tagList%}
+			<option value="{{tagName}}">{{tagName}}</option>
+			{% endfor %}
         </select>
-         <input type="submit" id="addBudgetEntry" value="Add Budget Entry">
+         <input type="submit" id="addBudgetEntry" value="Add Budget Entry" onclick="">
 		<script type="text/javascript">
 			document.getElementById("addBudgetEntry").onclick = function () 
 			{
