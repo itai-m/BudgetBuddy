@@ -5,13 +5,12 @@ from models.BudgeteerModel import Budgeteer
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
-        budgeteerId = None
         if self.request.cookies.get('budgeteerIdToken'):    #the cookie that should contain the access token!
-            budgeteerId = Budgeteer.getBudgeteerById(self.request.cookies.get('budgeteerIdToken'))
-            if budgeteerId:
+            budgeteer = Budgeteer.getBudgeteerById(self.request.cookies.get('budgeteerIdToken'))
+            if budgeteer:
                 self.redirect('/Budgets')
 
-        template_params = {}
+        template_params = dict()
         html = template.render("web/templates/registration.html", template_params)
         self.response.write(html)
 

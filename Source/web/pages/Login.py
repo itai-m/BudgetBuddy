@@ -3,15 +3,13 @@ import webapp2
 from models.BudgeteerModel import Budgeteer
 import json
 
-
-
 class IndexHandler(webapp2.RequestHandler):
 
     def get(self):
 
         if self.request.cookies.get('budgeteerIdToken'):
-            budgeteerId = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
-            if budgeteerId:
+            budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
+            if budgeteer:
                 self.redirect('/Budgets')
 
         template_params = {}

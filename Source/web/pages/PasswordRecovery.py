@@ -36,7 +36,7 @@ class MailSender:
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
-        template_params = {}
+        template_params = dict()
         html = template.render("web/templates/PasswordRecovery.html", template_params)
         self.response.write(html)
 

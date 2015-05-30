@@ -5,15 +5,15 @@ from models.BudgeteerModel import Budgeteer
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
         if self.request.cookies.get('budgeteerIdToken'):
-            budgeteerId = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
+            budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
         else:
             self.redirect('/Login')
             return
-        if not budgeteerId:
+        if not budgeteer:
             self.redirect('/Login')
             return
         template_params = dict()
-        template_params['userName'] = budgeteerId.userName
+        template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/master_page.html", template_params)
         self.response.write(html)
 
