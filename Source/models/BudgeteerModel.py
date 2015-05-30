@@ -25,8 +25,6 @@ class Budgeteer(ndb.Model):
     birthday = ndb.DateProperty()
     gender = ndb.StringProperty()  # char. m for male, f for female
     budgetList = ndb.KeyProperty(kind=BudgetModel.Budget, repeated=True)  # list of budgets related to the user
-    budgeteerSettingNotifyIfAddedToBudget = ndb.BooleanProperty()  # Invited to a budget
-    budgeteerSettingNotifyIfChangedEntry = ndb.BooleanProperty()  # Remove\Add\Change entry
 
     @staticmethod
     def registerBudgeteer(budgeteer):
