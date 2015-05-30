@@ -18,6 +18,7 @@ class IndexHandler(webapp2.RequestHandler):
         template_params = dict()
         template_params['userName'] = budgeteer.userName
         template_params['budget'] = budget
+        template_params['budgetId'] = budgetId
         html = template.render("web/templates/Budget.html", template_params)
         self.response.write(html)
 

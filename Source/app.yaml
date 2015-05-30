@@ -66,7 +66,7 @@ handlers:
 - url: /ProfileSettings
   script: web.pages.ProfileSettings.app
 
-- url: /AddEntry
+- url: /AddEntry/(.*)
   script: web.pages.AddEntry.app
 
 - url: /SubmitEntry

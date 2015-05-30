@@ -8,7 +8,7 @@ import json
 
 import datetime
 class AddEntryHandler(webapp2.RequestHandler):
-    def get(self):
+    def get(self, budgetId):
         if self.request.cookies.get('budgeteerIdToken'):
             budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
             if not budgeteer:
@@ -18,12 +18,10 @@ class AddEntryHandler(webapp2.RequestHandler):
             self.redirect('/Login')
             return
 
-        if not self.request.cookies.get('budgetId'):
+        if not budgetId:
             self.redirect('/Budgets')
             return
-        budgetId = long(self.request.cookies.get('budgetId'))
-
-
+        budgetId = long(budgetId)
         # Prepare a list of tag names.
         tagList = Budget.getTagList(Budget.getBudgetById(budgetId))
         tagNameList = []
@@ -72,6 +70,6 @@ class SubmitEntryHandler(webapp2.RequestHandler):
         self.response.write(json.dumps({'status':'OK'}))
         return
 
-app = webapp2.WSGIApplication([('/AddEntry', AddEntryHandler),
+app = webapp2.WSGIApplication([('/AddEntry/(.*)', AddEntryHandler),
                                ('/SubmitEntry', SubmitEntryHandler)],
                               debug=True)

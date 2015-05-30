@@ -57,7 +57,7 @@ function submitNewEntry()
 		data:{description: description, price:price, tagname: tagname, budgetId: budgetId},
 		success:function(data, status, xhr)
 		{
-			document.location.href = '/Budgets';
+			document.location.href = '/Budget/' + budgetId;
 
 		},
 		error:function(xhr, status, error)
