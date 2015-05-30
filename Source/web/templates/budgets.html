@@ -20,20 +20,27 @@
             <td>Actions</td>
         </tr>
 
-        <tr>
-            <td><a href="Budget">BBQ</a></td>
-            <td>Feb 21,2013</td>
-            <td>8 Budgeteers</td>
-            <td>Budget Manager</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditBudget"><span class="settingsIcon"><i class="fa fa-pencil"></i> </span></a>
-                </div>
-            </td>
-        </tr>
-
+        {% for budget in budgetList %}
+            <tr>
+                <td><a href="Budget/{{ budget.key.id }}">{{ budget.budgetName }}</a></td>
+                <td>{{ budget.creationDate }}</td>
+                <td>{{ budget.participantsAndPermission|length }} Budgeteers</td>
+                <td>{{ budget|getMyPermission:userName }}</td>
+                <td class="controlTd">
+                    <div class="settingsIcons">
+                        {% if budget|getMyPermission:userName == "Manager" %}
+                            <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                            <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                            <a href="EditBudget/{{ budget.key.id }}"><span class="settingsIcon"><i class="fa fa-pencil"></i> </span></a>
+                        {% else %}
+                            <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                            <span class="settingsIcon"><i class="fa fa-hand-o-left"></i></span>
+                        {% endif %}
+                    </div>
+                    <div class="settingsIcons">
+                </td>
+            </tr>
+        {% endfor %}
     </table>
 
     <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
