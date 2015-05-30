@@ -17,12 +17,17 @@ class IndexHandler(webapp2.RequestHandler):
 class RegistrationCheckHandler(webapp2.RequestHandler):
 
     def get(self):
-        firstname = self.request.get('FirstName')
-        lastname = self.request.get('LastName')
-        email = self.request.get('email')
-        username = self.request.get('username')
-        password = self.request.get('password')
-        budgeteerId = Budgeteer.logIn(username, password)
+        FirstName = self.request.get('FirstName')
+        LastName = self.request.get('LastName')
+        Email = self.request.get('email')
+        UserName = self.request.get('username')
+        Password = self.request.get('password')
+        BirthMonth = self.requst.get("BirthMonth")
+        BirthDay = self.requst.get("BirthDay")
+        BirthYear = self.requst.get("BirthYear")
+        Gender = self.requst.get("gender");
+
+        budgeteerId = Budgeteer.logIn(UserName, Password)
 
         if not budgeteerId :
             self.error(403)
