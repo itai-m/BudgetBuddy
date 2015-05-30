@@ -15,7 +15,7 @@ handlers:
 - url: /
   script: web.pages.Home.app
 
-- url: /Budget  
+- url: /Budget/(.*)
   script: web.pages.Budget.app
 
 - url: /Login
