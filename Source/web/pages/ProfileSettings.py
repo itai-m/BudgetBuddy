@@ -24,8 +24,6 @@ class IndexHandler(webapp2.RequestHandler):
         template_params['email'] = budgeteer.email
         template_params['gender'] = budgeteer.gender
         template_params['birthday'] = budgeteer.birthday
-        template_params['notifyIfAddedToBudget'] = budgeteer.budgeteerSettingNotifyIfAddedToBudget
-        template_params['notifyIfChangedEntry'] = budgeteer.budgeteerSettingNotifyIfChangedEntry
         html = template.render("web/templates/profileSettings.html", template_params)
         self.response.write(html)
 
