@@ -1,4 +1,6 @@
 from google.appengine.ext import ndb
+import BudgeteerModel
+import TagModel
 
 '''
     Functionality tests:
@@ -11,9 +13,9 @@ from google.appengine.ext import ndb
 class Entry(ndb.Model):
     description = ndb.StringProperty()
     amount = ndb.FloatProperty()
-    addedBy = ndb.KeyProperty()
+    addedBy = ndb.KeyProperty(kind=BudgeteerModel.Budgeteer)
     creationDate = ndb.DateProperty()
-    tagKey = ndb.KeyProperty()
+    tagKey = ndb.KeyProperty(kind=TagModel.Tag)
 
     @staticmethod
     def addEntryToDatastore(entry):
