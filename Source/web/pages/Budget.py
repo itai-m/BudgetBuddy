@@ -4,7 +4,7 @@ from models.BudgeteerModel import Budgeteer
 from models.BudgetModel import Budget
 
 class IndexHandler(webapp2.RequestHandler):
-    def get(self,budgetId):
+    def get(self, budgetId):
         if self.request.cookies.get('budgeteerIdToken'):
             budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
             if not budgeteer:
@@ -13,7 +13,7 @@ class IndexHandler(webapp2.RequestHandler):
         else:
             self.redirect('/Login')
             return
-
+        template.register_template_library('web.templatetags.filter_app')
         budget = Budget.getBudgetById(long(budgetId))
         template_params = dict()
         template_params['userName'] = budgeteer.userName

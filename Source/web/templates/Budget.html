@@ -21,7 +21,22 @@
             <td>Date</td>
             <td>Actions</td>
         </tr>
-
+        {% for entry in budget.entryList %}
+            <tr>
+                <td>{{ entry|getEntryDescriptionByKey }}</td>
+                <td>{{ entry|getEntryAmountByKey }}</td>
+                <td>{{ entry|getEntryTagDescriptionByKey }}</td>
+                <td>{{ entry|getEntryAddedByByKey }}</td>
+                <td>{{ entry|getEntryCreationDateByKey }}</td>
+                <td class="controlTd">
+                    <div class="settingsIcons">
+                        <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                        <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                        <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
         <tr>
             <td>Hummus</td>
             <td>4$</td>
@@ -50,7 +65,7 @@
                 </div>
             </td>
         </tr>
-                <tr>
+        <tr>
             <td>Steak</td>
             <td>15$</td>
             <td>Meat</td>
@@ -64,7 +79,7 @@
                 </div>
             </td>
         </tr>
-                <tr>
+        <tr>
             <td>Coke 6x</td>
             <td>7$</td>
             <td>Drink</td>
@@ -78,7 +93,7 @@
                 </div>
             </td>
         </tr>
-                <tr>
+        <tr>
             <td>Chicken Wings</td>
             <td>12$</td>
             <td>Meat</td>
@@ -126,44 +141,44 @@
     <center><a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a></center>
 
 
-<br>
-<center><span id="statistics"><h2>Statistics</h2></span></center>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <br>
+    <center><span id="statistics"><h2>Statistics</h2></span></center>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
 
-        var data_tags = google.visualization.arrayToDataTable([
-          ['Tag', 'Total Amount'],
-          ['Salad',     4+4],
-          ['Meat',      8+15+12],
-          ['Drink',     7],
-          ['Dessert',   7],
-        ]);
+            var data_tags = google.visualization.arrayToDataTable([
+                ['Tag', 'Total Amount'],
+                ['Salad',     4+4],
+                ['Meat',      8+15+12],
+                ['Drink',     7],
+                ['Dessert',   7],
+            ]);
 
-        var data_users = google.visualization.arrayToDataTable([
-          ['User', 'Total Amount'],
-          ['Nadav',     4],
-          ['Itai',      8+15],
-          ['Rotem',     7+12],
-          ['Liran',   7+4],
-        ]);
-        var options_tags = {
-          title: 'Amount by tags'
-        };
-        var options_users = {
-          title: 'Amount by users'
-        };
+            var data_users = google.visualization.arrayToDataTable([
+                ['User', 'Total Amount'],
+                ['Nadav',     4],
+                ['Itai',      8+15],
+                ['Rotem',     7+12],
+                ['Liran',   7+4],
+            ]);
+            var options_tags = {
+                title: 'Amount by tags'
+            };
+            var options_users = {
+                title: 'Amount by users'
+            };
 
-        var chart_tags = new google.visualization.PieChart(document.getElementById('piechart_tags'));
-        var chart_users = new google.visualization.PieChart(document.getElementById('piechart_users'));
+            var chart_tags = new google.visualization.PieChart(document.getElementById('piechart_tags'));
+            var chart_users = new google.visualization.PieChart(document.getElementById('piechart_users'));
 
-        chart_tags.draw(data_tags, options_tags);
-        chart_users.draw(data_users, options_users);
-      }
+            chart_tags.draw(data_tags, options_tags);
+            chart_users.draw(data_users, options_users);
+        }
     </script>
-  </head>
+    </head>
     <div i="piechart_parent">
         <div id="piechart_tags"></div>
         <div id="piechart_users"></div>
