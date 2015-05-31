@@ -42,7 +42,7 @@
                         <select class="select-style" name="BirthMonth">
                             <option value="" disabled selected style='display:none;'>Month</option>
                             {% for x in "xxxxxxxxxxxx" %}
-                                <option value={{ forloop.counter }} {% if forloop.counter ==  birthday.month %} selected {% endif %}>{{ forloop.counter }}</option>
+                                <option value={{ forloop.counter }} {% if forloop.counter ==  birthday.month %} selected {% endif %}>{{ forloop.counter|integer_to_month_name }}</option>
 
                             {% endfor %}
 

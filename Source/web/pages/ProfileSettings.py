@@ -16,7 +16,7 @@ class IndexHandler(webapp2.RequestHandler):
         else:
             self.redirect('/Login')
             return
-
+        template.register_template_library('web.templatetags.filter_app')
         template_params = dict()
         template_params['userName'] = budgeteer.userName
         template_params['firstName'] = budgeteer.firstName
