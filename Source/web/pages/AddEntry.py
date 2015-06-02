@@ -9,8 +9,10 @@ import json
 import datetime
 class AddEntryHandler(webapp2.RequestHandler):
     def get(self, budgetId):
+        budgeteerId = None
         if self.request.cookies.get('budgeteerIdToken'):
-            budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
+            budgeteerId = long(self.request.cookies.get('budgeteerIdToken'))
+            budgeteer = Budgeteer.getBudgeteerById(budgeteerId)
             if not budgeteer:
                 self.redirect('/Login')
                 return
@@ -22,6 +24,11 @@ class AddEntryHandler(webapp2.RequestHandler):
             self.redirect('/Budgets')
             return
         budgetId = long(budgetId)
+        # Verify that the user has sufficient permissions
+        if not Budget.hasAddEditEntryPermissions(budgeteerId ,budgetId):
+            self.redirect('/Budgets')
+            return
+
         # Prepare a list of tag names.
         tagList = Budget.getTagList(Budget.getBudgetById(budgetId))
         tagNameList = []
@@ -37,8 +44,10 @@ class AddEntryHandler(webapp2.RequestHandler):
 
 class SubmitEntryHandler(webapp2.RequestHandler):
     def get(self):
+        budgeteerId = None
         if self.request.cookies.get('budgeteerIdToken'):
-            budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
+            budgeteerId = long(self.request.cookies.get('budgeteerIdToken'))
+            budgeteer = Budgeteer.getBudgeteerById(budgeteerId)
             if not budgeteer:
                 self.redirect('/Login')
                 return
@@ -47,6 +56,10 @@ class SubmitEntryHandler(webapp2.RequestHandler):
             return
 
         budgetId = long(self.request.get('budgetId'))
+        # Verify that the user has sufficient permissions
+        if not Budget.hasAddEditEntryPermissions(budgeteerId ,budgetId):
+            self.redirect('/Budgets')
+            return
         # Prepare a list of tag names.
         description = self.request.get('description')
         price = self.request.get('price')

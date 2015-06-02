@@ -98,16 +98,16 @@ class Budget(ndb.Model):
         return entryList
 
     @staticmethod
-    def getParticipantsAndPermissionsListOfDict(budget):
+    def getParticipantsAndPermissionsDict(budget):
         '''
         Gets a budget object, and converts the participantsAndPermission to dictionary
         of [Key]=Value pairs as: [ParticipantID]=PermissionLevel
         :param budget:
         :return: Dictionary of [ParticipantID]=PermissionLevel
         '''
-        listOfDict = []
+        listOfDict = {}
         for entry in budget.participantsAndPermission:
-            listOfDict.append(dict(json.loads(entry)))
+            listOfDict.update(dict(json.loads(entry)))
         return listOfDict
 
     @staticmethod
@@ -183,7 +183,7 @@ class Budget(ndb.Model):
         :return: List of budgeteer ids associated with the buddget.
         '''
         participantIdList = []
-        participantsDictList = Budget.getParticipantsAndPermissionsListOfDict(budget)
+        participantsDictList = Budget.getParticipantsAndPermissionsDict(budget)
         for participantId in participantsDictList:
             participantIdList.append(long(participantId.keys()[0]))
         return participantIdList
@@ -196,11 +196,8 @@ class Budget(ndb.Model):
         :param budget: the budget itself
         :return: permission string if exists, None if not in list
         '''
-        permList = Budget.getParticipantsAndPermissionsListOfDict(budget)
-        for li in permList:
-            if long(li.keys()[0]) == long(budgeteerId):
-                return li.get(str(budgeteerId))
-        return None
+        permList = Budget.getParticipantsAndPermissionsDict(budget)
+        return permList[str(budgeteerId)]
 
     @staticmethod
     def removeBudgeteerFromBudget(budgeteerId, budget):
@@ -210,7 +207,7 @@ class Budget(ndb.Model):
         :param budget: Budget object.
         :return: budget object id.
         '''
-        participantsListOfDict = Budget.getParticipantsAndPermissionsListOfDict(budget)
+        participantsListOfDict = Budget.getParticipantsAndPermissionsDict(budget)
         for budgeteerIdInList in participantsListOfDict:
             if str(budgeteerId) in budgeteerIdInList:
                 BudgeteerModel.Budgeteer.removeBudgetByKey(budgeteerId, budget.key)
@@ -221,5 +218,17 @@ class Budget(ndb.Model):
             dictToStringList.append(json.dumps(budgeteerIdInList))
         budget.participantsAndPermission = dictToStringList
         budget.put()
-
         return budget.key.id()
+
+    @staticmethod
+    def hasAddEditEntryPermissions(budgeteerId, budgetId):
+        '''
+        Receives a budgetId and budgeteerId and returns whether that budgeteer has editing/adding permissions
+        :param budgeteerId: Budgeteer id to verify adding permission - Should be a Integer/Long
+        :param budgetId: Budget id to check Add / Edit permissions for said budgeteer. - Should be Integer/Long
+        :return: true if editing/adding permissions are present, false otherwise.
+        '''
+        participantsDict = Budget.getParticipantsAndPermissionsDict(Budget.getBudgetById(budgetId))
+        if "Manager" in participantsDict[str(budgeteerId)] or  "Partner" in participantsDict[budgeteerId]:
+            return True
+        return False
