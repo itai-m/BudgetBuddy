@@ -85,6 +85,7 @@ function submitNewEntry()
 
 	
 }
+
 function submitRegistration() {
     var FirstName = $('FirstName').val();
     var LastName = $('LastName').val();
@@ -105,7 +106,7 @@ function submitRegistration() {
 		url:'/RegistrationCheck',
 		type:'GET',
 		dataType:'json',
-		data:{username:username, password:password},
+		data:{username:username, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
 		success:function(data, status, xhr)
 		{
 			document.location.href = '/Registration';

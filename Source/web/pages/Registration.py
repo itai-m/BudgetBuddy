@@ -1,6 +1,7 @@
 from google.appengine.ext.webapp import template
 import webapp2
 from models.BudgeteerModel import Budgeteer
+from datetime import datetime
 
 
 class IndexHandler(webapp2.RequestHandler):
@@ -17,17 +18,28 @@ class IndexHandler(webapp2.RequestHandler):
 class RegistrationCheckHandler(webapp2.RequestHandler):
 
     def get(self):
-        FirstName = self.request.get('FirstName')
-        LastName = self.request.get('LastName')
+
+
         Email = self.request.get('email')
         UserName = self.request.get('username')
-        Password = self.request.get('password')
+
+        if Budgeteer.budgeteerUserNameExist(UserName):
+            self.response.write('UserName already exists')
+        if Budgeteer.budgeteerEmailExist(Email):
+            self.response.write('Email already exists')
+        BudgeteerObj = Budgeteer()
+        BudgeteerObj.firstName = self.request.get('FirstName')
+        BudgeteerObj.lastName = self.request.get('LastName')
+        BudgeteerObj.password = self.request.get('password')
         BirthMonth = self.requst.get("BirthMonth")
         BirthDay = self.requst.get("BirthDay")
         BirthYear = self.requst.get("BirthYear")
-        Gender = self.requst.get("gender");
+        #BudgeteerObj.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %b %Y')
+        BudgeteerObj.birthday = datetime.datetime(day =  BirthDay , month = BirthMonth ,yeat =  BirthYear)
+        BudgeteerObj.gender = self.requst.get("gender")
 
-        budgeteerId = Budgeteer.logIn(UserName, Password)
+
+        budgeteerId = Budgeteer.registerBudgeteer(BudgeteerObj)
 
         if not budgeteerId :
             self.error(403)
