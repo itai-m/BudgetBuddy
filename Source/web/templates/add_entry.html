@@ -21,15 +21,17 @@
 
           <input type="text" placeholder="Description" id="desc-textbox"><br><br> <!-- JS because of IE support; better: placeholder="Email" -->
 
-          <input type="text" placeholder="Price" id="price-textbox"> <!-- JS because of IE support; better: placeholder="Password" -->
+          <input type="text" placeholder="Price" id="price-textbox" title="Must be a positive number."> <!-- JS because of IE support; better: placeholder="Password" -->
 
           <select id="tag-combobox">
-            <option selected disabled>Choose tag</option>
+            <option value="disabled" selected disabled>Choose tag</option>
 			{% for tagName in tagList%}
 			<option value="{{tagName}}">{{tagName}}</option>
 			{% endfor %}
         </select>
-         <input type="submit" id="addBudgetEntry" value="Add Budget Entry" onclick="submitNewEntry()">
+
+        <input type="submit" id="addBudgetEntry" value="Add Budget Entry" onclick="submitNewEntry()">
+        <br><span id="errorText" style="color: red">&nbsp;</span>
         </form>
 
       </fieldset>

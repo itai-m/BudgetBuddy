@@ -41,15 +41,26 @@ function submitNewEntry()
 {
 	var description = $('#desc-textbox').val();
 	var price = $('#price-textbox').val();
-	var tagname = $('#tag-combobox option:selected').text();
+	var tagname = $('#tag-combobox option:selected').val();
 	var budgetId = $('#budgetId').val();
-
-	if (false)
+	if (isNumber(price) == false)
 	{
-		alert("There appears to be a field missing from the form.");
+		document.getElementById("errorText").innerHTML = "Price must be a positive number."
+		return;
+	}
+	if (tagname == "disabled")
+	{
+		document.getElementById("errorText").innerHTML = "No tag was selected."
+		return;
+	}
+	if (description.length == 0)
+	{
+		document.getElementById("errorText").innerHTML = "The description field is mandatory."
+		return;
 	}
 	else
 	{
+		$('#addBudgetEntry').attr('disabled', 'disabled');
 		$.ajax({
 		url:'/SubmitEntry',
 		type:'GET',
@@ -104,3 +115,9 @@ function submitRegistration() {
 		});
 	}
 }
+
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
