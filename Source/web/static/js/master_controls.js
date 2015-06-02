@@ -12,10 +12,13 @@ function submitLogin() {
 	var password = $('#loginPSW').val();
 	if (username == null || username == "" || password == null || password == "")
 	{
-		alert("There appears to be a field missing from the form.");
+		document.getElementById("errorText").innerHTML = "Please fill both fields.";
+		return;
 	}
 	else
 	{
+		document.getElementById("errorText").style.color = "green";
+		document.getElementById("errorText").innerHTML = "Logging in...";
 		$.ajax({
 		url:'/LoginCheck',
 		type:'GET',
@@ -30,7 +33,8 @@ function submitLogin() {
 		},
 		error:function(xhr, status, error)
 		{
-			alert(xhr.responseText);
+			document.getElementById("errorText").style.color = "red";
+			document.getElementById("errorText").innerHTML = xhr.responseText;
 			console.error(xhr, status, error);
 		}
 		});
