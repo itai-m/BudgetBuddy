@@ -69,6 +69,9 @@ handlers:
 - url: /ProfileSettings
   script: web.pages.ProfileSettings.app
 
+- url: /ProfileSettingsCheck
+  script: web.pages.ProfileSettings.app
+
 - url: /AddEntry/(.*)
   script: web.pages.AddEntry.app
 
