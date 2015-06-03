@@ -37,10 +37,12 @@ class RegistrationCheckHandler(webapp2.RequestHandler):
         BudgeteerObj.password = self.request.get('password')
         BirthMonth = self.request.get("BirthMonth")
         BirthDay = self.request.get("BirthDay")
+        BirthDay = BirthDay.zfill(2)
         BirthYear = self.request.get("BirthYear")
-        BudgeteerObj.birthday = datetime.now()
-        #BudgeteerObj.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %b %Y')
-        #BudgeteerObj.birthday = datetime.datetime(day =  BirthDay , month = BirthMonth ,yeat =  BirthYear)
+        if BirthYear<100 :
+            BudgeteerObj.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %y')
+        else:
+            BudgeteerObj.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
         BudgeteerObj.gender = self.request.get("gender")
 
 
