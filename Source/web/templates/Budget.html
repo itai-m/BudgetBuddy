@@ -55,8 +55,9 @@
 
     </script>
     <script type="text/javascript">
-        var tagsPieDic = [{{ budget|getTagPieDic|safe }}];
-        var usersPieDic= [{{ budget|getUsersPieDic|safe }}];
+        var tagsPieDic = {{ budget|getTagPieDic|safe }};
+        var usersPieDic= {{ budget|getUsersPieDic|safe }};
+
         google.load("visualization", "1", {packages:["corechart"]});
         google.setOnLoadCallback(drawChart);
         function drawChart()
@@ -66,20 +67,21 @@
             data_tags.addColumn('number', 'Total Amount');
 	     	var f,n;
 
-	        for(var i = 0 ; i<tagsPieDic.length;i++)
+	        for(var key in tagsPieDic )
             {
-	        	f = String(Object.keys(tagsPieDic[i]))
-                n =  tagsPieDic[i][f]
+	        	f = key
+                n =  tagsPieDic[key]
 	        	data_tags.addRows([[f,n]])
 	        }
 
             var data_users = new google.visualization.DataTable();
 	      	data_users.addColumn('string', 'User');
             data_users.addColumn('number', 'Total Amount');
-            for(var i = 0 ; i<usersPieDic.length;i++)
+
+             for(var key in usersPieDic )
             {
-	        	f = String(Object.keys(usersPieDic[i]))
-                n =  usersPieDic[i][f]
+	        	f = key
+                n =  usersPieDic[key]
 	        	data_users.addRows([[f,n]])
 	        }
 
@@ -90,7 +92,7 @@
             };
             var options_users = {
                 backgroundColor: '#ecf0f5',
-               titleTextStyle: {fontSize: 18},
+                titleTextStyle: {fontSize: 18},
                 title: 'Budgeteer Spendings'
             };
 
