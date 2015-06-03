@@ -350,9 +350,13 @@ function getParticipants()
 		{
 			budgeteerPerm="Viewer";
 		}
+		else if(budgeteerPerm.localeCompare("Budget Manager") == 0)
+		{
+			budgeteerPerm="Manager";
+		}
 		else
 		{
-			alert("ERRORR!! unidentified permission level");
+			alert(budgeteerPerm);
 		}
 		retString += budgeteerName +":"+budgeteerPerm;
 		if (i != rowCount-1)
