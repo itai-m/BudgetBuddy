@@ -30,112 +30,17 @@
                 <td>{{ entry|getEntryCreationDateByKey }}</td>
                 <td class="controlTd">
                     <div class="settingsIcons">
-                        <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                        <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                        <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
+                        {% if entry|getEntryAddedByByKey == userName or budget|getMyPermission:userName == "Manager" %}
+
+                            <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                            <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                            <a href="/EditEntry/{{ entry.id }}"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
+                        {% endif %}
                     </div>
                 </td>
+
             </tr>
         {% endfor %}
-        <tr>
-            <td>Hummus</td>
-            <td>4$</td>
-            <td>Salad</td>
-            <td>Nadav</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Kebab</td>
-            <td>8$</td>
-            <td>Meat</td>
-            <td>Itai</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Steak</td>
-            <td>15$</td>
-            <td>Meat</td>
-            <td>Itai</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Coke 6x</td>
-            <td>7$</td>
-            <td>Drink</td>
-            <td>Rotem</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Chicken Wings</td>
-            <td>12$</td>
-            <td>Meat</td>
-            <td>Rotem</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        </tr>
-        <tr>
-            <td>Pebble Cake</td>
-            <td>7$</td>
-            <td>Dessert</td>
-            <td>Liran</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Matbocha</td>
-            <td>4$</td>
-            <td>Salad</td>
-            <td>Liran</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
     </table>
     <br>
     <center><a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a></center>

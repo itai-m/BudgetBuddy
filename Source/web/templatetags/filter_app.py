@@ -36,7 +36,7 @@ def getEntryTagDescriptionByKey(value):
 def getEntryAddedByByKey(value):
     entry = Entry.getEntryByKey(value)
     budgeteer = Budgeteer.getBudgeteerById(entry.addedBy.id())
-    return budgeteer.firstName + " " + budgeteer.lastName
+    return budgeteer.userName
 
 @register.filter(name='getEntryCreationDateByKey')
 def getEntryCreationDateByKey(value):

@@ -22,6 +22,7 @@ class IndexHandler(webapp2.RequestHandler):
         html = template.render("web/templates/Budget.html", template_params)
         self.response.write(html)
 
+
 app = webapp2.WSGIApplication([
     ('/Budget/(.*)', IndexHandler),
 ], debug=True)
