@@ -65,18 +65,30 @@ class SubmitNewBudgetHandler(webapp2.RequestHandler):
         budgetName = self.request.get('budgetName')
         tagList = self.request.get('tagList')
         participantList = self.request.get('participantList')
+
         budget = Budget()
         budget.budgetName = budgetName
         budget.creationDate = datetime.datetime.now()
         budget.entryList = []
         budget.tagList = []
         budget.participantsAndPermission = []
+
         for tag in tagList.split(','):
-            budget.tagList.append(Tag.getTagKeyByName(tag))
+            tag_key = Tag.getTagKeyByName(tag)
+            if not tag_key:
+                self.response.write('Unrecognized tag ' + tag)
+                return
+            budget.tagList.append()
         for participant in participantList.split(","):
             budgeteer_name = participant.split(":")[0]
             budgeteer_id = str(Budgeteer.getBudgeteerIdByUserName(budgeteer_name.lower()))
+            if not budgeteer_id:
+                self.response.write('No such username ' + budgeteer_name)
+                return
             budgeteer_perm = participant.split(":")[1]
+            if "Manager" not in budgeteer_perm or "Partner" not in budgeteer_perm or "Viewer" not in budgeteer_perm:
+                self.response.write('Unknown permission level ' + budgeteer_perm)
+                return
             budget.participantsAndPermission.append(json.dumps({budgeteer_id : budgeteer_perm}))
         Budget.addBudget(budget)
         self.response.write(json.dumps({'status':'OK'}))

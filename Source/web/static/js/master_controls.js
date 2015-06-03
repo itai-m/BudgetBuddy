@@ -309,7 +309,8 @@ function createBudget(){
 		},
 		error:function(xhr, status, error)
 		{
-			alert("not success1!");
+			document.getElementById("submitError").style.color = "red";
+			document.getElementById("submitError").innerHTML =  xhr.responseText;
 			console.error(xhr, status, error);
 		}
 		});
