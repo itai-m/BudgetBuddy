@@ -49,7 +49,7 @@
     </center>
 
 
-    <br>
+    <br><br>
     <center><span id="statistics"><h2>Statistics</h2></span></center>
     <script type="text/javascript" src="https://www.google.com/jsapi">
 
@@ -66,7 +66,7 @@
             data_tags.addColumn('number', 'Total Amount');
 	     	var f,n;
 
-	        for(var i = 0 ; i<tagPieDic.length;i++)
+	        for(var i = 0 ; i<tagsPieDic.length;i++)
             {
 	        	f = String(Object.keys(tagsPieDic[i]))
                 n =  tagsPieDic[i][f]
@@ -85,11 +85,13 @@
 
             var options_tags = {
                 backgroundColor: '#ecf0f5',
-                title: 'Amount by tags'
+                titleTextStyle: {fontSize: 18},
+                title: 'Amount by Tags'
             };
             var options_users = {
                 backgroundColor: '#ecf0f5',
-                title: 'Amount by users'
+               titleTextStyle: {fontSize: 18},
+                title: 'Budgeteer Spendings'
             };
 
             var chart_tags = new google.visualization.PieChart(document.getElementById('piechart_tags'));
