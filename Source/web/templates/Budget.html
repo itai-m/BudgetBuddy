@@ -24,14 +24,13 @@
         {% for entry in budget.entryList %}
             <tr>
                 <td>{{ entry|getEntryDescriptionByKey }}</td>
-                <td>{{ entry|getEntryAmountByKey }}</td>
+                <td>{{ entry|getEntryAmountByKey }} NIS</td>
                 <td>{{ entry|getEntryTagDescriptionByKey }}</td>
                 <td>{{ entry|getEntryAddedByByKey }}</td>
                 <td>{{ entry|getEntryCreationDateByKey }}</td>
                 <td class="controlTd">
                     <div class="settingsIcons">
                         {% if entry|getEntryAddedByByKey == userName or budget|getMyPermission:userName == "Manager" %}
-
                             <span class="settingsIcon"><i class="fa fa-cog"></i></span>
                             <span class="settingsIcon"><i class="fa fa-times"></i></span>
                             <a href="/EditEntry/{{ entry.id }}"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
@@ -48,27 +47,38 @@
 
     <br>
     <center><span id="statistics"><h2>Statistics</h2></span></center>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi">
+
+    </script>
     <script type="text/javascript">
+        var tagsPieDic = [{{ budget|getTagPieDic|safe }}];
+        var usersPieDic= [{{ budget|getUsersPieDic|safe }}];
         google.load("visualization", "1", {packages:["corechart"]});
         google.setOnLoadCallback(drawChart);
-        function drawChart() {
+        function drawChart()
+        {
+            var data_tags = new google.visualization.DataTable();
+	      	data_tags.addColumn('string', 'Tags');
+            data_tags.addColumn('number', 'Total Amount');
+	     	var f,n;
 
-            var data_tags = google.visualization.arrayToDataTable([
-                ['Tag', 'Total Amount'],
-                ['Salad',     4+4],
-                ['Meat',      8+15+12],
-                ['Drink',     7],
-                ['Dessert',   7],
-            ]);
+	        for(var i = 0 ; i<tagPieDic.length;i++)
+            {
+	        	f = String(Object.keys(tagsPieDic[i]))
+                n =  tagsPieDic[i][f]
+	        	data_tags.addRows([[f,n]])
+	        }
 
-            var data_users = google.visualization.arrayToDataTable([
-                ['User', 'Total Amount'],
-                ['Nadav',     4],
-                ['Itai',      8+15],
-                ['Rotem',     7+12],
-                ['Liran',   7+4],
-            ]);
+            var data_users = new google.visualization.DataTable();
+	      	data_users.addColumn('string', 'User');
+            data_users.addColumn('number', 'Total Amount');
+            for(var i = 0 ; i<usersPieDic.length;i++)
+            {
+	        	f = String(Object.keys(usersPieDic[i]))
+                n =  usersPieDic[i][f]
+	        	data_users.addRows([[f,n]])
+	        }
+
             var options_tags = {
                 title: 'Amount by tags'
             };
