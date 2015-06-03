@@ -18,6 +18,9 @@ handlers:
 - url: /Budget/(.*)
   script: web.pages.Budget.app
 
+- url: /RemoveEntryFromBudget
+  script: web.pages.Budget.app
+
 - url: /Login
   script: web.pages.Login.app
 

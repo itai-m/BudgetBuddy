@@ -1,10 +1,6 @@
-/**
- * Created by liran.ben-gida on 5/27/2015.
- */
-
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
-    $('#RegistrationSubmit').on('click', submitRegistration);
+	$('#RegistrationSubmit').on('click', submitRegistration);
 });
 
 
@@ -21,23 +17,23 @@ function submitLogin() {
 		document.getElementById("errorText").style.color = "green";
 		document.getElementById("errorText").innerHTML = "Logging in...";
 		$.ajax({
-		url:'/LoginCheck',
-		type:'GET',
-		dataType:'json',
-		data:{username:username, password:password},
-		success:function(data, status, xhr)
-		{
-			//location.reload();
-			document.location.href = '/Budgets';
-			//window.location='/Budgets';
+			url:'/LoginCheck',
+			type:'GET',
+			dataType:'json',
+			data:{username:username, password:password},
+			success:function(data, status, xhr)
+			{
+				//location.reload();
+				document.location.href = '/Budgets';
+				//window.location='/Budgets';
 
-		},
-		error:function(xhr, status, error)
-		{
-			document.getElementById("errorText").style.color = "red";
-			document.getElementById("errorText").innerHTML = xhr.responseText;
-			console.error(xhr, status, error);
-		}
+			},
+			error:function(xhr, status, error)
+			{
+				document.getElementById("errorText").style.color = "red";
+				document.getElementById("errorText").innerHTML = xhr.responseText;
+				console.error(xhr, status, error);
+			}
 		});
 	}
 }
@@ -50,51 +46,51 @@ function submitNewEntry()
 	var budgetId = $('#budgetId').val();
 	if (isNumber(price) == false)
 	{
-		document.getElementById("errorText").innerHTML = "Price must be a positive number."
+		document.getElementById("errorText").innerHTML = "Price must be a positive number.";
 		return;
 	}
 	if (tagname == "disabled")
 	{
-		document.getElementById("errorText").innerHTML = "No tag was selected."
+		document.getElementById("errorText").innerHTML = "No tag was selected.";
 		return;
 	}
 	if (description.length == 0)
 	{
-		document.getElementById("errorText").innerHTML = "The description field is mandatory."
+		document.getElementById("errorText").innerHTML = "The description field is mandatory.";
 		return;
 	}
 	else
 	{
 		$('#addBudgetEntry').attr('disabled', 'disabled');
 		$.ajax({
-		url:'/SubmitEntry',
-		type:'GET',
-		dataType:'json',
-		data:{description: description, price:price, tagname: tagname, budgetId: budgetId},
-		success:function(data, status, xhr)
-		{
-			document.location.href = '/Budget/' + budgetId;
+			url:'/SubmitEntry',
+			type:'GET',
+			dataType:'json',
+			data:{description: description, price:price, tagname: tagname, budgetId: budgetId},
+			success:function(data, status, xhr)
+			{
+				document.location.href = '/Budget/' + budgetId;
 
-		},
-		error:function(xhr, status, error)
-		{
-			alert(xhr.responseText);
-			console.error(xhr, status, error);
-		}
+			},
+			error:function(xhr, status, error)
+			{
+				alert(xhr.responseText);
+				console.error(xhr, status, error);
+			}
 		});
 	}
 
-	
+
 }
 
 function submitRegistration() {
-    var FirstName = $('#FirstName').val();
-    var LastName = $('#LastName').val();
-    var email = $('#email').val();
-    var BirthMonth = $('#BirthMonth').val();
-    var BirthDay = $('#BirthDay').val();
-    var BirthYear = $('#BirthYear').val();
-    var gender = $('#gender').val();
+	var FirstName = $('#FirstName').val();
+	var LastName = $('#LastName').val();
+	var email = $('#email').val();
+	var BirthMonth = $('#BirthMonth').val();
+	var BirthDay = $('#BirthDay').val();
+	var BirthYear = $('#BirthYear').val();
+	var gender = $('#gender').val();
 	var username = $('#username').val();
 	var password = $('#password').val();
 	if (username == null || username == "" || password == null || password == "")
@@ -104,26 +100,44 @@ function submitRegistration() {
 	else
 	{
 		$.ajax({
-		url:'/RegistrationCheck',
-		type:'GET',
-		dataType:'json',
-		data:{username:username, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
-		success:function(data, status, xhr)
-		{
-			document.location.href = '/Budgets';
+			url:'/RegistrationCheck',
+			type:'GET',
+			dataType:'json',
+			data:{username:username, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
+			success:function(data, status, xhr)
+			{
+				document.location.href = '/Budgets';
 
-		},
-		error:function(xhr, status, error)
-		{
-			alert(xhr.responseText);
-			console.error(xhr, status, error);
-		}
+			},
+			error:function(xhr, status, error)
+			{
+				alert(xhr.responseText);
+				console.error(xhr, status, error);
+			}
 		});
 	}
 }
 
 
 function isNumber(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
+	return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+function removeEntry(entryId,budgetId,userId) {
+	$.ajax({
+		url:'/RemoveEntryFromBudget',
+		type:'GET',
+		dataType:'json',
+		data:{entryId: entryId, budgetId:budgetId, userId: userId},
+		success:function(data, status, xhr)
+		{
+			document.location.href = '/Budget/' + budgetId;
+		},
+		error:function(xhr, status, error)
+		{
+			alert(xhr.responseText);
+			console.error(xhr, status, error);
+		}
+	});
+
+}
