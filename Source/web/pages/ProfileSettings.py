@@ -64,6 +64,7 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
         budgeteer.lastName = self.request.get('LastName')
         budgeteer.password = self.request.get('password')
         BirthMonth = self.request.get("BirthMonth")
+        BirthMonth = BirthMonth.zfill(2)
         BirthDay = self.request.get("BirthDay")
         BirthDay = BirthDay.zfill(2)
         budgeteer.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')

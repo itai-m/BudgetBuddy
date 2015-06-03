@@ -5,7 +5,7 @@
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
     $('#RegistrationSubmit').on('click', submitRegistration);
-    $('#profilesettingsubmit').on('click',submitProfile );
+    $('#ProfileSettingSubmit').on('click',submitProfile );
 });
 
 
@@ -140,13 +140,13 @@ function submitProfile() {
 	else
 	{
 		$.ajax({
-		url:'/RegistrationCheck',
+		url:'/ProfileSettingsCheck',
 		type:'GET',
 		dataType:'json',
 		data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
 		success:function(data, status, xhr)
 		{
-			document.location.href = '/Budgets';
+			document.location.href = '/ProfileSettings';
 
 		},
 		error:function(xhr, status, error)
