@@ -228,7 +228,5 @@ class Budget(ndb.Model):
         :param budgetId: Budget id to check Add / Edit permissions for said budgeteer. - Should be Integer/Long
         :return: true if editing/adding permissions are present, false otherwise.
         '''
-        participantsDict = Budget.getParticipantsAndPermissionsDict(Budget.getBudgetById(budgetId))
-        if "Manager" in participantsDict[str(budgeteerId)] or  "Partner" in participantsDict[budgeteerId]:
-            return True
-        return False
+        myPermission = Budget.getPermissionByBudgeteerId(budgeteerId,Budget.getBudgetById(budgetId))
+        return myPermission == "Manager" or myPermission == "Partner"

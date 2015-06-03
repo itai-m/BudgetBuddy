@@ -43,7 +43,11 @@
         {% endfor %}
     </table>
     <br>
-    <center><a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a></center>
+    <center>
+    {% if budget|getMyPermission:userName == "Manager" or budget|getMyPermission:userName == "Partner" %}
+        <a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a>
+    {% endif %}
+    </center>
 
 
     <br>
