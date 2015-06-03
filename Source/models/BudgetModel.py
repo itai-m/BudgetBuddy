@@ -184,8 +184,8 @@ class Budget(ndb.Model):
         '''
         participantIdList = []
         participantsDictList = Budget.getParticipantsAndPermissionsDict(budget)
-        for participantId in participantsDictList:
-            participantIdList.append(long(participantId.keys()[0]))
+        for participantId in participantsDictList.keys():
+            participantIdList.append(long(participantId))
         return participantIdList
 
     @staticmethod

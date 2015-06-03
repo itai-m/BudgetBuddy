@@ -34,7 +34,8 @@ class Budgeteer(ndb.Model):
                           budgeteer, such as name, username, password, email, birthday, notification settings.
         :return: returns the budgeteer key id.
         '''
-
+        budgeteer.email = budgeteer.email.lower()
+        budgeteer.userName = budgeteer.userName.lower()
         budgeteer.put()
         return budgeteer.key.id()
     
@@ -46,6 +47,8 @@ class Budgeteer(ndb.Model):
         :param budgeteerToEdit: Budgeteer object that contains all the budgeteer updated data.
         :return: budgeteer key id.
         '''
+        budgeteerToEdit.email.lower()
+        budgeteerToEdit.userName.lower()
         budgeteerToEdit.put()
         return budgeteerToEdit.key.id()
 
@@ -56,6 +59,7 @@ class Budgeteer(ndb.Model):
         :param userName: string contains the username.
         :return: Boolean variable, True if username exists, false if not.
         '''
+        userName = userName.lower()
         if Budgeteer.query(Budgeteer.userName == userName).get():
             return True
         return False
@@ -67,6 +71,7 @@ class Budgeteer(ndb.Model):
         :param email: string contains the email.
         :return: Boolean variable, True if email exists, false if not.
         '''
+        email = email.lower()
         if Budgeteer.query(Budgeteer.email == email).get():
             return True
         return False
@@ -78,6 +83,7 @@ class Budgeteer(ndb.Model):
         :param userName: The budgeteer username string.
         :return: budgeteer key id.
         '''
+        userName = userName.lower()
         budgeteerToReturn = Budgeteer.query(Budgeteer.userName == userName).get()
         if budgeteerToReturn:
             return budgeteerToReturn.key.id()
@@ -90,6 +96,7 @@ class Budgeteer(ndb.Model):
         :param email: The budgeteer email string.
         :return: budgeteer object id if email exist, None if not.
         '''
+        email = email.lower();
         budgeteerToReturn = Budgeteer.query(Budgeteer.email == email).get()
         if budgeteerToReturn:
             return budgeteerToReturn.key.id()
@@ -104,6 +111,7 @@ class Budgeteer(ndb.Model):
         :return: None if the username-password combination is not found.
                  Budgeteer key id if the combination is found.
         '''
+        userName = userName.lower()
         budgeteerToReturn = Budgeteer.query(ndb.AND(Budgeteer.userName == userName, Budgeteer.password == password)).get()
         if budgeteerToReturn:
             return budgeteerToReturn.key.id()
@@ -116,6 +124,7 @@ class Budgeteer(ndb.Model):
         :param email: Email string.
         :return: Password associated with the email if exists, None if not.
         '''
+        email = email.lower()
         budgeteer = Budgeteer.getBudgeteerIdByEmail(email)
         if budgeteer:
             return Budgeteer.get_by_id(budgeteer).password
