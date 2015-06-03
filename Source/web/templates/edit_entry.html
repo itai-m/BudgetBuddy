@@ -31,6 +31,7 @@
         </select>
          <input type="submit" id="editBudgetEntry" value="Edit Budget Entry" onsubmit="return false;" onclick="submitEditedEntry();">
         <br><span id="errorText" style="color: red">&nbsp;</span>
+        <br><a href="../Budget/{{ budgetId }}"> <i class="fa fa-arrow-left"></i> Back to Budget Page</a>
 		<script type="text/javascript">
             // Set the select box to the correct tag.
             document.getElementById('tag-combobox').value = "{{ tag }}";
