@@ -4,6 +4,7 @@
 
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
+    $('#RegistrationSubmit').on('click', submitRegistration);
 });
 
 
@@ -87,13 +88,13 @@ function submitNewEntry()
 }
 
 function submitRegistration() {
-    var FirstName = $('FirstName').val();
-    var LastName = $('LastName').val();
-    var email = $('email').val();
-    var BirthMonth = $('BirthMonth').val();
-    var BirthDay = $('BirthDay').val();
-    var BirthYear = $('BirthYear').val();
-    var gender = $('gender').val();
+    var FirstName = $('#FirstName').val();
+    var LastName = $('#LastName').val();
+    var email = $('#email').val();
+    var BirthMonth = $('#BirthMonth').val();
+    var BirthDay = $('#BirthDay').val();
+    var BirthYear = $('#BirthYear').val();
+    var gender = $('#gender').val();
 	var username = $('#username').val();
 	var password = $('#password').val();
 	if (username == null || username == "" || password == null || password == "")
@@ -109,7 +110,7 @@ function submitRegistration() {
 		data:{username:username, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
 		success:function(data, status, xhr)
 		{
-			document.location.href = '/Registration';
+			document.location.href = '/Budgets';
 
 		},
 		error:function(xhr, status, error)

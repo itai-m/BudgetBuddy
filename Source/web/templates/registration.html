@@ -18,30 +18,30 @@
         </header>
 
         <div  class="form">
-            <form id="contactform">
+            <form id="contactform"  onsubmit="return false;">
                 <p class="contact"><label for="name">First Name</label></p>
                 <input id="FirstName" name="FirstName" placeholder="First Name" required="" tabindex="1" type="text">
 
                 <p class="contact"><label for="name">Last Name</label></p>
-                <input id="LastName" name="LastName" placeholder="Last Name" required="" tabindex="1" type="text">
+                <input id="LastName" name="LastName" placeholder="Last Name" required="" tabindex="2" type="text">
 
 
                 <p class="contact"><label for="email">Email</label></p>
-                <input id="email" name="email" placeholder="example@domain.com" required="" type="email">
+                <input id="email" name="email" placeholder="example@domain.com" required="" tabindex="3" type="email">
 
                 <p class="contact"><label for="username">Create a username</label></p>
-                <input id="username" name="username" placeholder="username" required="" tabindex="2" type="text">
+                <input id="username" name="username" placeholder="username" required="" tabindex="4" type="text">
 
                 <p class="contact"><label for="password">Create a password</label></p>
-                <input type="password" id="password" name="password" required="">
+                <input type="password" id="password" name="password" required="" tabindex="5">
                 <p class="contact"><label for="repassword">Confirm your password</label></p>
-                <input type="password" id="repassword" name="repassword" required="">
+                <input type="password" id="repassword" name="repassword" required="" tabindex="6">
 
                 <fieldset >  <!-- The incomplete tag is intentional, otherwise the bootstrap css collides with ours and it breaks this section
 										I don't know how to fix this so I'll leave it like this for now -->
                     <label id="register_label">Birthday</label>
                     <label class="month">
-                        <select class="select-style" name="BirthMonth" id="BirthMonth">
+                        <select class="select-style" name="BirthMonth" id="BirthMonth" tabindex="7">
                             <option value="" disabled selected style='display:none;'>Month</option>
                             <option  value="1">January</option>
                             <option value="2">February</option>
@@ -59,20 +59,20 @@
                     </label>
 
 
-                    <label id="register_label">Day<input class="birthday" maxlength="2" name="BirthDay"  id="BirthDay" placeholder="Day" required=""></label>
-                    <label id="register_label">Year <input class="birthyear" maxlength="4" name="BirthYear" id="BirthYear" placeholder="Year" required=""></label>
+                    <label id="register_label">Day<input class="birthday" maxlength="2" name="BirthDay"  id="BirthDay" placeholder="Day" required="" tabindex="8"></label>
+                    <label id="register_label">Year <input class="birthyear" maxlength="4" name="BirthYear" id="BirthYear" placeholder="Year" required="" tabindex="9"></label>
                 </fieldset>
 
                 <p class="contact"><label for="password">Gender</label>
-                    <select class="select-style gender" name="gender" id="gender">
+                    <select class="select-style gender" name="gender" id="gender" tabindex="10">
                         <option value="" disabled selected style='display:none;'>I am..</option>
                         <option value="m">Male</option>
                         <option value="f">Female</option>
                         <option value="others">Other</option>
                     </select><br><br>
+                </p>
 
-
-                    <input class="buttom" name="submit" id="RegistrationSubmit" tabindex="5" value="Sign me up" type="submit">
+                    <input class="buttom" name="submit" id="RegistrationSubmit" tabindex="11" value="Sign me up" type="submit">
 
             </form>
         </div>
