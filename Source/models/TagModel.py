@@ -32,6 +32,15 @@ class Tag(ndb.Model):
         return tag.key
 
     @staticmethod
+    def getAllTags():
+        '''
+        Returns all the tags in the database.
+        :return: List of all tag objects in the database.
+        '''
+        return Tag.query().fetch()
+
+
+    @staticmethod
     def addTagToDatastore(tag):
         '''
         Adds a tag to the Datastore, and returns the key.
