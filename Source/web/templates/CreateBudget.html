@@ -15,7 +15,7 @@
                 <label>Budget Name</label>
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="form-control input-lg" placeholder="Budget name" />
+                        <input type="text" id="budgetName" class="form-control input-lg" placeholder="Budget name" />
                     </div>
                 </div>
             </div>
@@ -25,26 +25,29 @@
                 <label>Add a Budgeteer</label>
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="form-control input-lg" placeholder="Budgeteer name" />
+                        <input  id="checkUsernameExist" type="text" class="form-control input-lg" placeholder="Budgeteer name" />
                         <span class="input-group-btn">
-                            <button class="btn btn-info btn-lg" type="button">
+                            <button class="btn btn-info btn-lg" type="button" onclick='usernameExist();'>
                                <i class="fa fa-search"></i>
                             </button>
                         </span>
+
                     </div>
                     </div>
+                 <span id="usernameExistField"> &nbsp;</span>                        <br/>
 					</div>
+
             <div class="form-group">
                         <label>Permissions:</label>
                         <div class="funkyradio-default">
-                            <input type="radio" name="radio" id="radio1" />
+                            <input type="radio" name="radio" id="partner" />
                             <label for="radio1">Budget Partner</label>
                             &nbsp;&nbsp;
-                            <input type="radio" name="radio" id="radio2" checked/>
+                            <input type="radio" name="radio" id="viewer" checked/>
                             <label for="radio2">Budget Viewer</label>
                         </div>
                     <div>
-                        <input type="submit" name="Add" id="Add" value="Add the Budgeteer" class="btn btn-primary">
+                        <input type="submit" name="Add" id="Add" value="Add the Budgeteer" class="btn btn-primary" onclick='addRow();'>
                     </div>
                 </div>
                     <br>
@@ -54,7 +57,7 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title">Budgeteer</h3>
                             </div>
-                            <table class="table">
+                            <table class="table" id="budgeteerTable">
                                 <thead>
                                     <tr class="filters">
                                         <th>#</th>
@@ -63,16 +66,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Itai</td>
-                                        <td>Budget Viewer</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-cons">Remove</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -88,7 +82,7 @@
                             {% for tagName in tagNamePair %}
                                 {%  if tagName %}
                               <td width="50%">
-                                <input id="{{ tagName }}" type="checkbox"/> {{ tagName }}
+                                <input class="tagCheckbox" value="{{ tagName }}" id="{{ tagName }}" type="checkbox"/> {{ tagName }}
                                 </td>
                                 {% endif %}
                             {% endfor %}
@@ -97,8 +91,11 @@
                     </table>
                 </div>
             </div>
-            <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right">
+            <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right"
+                   onsubmit="return false;" onclick="createBudget();">
+        </br><span id="submitError">errortext goes here</span>
         </div>
+
     </div>
 </div>
 <script language="javascript">

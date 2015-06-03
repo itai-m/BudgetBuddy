@@ -36,6 +36,12 @@ handlers:
 - url: /CreateBudget
   script: web.pages.CreateBudget.app
 
+- url: /CreateCheck
+  script: web.pages.CreateBudget.app
+
+- url: /SubmitNewBudget
+  script: web.pages.CreateBudget.app
+
 - url: /EditBudget
   script: web.pages.EditBudget.app
 

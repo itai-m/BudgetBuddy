@@ -29,7 +29,7 @@ class Budget(ndb.Model):
     creationDate = ndb.DateProperty()
     tagList = ndb.KeyProperty(kind=TagModel.Tag, repeated=True)  # list of tag id
     entryList = ndb.KeyProperty(kind=EntryModel.Entry, repeated=True)  # list of limited available tags.
-    participantsAndPermission = ndb.StringProperty(repeated=True)  # "liranObjectKey.id()":"Manager"
+    participantsAndPermission = ndb.StringProperty(repeated=True)  # " "liranObjectKey.id()":"Manager" "
 
     @staticmethod
     def addBudget(budget):
