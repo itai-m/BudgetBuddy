@@ -32,8 +32,8 @@
                     <div class="settingsIcons">
                         {% if entry|getEntryAddedByByKey == userName or budget|getMyPermission:userName == "Manager" %}
                             <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                            <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                            <a href="/EditEntry/{{ entry.id }}"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
+                            <a  id="removeEntry" href="javascript: removeEntry({{ entry.id }},{{ budget.key.id }},{{ userId }});" ><span class="settingsIcon"><i class="fa fa-times"></i></span></a>
+                            <a href="/EditEntry/{{ entry.id }}?budgetId={{ budget.key.id }}"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
                         {% endif %}
                     </div>
                 </td>
@@ -42,7 +42,11 @@
         {% endfor %}
     </table>
     <br>
-    <center><a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a></center>
+    <center>
+    {% if budget|getMyPermission:userName == "Manager" or budget|getMyPermission:userName == "Partner" %}
+        <a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a>
+    {% endif %}
+    </center>
 
 
     <br>
@@ -80,9 +84,11 @@
 	        }
 
             var options_tags = {
+                backgroundColor: '#ecf0f5',
                 title: 'Amount by tags'
             };
             var options_users = {
+                backgroundColor: '#ecf0f5',
                 title: 'Amount by users'
             };
 

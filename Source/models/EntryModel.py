@@ -42,7 +42,16 @@ class Entry(ndb.Model):
         :return: Entry object.
         '''
         return entryKey.get()
-    
+
+    @staticmethod
+    def getEntryById(entryId):
+        '''
+        Receives an entry id, and returns the entry object.
+        :param entryKey: entry id.
+        :return: Entry object.
+        '''
+        return Entry.get_by_id(entryId)
+
     @staticmethod
     def removeEntry(entryKey):
         '''
