@@ -2,7 +2,7 @@ from google.appengine.ext.webapp import template
 import webapp2
 from models.BudgeteerModel import Budgeteer
 
-class IndexHandler(webapp2.RequestHandler):
+class EditBudgetHandler(webapp2.RequestHandler):
     def get(self):
         if self.request.cookies.get('budgeteerIdToken'):
             budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
@@ -17,4 +17,4 @@ class IndexHandler(webapp2.RequestHandler):
         html = template.render("web/templates/EditBudget.html", template_params)
         self.response.write(html)
 
-app = webapp2.WSGIApplication([('/EditBudget', IndexHandler)], debug=True)
+app = webapp2.WSGIApplication([('/EditBudget', EditBudgetHandler)], debug=True)

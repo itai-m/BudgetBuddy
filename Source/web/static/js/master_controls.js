@@ -39,6 +39,51 @@ function submitLogin() {
 	}
 }
 
+function submitEditedEntry()
+{
+	var description = $('#desc-textbox').val();
+	var price = $('#price-textbox').val();
+	var tagname = $('#tag-combobox option:selected').val();
+	var budgetId = $('#budgetId').val();
+	var entryId = $("#entryId").val();
+	if (isNumber(price) == false)
+	{
+		document.getElementById("errorText").innerHTML = "Price must be a positive number.";
+		return;
+	}
+	if (tagname == "disabled")
+	{
+		document.getElementById("errorText").innerHTML = "No tag was selected.";
+		return;
+	}
+	if (description.length == 0)
+	{
+		document.getElementById("errorText").innerHTML = "The description field is mandatory.";
+		return;
+	}
+		else
+	{
+
+		document.getElementById("editBudgetEntry").disabled = true;
+		$.ajax({
+			url:'/SubmitEditedEntry',
+			type:'GET',
+			dataType:'json',
+			data:{description: description, price:price, tagname: tagname, budgetId: budgetId, entryId: entryId},
+			success:function(data, status, xhr)
+			{
+				document.location.href = '/Budget/' + budgetId;
+			},
+			error:function(xhr, status, error)
+			{
+				alert(xhr.responseText);
+				console.error(xhr, status, error);
+			}
+		});
+		document.getElementById("editBudgetEntry").disabled = false;
+	}
+
+}
 function submitNewEntry()
 {
 	var description = $('#desc-textbox').val();
