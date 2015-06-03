@@ -17,6 +17,11 @@ class EditEntryHandler(webapp2.RequestHandler):
             self.redirect('/Login')
             return
 
+        entry = Entry.getEntryById(long(entryId))
+        if entry.addedBy.id() != long(budgeteer.key.id()):
+            self.redirect('/Budgets')
+            return
+
         template_params = dict()
         budgetId = long(self.request.get('budgetId'))
 
@@ -24,8 +29,6 @@ class EditEntryHandler(webapp2.RequestHandler):
         tagNameList = []
         for tag in tagList:
             tagNameList += [tag.description]
-
-        entry = Entry.getEntryById(long(entryId))
 
         template_params['description'] = entry.description
         template_params['price'] = entry.amount
