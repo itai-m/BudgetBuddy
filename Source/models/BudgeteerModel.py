@@ -34,6 +34,7 @@ class Budgeteer(ndb.Model):
                           budgeteer, such as name, username, password, email, birthday, notification settings.
         :return: returns the budgeteer key id.
         '''
+
         budgeteer.put()
         return budgeteer.key.id()
     

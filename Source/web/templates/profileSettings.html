@@ -18,28 +18,28 @@
         </header>
 
         <div  class="form">
-            <form id="contactform">
+            <form id="contactform" onsubmit="return false;">
                 <p class="contact"><label for="name">First Name</label></p>
                 <input id="FirstName" name="FirstName" placeholder="First Name" required="" tabindex="1" type="text" value="{{ firstName }}">
 
                 <p class="contact"><label for="name">Last Name</label></p>
-                <input id="LastName" name="LastName" placeholder="Last Name" required="" tabindex="1" type="text" value="{{ lastName }}">
+                <input id="LastName" name="LastName" placeholder="Last Name" required="" tabindex="2" type="text" value="{{ lastName }}">
 
 
                 <p class="contact"><label for="email">Email</label></p>
-                <input id="email" name="email" placeholder="example@domain.com" required="" type="email" value="{{ email }}">
+                <input id="email" name="email" placeholder="example@domain.com" required="" type="email" tabindex="3" value="{{ email }}">
 
                 <p class="contact"><label for="password">Old password</label></p>
-                <input type="password" id="password" name="password" required="">
+                <input type="password" id="oldpassword" name="password" required="" tabindex="4">
                 <p class="contact"><label for="password">New password</label></p>
-                <input type="password" id="password" name="password" required="">
+                <input type="password" id="password" name="password" required="" tabindex="5">
                 <p class="contact"><label for="repassword">Confirm your password</label></p>
-                <input type="password" id="repassword" name="repassword" required=""> <br>
+                <input type="password" id="repassword" name="repassword" required="" tabindex="6"> <br>
 
                 <fieldsetDate>
                     <label>Birthday</label>
                     <label class="month">
-                        <select class="select-style" name="BirthMonth">
+                        <select class="select-style" name="BirthMonth" tabindex="7">
                             <option value="" disabled selected style='display:none;'>Month</option>
                             {% for x in "xxxxxxxxxxxx" %}
                                 <option value={{ forloop.counter }} {% if forloop.counter ==  birthday.month %} selected {% endif %}>{{ forloop.counter|integer_to_month_name }}</option>
@@ -49,12 +49,12 @@
                         </select>
                     </label>
 
-                    <label>Day<input class="birthday" maxlength="2" name="BirthDay"  placeholder="Day" required="" value="{{ birthday.day }}"></label>
-                    <label>Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required="" value="{{ birthday.year }}"></label>
+                    <label>Day<input class="birthday" maxlength="2" name="BirthDay"  placeholder="Day" required="" tabindex="8" value="{{ birthday.day }}"></label>
+                    <label>Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required="" tabindex="9" value="{{ birthday.year }}"></label>
                 </fieldsetDate>
 
                 <p class="contact"><label for="password">Gender</label>
-                    <select class="select-style gender" name="gender">
+                    <select class="select-style gender" name="gender" tabindex="10">
                         <option value="" disabled selected style='display:none;'>I am..</option>
 
                         <option value="m" {% if gender == 'm'  %} selected {% endif %}>Male</option>
@@ -64,7 +64,7 @@
 
 
                 <br>
-                <input class="buttom" name="submit" id="submit" tabindex="5" value="Confirm" type="submit">
+                <input class="buttom" name="submit" id="profilesettingsubmit" tabindex="11" value="Confirm" type="submit">
             </form>
         </div>
     </div>
