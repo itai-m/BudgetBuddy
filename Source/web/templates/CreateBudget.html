@@ -81,8 +81,20 @@
                 <br>
             <div>
                 <label>Tags:</label>
-                <div>
-                     <iframe src="./Tags" width="500" height="200"></iframe>
+                <div class="checkboxContainer">
+                <table width="100%">
+                        {% for tagNamePair in tagnamePairList %}
+                        <tr>
+                            {% for tagName in tagNamePair %}
+                                {%  if tagName %}
+                              <td width="50%">
+                                <input id="{{ tagName }}" type="checkbox"/> {{ tagName }}
+                                </td>
+                                {% endif %}
+                            {% endfor %}
+                       </tr>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
             <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right">
