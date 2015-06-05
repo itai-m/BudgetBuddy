@@ -12,12 +12,12 @@ class AboutUsHandler(webapp2.RequestHandler):
                 loggedIn = False
         else:
                 loggedIn = False
-        
+
         if loggedIn:
             template_params['base_template'] = "master_page.html"
         else:
             template_params['base_template'] = "guest_master.html"
-
+        template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/AboutUs.html", template_params)
         self.response.write(html)
 

@@ -17,7 +17,7 @@ class HelpHandler(webapp2.RequestHandler):
             template_params['base_template'] = "master_page.html"
         else:
             template_params['base_template'] = "guest_master.html"
-
+        template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/Help.html", template_params)
         self.response.write(html)
 
