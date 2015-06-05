@@ -7,6 +7,12 @@ from models.TagModel import Tag
 import json
 import calendar
 
+@register.filter(name='budgeteer_key_to_username')
+def budgeteer_key_to_username(budgeteer_key):
+    return Budgeteer.getBudgeteerById(long(json.loads(budgeteer_key).keys()[0])).userName
+
+
+
 @register.filter(name='getMyPermission')
 def getMyPermission(budget, userName):
     budgeteerId = Budgeteer.getBudgeteerIdByUserName(userName)

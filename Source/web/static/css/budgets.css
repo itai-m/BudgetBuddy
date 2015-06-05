@@ -100,3 +100,26 @@ tr:nth-child(3) .settingsIcon {
 .openIcon {
   width: 80px;
 }
+.popbox {
+    display: none;
+    position: absolute;
+    z-index: 99999;
+    width: 250px;
+    padding: 5px;
+    background: #EEEFEB;
+    color: #000000;
+    border: 1px solid #4D4F53;
+    margin: 0px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(164, 164, 164, 1);
+    box-shadow: 0px 0px 5px 0px rgba(164, 164, 164, 1);
+}
+.popbox h2
+{
+    background-color: #4D4F53;
+    color:  #E3E5DD;
+    font-size: 14px;
+    display: block;
+    width: 104%;
+    margin: -6px 0px 6px -5px;
+    padding: 0px 0px;
+}

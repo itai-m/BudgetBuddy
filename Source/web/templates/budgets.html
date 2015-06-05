@@ -21,10 +21,16 @@
         </tr>
 
         {% for budget in budgetList %}
+            <div id="pop{{ forloop.counter }}" class="popbox">
+                <h2>Budgeteer List</h2>
+                {% for budgeteer in budget.participantsAndPermission %}
+                    <p>{{ budgeteer|budgeteer_key_to_username }}</p>
+                {% endfor %}
+            </div>
             <tr>
                 <td><a href="Budget/{{ budget.key.id }}">{{ budget.budgetName }}</a></td>
                 <td>{{ budget.creationDate }}</td>
-                <td>{{ budget.participantsAndPermission|length }} Budgeteers</td>
+                <td><a href="#" class="popper" data-popbox="pop{{ forloop.counter }}">{{ budget.participantsAndPermission|length }} Budgeteers</a></td>
                 <td>{{ budget|getMyPermission:userName }}</td>
                 <td class="controlTd">
                     <div class="settingsIcons">
@@ -43,7 +49,7 @@
         {% endfor %}
     </table>
     <script language="javascript">
-    document.getElementById("showAllBudgetsButton").className = "active"
+        document.getElementById("showAllBudgetsButton").className = "active"
     </script>
     <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
     <script src="../static/js/budgets.js"></script>
