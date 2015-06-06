@@ -5,7 +5,6 @@
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
     $('#RegistrationSubmit').on('click', submitRegistration);
-    $('#ProfileSettingSubmit').on('click',submitProfile );
 });
 
 
@@ -133,6 +132,7 @@ function submitProfile() {
     var gender = $('#gender').val();
 	var password = $('#password').val();
     var oldpassword = $('#oldpassword').val();
+    alert("i am here;");
 	if (password == null || password == "")
 	{
 		alert("There appears to be a field missing from the form.");
@@ -160,9 +160,4 @@ function submitProfile() {
 
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-function usernameExist()
-{
-
 }
