@@ -1,6 +1,7 @@
 from google.appengine.ext import ndb
 import BudgeteerNotificationModel
 import BudgetModel
+import operator
 '''
     Functionality tests:
         [X] Username Exist
@@ -131,7 +132,7 @@ class Budgeteer(ndb.Model):
         return None
 
     @staticmethod
-    def getBudgetList(budgeteer):
+    def getBudgetList(budgeteer, sort_by="name", reverse=True):
         '''
         :param budgeteer: Budgeteer object.
         :return: List of Budget objects.
@@ -139,6 +140,19 @@ class Budgeteer(ndb.Model):
         budgetList = []
         for budgetKey in budgeteer.budgetList:
             budgetList.append(BudgetModel.Budget.getBudgetById(budgetKey.id()))
+        print reverse
+        print sort_by
+        if sort_by == "name":
+            budgetList.sort(key=lambda x: x.budgetName, reverse=reverse)
+        elif sort_by == "shared_with":
+            budgetList.sort(key=lambda x: len(x.participantsAndPermission), reverse=reverse)
+        elif sort_by == "creation_date":
+            budgetList.sort(key=lambda x: x.creationDate, reverse=reverse)
+        elif sort_by == "permission":
+            # Did some nasty thing here, but couldn't think of any other way.
+            # If anyone has a better idea how to sort the list by the budgeteer permission you can replace this
+            budgeteer_id_string =  '{"' + str(budgeteer.key.id()) + '"'
+            budgetList.sort(key=lambda x: [i for i in x.participantsAndPermission if i.split(":")[0] == budgeteer_id_string][0], reverse=reverse)
         return budgetList
     
     @staticmethod

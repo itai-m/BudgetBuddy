@@ -123,3 +123,6 @@ tr:nth-child(3) .settingsIcon {
     margin: -6px 0px 6px -5px;
     padding: 0px 0px;
 }
+a.sortLink {
+	color: white;
+}
