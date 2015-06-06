@@ -99,6 +99,8 @@ handlers:
 - url: /SubmitEditedEntry
   script: web.pages.EditEntry.app
 
+- url: /SendChatMessage
+  script: web.pages.SendChatMessage.app
 #cacthes everything that wasn't cought until now
 - url: /(.*)
   script: web.pages.404.app

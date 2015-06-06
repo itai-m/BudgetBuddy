@@ -4,7 +4,7 @@ from models.BudgeteerModel import Budgeteer
 from models.BudgetModel import Budget
 from models.EntryModel import Entry
 import json
-
+from models.ChatMessageModel import ChatMessage
 class IndexHandler(webapp2.RequestHandler):
     def get(self, budgetId):
         if self.request.cookies.get('budgeteerIdToken'):
@@ -18,10 +18,13 @@ class IndexHandler(webapp2.RequestHandler):
         template.register_template_library('web.templatetags.filter_app')
         budget = Budget.getBudgetById(long(budgetId))
         template_params = dict()
+
+        template_params['chatMessages'] = ChatMessage.getChatMessagesByBudgetId((budgetId)).fetch()
         template_params['userName'] = budgeteer.userName
         template_params['userId'] = budgeteer.key.id()
         template_params['budget'] = budget
         template_params['budgetId'] = budgetId
+
         html = template.render("web/templates/Budget.html", template_params)
         self.response.write(html)
 

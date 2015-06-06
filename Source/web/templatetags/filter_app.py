@@ -41,6 +41,11 @@ def getEntryTagDescriptionByKey(value):
     tg = Tag.getTagByKey(entry.tagKey)
     return tg.description
 
+@register.filter(name='getUsernameByKey')
+def getUsernameByKey(value):
+    budgeteer = Budgeteer.getBudgeteerById(value.id())
+    return budgeteer.userName
+
 @register.filter(name='getEntryAddedByByKey')
 def getEntryAddedByByKey(value):
     entry = Entry.getEntryByKey(value)
