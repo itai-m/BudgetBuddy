@@ -38,19 +38,18 @@ class RemoveEntryHandler(webapp2.RequestHandler):
 
         entryId = long(self.request.get('entryId'))
         budgetId = long(self.request.get('budgetId'))
-        userId = long(self.request.get('userId'))
-
-        if userId != long(budgeteer.key.id()):
-            self.response.write("You Have No Permission To Do So...")
-            self.error(403)
-            return
 
         budget = Budget.getBudgetById(budgetId)
         entry = Entry.get_by_id(entryId)
+        my_permission = Budget.getPermissionByBudgeteerId(long(budgeteer.key.id()), budget)
+        if my_permission != "Manager" and my_permission != "Partner":
+            self.error(403)
+            self.response.write("You have no permission to do so")
+            return
 
         if not budget or not entry:
-            self.response.write("There is no such entry")
             self.error(403)
+            self.response.write("There is no such entry")
             return
 
         Budget.RemoveEntryFromBudget(entry.key,budget)

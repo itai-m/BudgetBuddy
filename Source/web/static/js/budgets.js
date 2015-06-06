@@ -5,6 +5,7 @@ $(".controlTd").click(function () {
 $(function() {
     var moveLeft = 0;
     var moveDown = 0;
+    var timeout;
     $('a.popper').hover(function(e) {
 
         var target = '#' + ($(this).attr('data-popbox'));
@@ -18,6 +19,7 @@ $(function() {
     });
 
     $('a.popper').mousemove(function(e) {
+
         var target = '#' + ($(this).attr('data-popbox'));
 
         leftD = e.pageX-250;
@@ -32,10 +34,7 @@ $(function() {
         } else if(maxTop < windowTop){
             topD = windowTop + 20;
         }
-
         $(target).css('top', topD).css('left', leftD);
 
-
     });
-
 });

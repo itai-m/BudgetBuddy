@@ -164,12 +164,12 @@ function submitRegistration() {
 	}
 }
 
-function removeEntry(entryId,budgetId,userId) {
+function removeEntry(entryId,budgetId) {
 	$.ajax({
 		url:'/RemoveEntryFromBudget',
 		type:'GET',
 		dataType:'json',
-		data:{entryId: entryId, budgetId:budgetId, userId: userId},
+		data:{entryId: entryId, budgetId:budgetId},
 		success:function(data, status, xhr)
 		{
 			document.location.href = '/Budget/' + budgetId;
@@ -181,6 +181,25 @@ function removeEntry(entryId,budgetId,userId) {
 		}
 	});
 }
+
+function removeBudget(budgetId,userId) {
+	$.ajax({
+		url:'/RemoveBudgetFromBudget',
+		type:'GET',
+		dataType:'json',
+		data:{budgetId:budgetId, userId: userId},
+		success:function(data, status, xhr)
+		{
+			document.location.href = '/Budgets';
+		},
+		error:function(xhr, status, error)
+		{
+			alert(xhr.responseText);
+			console.error(xhr, status, error);
+		}
+	});
+}
+
 
 function submitProfile() {
 	var FirstName = $('#FirstName').val();

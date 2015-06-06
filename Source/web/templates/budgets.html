@@ -36,7 +36,7 @@
                     <div class="settingsIcons">
                         {% if budget|getMyPermission:userName == "Manager" %}
                             <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                            <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                            <a id="removeBudget" href="javascript: removeBudget({{ budget.key.id }});" ><span class="settingsIcon"><i class="fa fa-times"></i></span></a>
                             <a href="EditBudget/{{ budget.key.id }}"><span class="settingsIcon"><i class="fa fa-pencil"></i> </span></a>
                         {% else %}
                             <span class="settingsIcon"><i class="fa fa-cog"></i></span>
