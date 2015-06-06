@@ -4,7 +4,7 @@ from models.BudgeteerModel import Budgeteer
 from models.BudgetModel import Budget
 from models.EntryModel import Entry
 import json
-
+from models.ChatMessageModel import ChatMessage
 class IndexHandler(webapp2.RequestHandler):
     def get(self, budgetId):
         if self.request.cookies.get('budgeteerIdToken'):
@@ -18,10 +18,13 @@ class IndexHandler(webapp2.RequestHandler):
         template.register_template_library('web.templatetags.filter_app')
         budget = Budget.getBudgetById(long(budgetId))
         template_params = dict()
+
+        template_params['chatMessages'] = ChatMessage.getChatMessagesByBudgetId((budgetId)).fetch()
         template_params['userName'] = budgeteer.userName
         template_params['userId'] = budgeteer.key.id()
         template_params['budget'] = budget
         template_params['budgetId'] = budgetId
+
         html = template.render("web/templates/Budget.html", template_params)
         self.response.write(html)
 
@@ -38,19 +41,18 @@ class RemoveEntryHandler(webapp2.RequestHandler):
 
         entryId = long(self.request.get('entryId'))
         budgetId = long(self.request.get('budgetId'))
-        userId = long(self.request.get('userId'))
-
-        if userId != long(budgeteer.key.id()):
-            self.response.write("You Have No Permission To Do So...")
-            self.error(403)
-            return
 
         budget = Budget.getBudgetById(budgetId)
         entry = Entry.get_by_id(entryId)
+        my_permission = Budget.getPermissionByBudgeteerId(long(budgeteer.key.id()), budget)
+        if my_permission != "Manager" and my_permission != "Partner":
+            self.error(403)
+            self.response.write("You have no permission to do so")
+            return
 
         if not budget or not entry:
-            self.response.write("There is no such entry")
             self.error(403)
+            self.response.write("There is no such entry")
             return
 
         Budget.RemoveEntryFromBudget(entry.key,budget)

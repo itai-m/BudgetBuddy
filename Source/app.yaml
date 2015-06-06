@@ -39,6 +39,12 @@ handlers:
 - url: /CreateBudget
   script: web.pages.CreateBudget.app
 
+- url: /RemoveBudgetFromBudget
+  script: web.pages.Budgets.app
+
+- url: /ExitBudget
+  script: web.pages.Budgets.app
+
 - url: /CreateCheck
   script: web.pages.CreateBudget.app
 
@@ -93,6 +99,8 @@ handlers:
 - url: /SubmitEditedEntry
   script: web.pages.EditEntry.app
 
+- url: /SendChatMessage
+  script: web.pages.SendChatMessage.app
 #cacthes everything that wasn't cought until now
 - url: /(.*)
   script: web.pages.404.app

@@ -164,15 +164,50 @@ function submitRegistration() {
 	}
 }
 
-function removeEntry(entryId,budgetId,userId) {
+function removeEntry(entryId,budgetId) {
 	$.ajax({
 		url:'/RemoveEntryFromBudget',
 		type:'GET',
 		dataType:'json',
-		data:{entryId: entryId, budgetId:budgetId, userId: userId},
+		data:{entryId: entryId, budgetId:budgetId},
 		success:function(data, status, xhr)
 		{
 			document.location.href = '/Budget/' + budgetId;
+		},
+		error:function(xhr, status, error)
+		{
+			alert(xhr.responseText);
+			console.error(xhr, status, error);
+		}
+	});
+}
+
+function removeBudget(budgetId) {
+	$.ajax({
+		url:'/RemoveBudgetFromBudget',
+		type:'GET',
+		dataType:'json',
+		data:{budgetId:budgetId},
+		success:function(data, status, xhr)
+		{
+			document.location.href = '/Budgets';
+		},
+		error:function(xhr, status, error)
+		{
+			alert(xhr.responseText);
+			console.error(xhr, status, error);
+		}
+	});
+}
+function ExitBudget(budgetId) {
+	$.ajax({
+		url:'/ExitBudget',
+		type:'GET',
+		dataType:'json',
+		data:{budgetId:budgetId},
+		success:function(data, status, xhr)
+		{
+			document.location.href = '/Budgets';
 		},
 		error:function(xhr, status, error)
 		{
@@ -379,7 +414,7 @@ function getCheckedTags()
 
 function getParticipants()
 {
-		tableID = 'budgeteerTable';
+	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
 	var rowCount=table.rows.length;
 	var retString = ""
@@ -411,4 +446,26 @@ function getParticipants()
 		}
 	}
 	return retString;
+}
+
+function sendNewChatMessage()
+{
+	var message = $('#ChatMessage').val();
+	var budgetId = $('#hiddenBudgetId').val();
+
+	$.ajax({
+		url:'/SendChatMessage',
+		type:'POST',
+		dataType:'json',
+		data:{message: message, budgetId: budgetId },
+		success:function(data, status, xhr)
+		{
+			location.reload();
+		},
+		error:function(xhr, status, error)
+		{
+			alert("error");
+			console.error(xhr, status, error);
+		}
+		});
 }
