@@ -460,7 +460,8 @@ function sendNewChatMessage()
 		data:{message: message, budgetId: budgetId },
 		success:function(data, status, xhr)
 		{
-			location.reload();
+			setTimeout(reload_page, 2000);
+
 		},
 		error:function(xhr, status, error)
 		{
@@ -468,4 +469,9 @@ function sendNewChatMessage()
 			console.error(xhr, status, error);
 		}
 		});
+}
+
+function reload_page()
+{
+	location.reload();
 }
