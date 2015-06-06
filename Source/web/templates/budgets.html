@@ -13,28 +13,34 @@
             <td colspan="2"></td>
         </tr>
         <tr class="headingTr">
-            <td>Budget Name</td>
-            <td>Creation Date</td>
-            <td>Shared With</td>
-            <td>Permission</td>
+            <td><a class="sortLink" href="Budgets?sort_by=name&reverse_order={{ reverse }}">Budget Name</a></td>
+            <td><a class="sortLink" href="Budgets?sort_by=creation_date&reverse_order={{ reverse }}">Creation Date</a></td>
+            <td><a class="sortLink" href="Budgets?sort_by=shared_with&reverse_order={{ reverse }}">Shared With</a></td>
+            <td><a class="sortLink" href="Budgets?sort_by=permission&reverse_order={{ reverse }}">Permission</a></td>
             <td>Actions</td>
         </tr>
 
         {% for budget in budgetList %}
+            <div id="pop{{ forloop.counter }}" class="popbox">
+                <h2>Budgeteer List</h2>
+                {% for budgeteer in budget.participantsAndPermission %}
+                    <p>{{ budgeteer|budgeteer_key_to_username }}</p>
+                {% endfor %}
+            </div>
             <tr>
                 <td><a href="Budget/{{ budget.key.id }}">{{ budget.budgetName }}</a></td>
                 <td>{{ budget.creationDate }}</td>
-                <td>{{ budget.participantsAndPermission|length }} Budgeteers</td>
+                <td><a href="#" class="popper" data-popbox="pop{{ forloop.counter }}">{{ budget.participantsAndPermission|length }} Budgeteers</a></td>
                 <td>{{ budget|getMyPermission:userName }}</td>
                 <td class="controlTd">
                     <div class="settingsIcons">
                         {% if budget|getMyPermission:userName == "Manager" %}
                             <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                            <span class="settingsIcon"><i class="fa fa-times"></i></span>
+                            <a id="removeBudget" href="javascript: removeBudget({{ budget.key.id }});" ><span class="settingsIcon"><i class="fa fa-times"></i></span></a>
                             <a href="EditBudget/{{ budget.key.id }}"><span class="settingsIcon"><i class="fa fa-pencil"></i> </span></a>
                         {% else %}
                             <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                            <span class="settingsIcon"><i class="fa fa-hand-o-left"></i></span>
+                            <a id="quitBudget" href="javascript: ExitBudget({{ budget.key.id }});" ><span class="settingsIcon"><i class="fa fa-hand-o-left"></i></span></a>
                         {% endif %}
                     </div>
                     <div class="settingsIcons">
@@ -43,7 +49,7 @@
         {% endfor %}
     </table>
     <script language="javascript">
-    document.getElementById("showAllBudgetsButton").className = "active"
+        document.getElementById("showAllBudgetsButton").className = "active"
     </script>
     <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
     <script src="../static/js/budgets.js"></script>

@@ -39,7 +39,7 @@
                 <fieldsetDate>
                     <label>Birthday</label>
                     <label class="month">
-                        <select class="select-style" name="BirthMonth" tabindex="7">
+                        <select class="select-style" name="BirthMonth" id="BirthMonth" tabindex="7">
                             <option value="" disabled selected style='display:none;'>Month</option>
                             {% for x in "xxxxxxxxxxxx" %}
                                 <option value={{ forloop.counter }} {% if forloop.counter ==  birthday.month %} selected {% endif %}>{{ forloop.counter|integer_to_month_name }}</option>
@@ -49,8 +49,8 @@
                         </select>
                     </label>
 
-                    <label>Day<input class="birthday" maxlength="2" name="BirthDay"  placeholder="Day" required="" tabindex="8" value="{{ birthday.day }}"></label>
-                    <label>Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required="" tabindex="9" value="{{ birthday.year }}"></label>
+                    <label>Day<input class="birthday" maxlength="2" name="BirthDay" id="BirthDay" placeholder="Day" required="" tabindex="8" value="{{ birthday.day }}"></label>
+                    <label>Year <input class="birthyear" maxlength="4" name="BirthYear" id="BirthYear" placeholder="Year" required="" tabindex="9" value="{{ birthday.year }}"></label>
                 </fieldsetDate>
 
                 <p class="contact"><label for="password">Gender</label></p>

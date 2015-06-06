@@ -24,151 +24,76 @@
         {% for entry in budget.entryList %}
             <tr>
                 <td>{{ entry|getEntryDescriptionByKey }}</td>
-                <td>{{ entry|getEntryAmountByKey }}</td>
+                <td>{{ entry|getEntryAmountByKey }} NIS</td>
                 <td>{{ entry|getEntryTagDescriptionByKey }}</td>
                 <td>{{ entry|getEntryAddedByByKey }}</td>
                 <td>{{ entry|getEntryCreationDateByKey }}</td>
                 <td class="controlTd">
                     <div class="settingsIcons">
-                        <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                        <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                        <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
+                        {% if entry|getEntryAddedByByKey == userName or budget|getMyPermission:userName == "Manager" %}
+                            <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                            <a  id="removeEntry" href="javascript: removeEntry({{ entry.id }},{{ budget.key.id }});" ><span class="settingsIcon"><i class="fa fa-times"></i></span></a>
+                            <a href="/EditEntry/{{ entry.id }}?budgetId={{ budget.key.id }}"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
+                        {% endif %}
                     </div>
                 </td>
+
             </tr>
         {% endfor %}
-        <tr>
-            <td>Hummus</td>
-            <td>4$</td>
-            <td>Salad</td>
-            <td>Nadav</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Kebab</td>
-            <td>8$</td>
-            <td>Meat</td>
-            <td>Itai</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Steak</td>
-            <td>15$</td>
-            <td>Meat</td>
-            <td>Itai</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Coke 6x</td>
-            <td>7$</td>
-            <td>Drink</td>
-            <td>Rotem</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Chicken Wings</td>
-            <td>12$</td>
-            <td>Meat</td>
-            <td>Rotem</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        </tr>
-        <tr>
-            <td>Pebble Cake</td>
-            <td>7$</td>
-            <td>Dessert</td>
-            <td>Liran</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Matbocha</td>
-            <td>4$</td>
-            <td>Salad</td>
-            <td>Liran</td>
-            <td>12/03/2015</td>
-            <td class="controlTd">
-                <div class="settingsIcons">
-                    <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                    <span class="settingsIcon"><i class="fa fa-times"></i></span>
-                    <a href="EditEntry"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
-                </div>
-            </td>
-        </tr>
     </table>
     <br>
-    <center><a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a></center>
+    <center>
+    {% if budget|getMyPermission:userName == "Manager" or budget|getMyPermission:userName == "Partner" %}
+        <a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a>
+    {% endif %}
+    </center>
 
 
-    <br>
+    <br><br>
     <center><span id="statistics"><h2>Statistics</h2></span></center>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi">
+
+    </script>
     <script type="text/javascript">
+        var tagsPieDic = {{ budget|getTagPieDic|safe }};
+        var usersPieDic= {{ budget|getUsersPieDic|safe }};
+
         google.load("visualization", "1", {packages:["corechart"]});
         google.setOnLoadCallback(drawChart);
-        function drawChart() {
+        function drawChart()
+        {
+            var data_tags = new google.visualization.DataTable();
+	      	data_tags.addColumn('string', 'Tags');
+            data_tags.addColumn('number', 'Total Amount');
+	     	var f,n;
 
-            var data_tags = google.visualization.arrayToDataTable([
-                ['Tag', 'Total Amount'],
-                ['Salad',     4+4],
-                ['Meat',      8+15+12],
-                ['Drink',     7],
-                ['Dessert',   7],
-            ]);
+	        for(var key in tagsPieDic )
+            {
+	        	f = key
+                n =  tagsPieDic[key]
+	        	data_tags.addRows([[f,n]])
+	        }
 
-            var data_users = google.visualization.arrayToDataTable([
-                ['User', 'Total Amount'],
-                ['Nadav',     4],
-                ['Itai',      8+15],
-                ['Rotem',     7+12],
-                ['Liran',   7+4],
-            ]);
+            var data_users = new google.visualization.DataTable();
+	      	data_users.addColumn('string', 'User');
+            data_users.addColumn('number', 'Total Amount');
+
+             for(var key in usersPieDic )
+            {
+	        	f = key
+                n =  usersPieDic[key]
+	        	data_users.addRows([[f,n]])
+	        }
+
             var options_tags = {
-                title: 'Amount by tags'
+                backgroundColor: '#ecf0f5',
+                titleTextStyle: {fontSize: 18},
+                title: 'Amount by Tags'
             };
             var options_users = {
-                title: 'Amount by users'
+                backgroundColor: '#ecf0f5',
+                titleTextStyle: {fontSize: 18},
+                title: 'Budgeteer Spendings'
             };
 
             var chart_tags = new google.visualization.PieChart(document.getElementById('piechart_tags'));

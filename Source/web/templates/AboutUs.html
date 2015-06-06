@@ -1,16 +1,51 @@
 {% extends base_template %}
 
 {% block head %}
-  {{block.super}}
-  <title>BudgetBuddy - AboutUs</title>
-{%endblock%}
+    {{ block.super }}
+    <link href="../static/css/about_us.css" rel="stylesheet" type="text/css"/>
+    <title>BudgetBuddy - AboutUs</title>
+{% endblock %}
 
 {% block content %}
-<center>
-<h1> About BudgetBuddy</h1>
-<h3>Page is currently under construction. Please come back again soon!</h3>
-<script language="javascript">
-document.getElementById("aboutUsButton").className = "active"
-</script>
-</center>
-{%endblock%}
+    <center>
+    <div id="aboutUsContainer">
+        <div id="aboutUsContent">
+            <h1> About BudgetBuddy</h1>
+
+            <h3>Hey, we're a pack of 4 students on our third year of college, studying Software Engineering,
+                </br>This web service is a project for the Software Engineering course.
+            </h3>
+            </br>
+            <h3>We are open to any suggestions / bug sightings / jobs with generous paychecks offerings<br>
+                The source code can be found at our <a href="https://github.com/itai-m/BudgetBuddy/">GitHub</a>
+                repository.
+                </br>
+                </br>
+                Introducing our team:</h3>
+        </div>
+        <table width="70%">
+            <tr>
+               <td width="250px"><h3>Nadav Luzzato</h3></td>
+               <td width="250px"><h3>Liran Ben Gida</h3></td>
+               <td width="250px"><h3>Rotem Nehama</h3></td>
+               <td width="250px"><h3>Itai Michael</h3></td>
+            </tr>
+            <tr>
+                <td width="250px"><img src="../static/images/m_default_profile.jpg" height="250" width="250"></td>
+                <td width="250px"><img src="../static/images/m_default_profile.jpg" height="250" width="250"></td>
+                <td width="250px"><img src="../static/images/f_default_profile.jpg" height="250" width="250"></td>
+                <td width="250px"><img src="../static/images/m_default_profile.jpg" height="250" width="250"></td>
+            </tr>
+            <tr>
+                <td width="250px" class="tdCell">"Details detai214124ls details contact information asfasfasf deasdasdails blah blah</td>
+                <td width="250px" class="tdCell">"Details details details contact information asfasfasf details blah blah</td>
+                <td width="250px" class="tdCell">"Details details details contact information details blah blah</td>
+                <td width="250px" class="tdCell">"Details details details contact information details blah blah</td>
+            </tr>
+        </table>
+    </div>
+    <script language="javascript">
+        document.getElementById("aboutUsButton").className = "active"
+    </script>
+    </center>
+{% endblock %}

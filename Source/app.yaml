@@ -18,6 +18,9 @@ handlers:
 - url: /Budget/(.*)
   script: web.pages.Budget.app
 
+- url: /RemoveEntryFromBudget
+  script: web.pages.Budget.app
+
 - url: /Login
   script: web.pages.Login.app
 
@@ -34,6 +37,18 @@ handlers:
   script: web.pages.Registration.app
 
 - url: /CreateBudget
+  script: web.pages.CreateBudget.app
+
+- url: /RemoveBudgetFromBudget
+  script: web.pages.Budgets.app
+
+- url: /ExitBudget
+  script: web.pages.Budgets.app
+
+- url: /CreateCheck
+  script: web.pages.CreateBudget.app
+
+- url: /SubmitNewBudget
   script: web.pages.CreateBudget.app
 
 - url: /EditBudget
@@ -72,11 +87,18 @@ handlers:
 - url: /AddEntry/(.*)
   script: web.pages.AddEntry.app
 
+- url: /EditEntry/(.*)
+  script: web.pages.EditEntry.app
+
 - url: /SubmitEntry
   script: web.pages.AddEntry.app
 
 - url: /EditEntry
   script: web.pages.EditEntry.app
+
+- url: /SubmitEditedEntry
+  script: web.pages.EditEntry.app
+
 #cacthes everything that wasn't cought until now
 - url: /(.*)
   script: web.pages.404.app
