@@ -45,7 +45,7 @@ handlers:
 - url: /SubmitNewBudget
   script: web.pages.CreateBudget.app
 
-- url: /EditBudget
+- url: /EditBudget/(.*)
   script: web.pages.EditBudget.app
 
 - url: /PasswordRecovery[\/]?(.*)
