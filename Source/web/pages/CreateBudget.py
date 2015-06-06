@@ -19,18 +19,26 @@ class IndexHandler(webapp2.RequestHandler):
             return
 
         template_params = dict()
-        tagObjectList = Tag.getAllTags()
-        tagnamePairList = []
+        tag_object_list = Tag.getAllTags()
 
-        if len(tagObjectList)%2 == 1:
-            tagObjectList.append(None)
-        for i in range (0,len(tagObjectList),2):
-            if tagObjectList[i+1] == None:
-                tagnamePairList.append([tagObjectList[i].description, None])
+        # Remove the "untagged" tag. the user should not be able to see it.
+        temp_object_list = []
+        for tag in tag_object_list:
+            if tag.description != "Untagged":
+                temp_object_list.append(tag)
+        tag_object_list = temp_object_list
+        
+        tagname_pair_list = []
+
+        if len(tag_object_list)%2 == 1:
+            tag_object_list.append(None)
+        for i in range (0,len(tag_object_list),2):
+            if tag_object_list[i+1] == None:
+                tagname_pair_list.append([tag_object_list[i].description, None])
             else:
-                tagnamePairList.append([tagObjectList[i].description, tagObjectList[i+1].description])
+                tagname_pair_list.append([tag_object_list[i].description, tag_object_list[i+1].description])
 
-        template_params['tagnamePairList'] = tagnamePairList
+        template_params['tagnamePairList'] = tagname_pair_list
         template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/CreateBudget.html", template_params)
         self.response.write(html)
@@ -62,24 +70,35 @@ class SubmitNewBudgetHandler(webapp2.RequestHandler):
         else:
             self.redirect('/Login')
             return
-        budgetName = self.request.get('budgetName')
-        tagList = self.request.get('tagList')
-        participantList = self.request.get('participantList')
+        budget_name = self.request.get('budgetName')
+        tag_list = self.request.get('tagList')
+        participant_list = self.request.get('participantList')
 
         budget = Budget()
-        budget.budgetName = budgetName
+        budget.budgetName = budget_name
         budget.creationDate = datetime.datetime.now()
         budget.entryList = []
         budget.tagList = []
         budget.participantsAndPermission = []
 
-        for tag in tagList.split(','):
+        # Add the Untagged entry to the budget.
+        untagged_key = Tag.getTagKeyByName("Untagged")
+        if not untagged_key:
+            untagged_key = Tag()
+            untagged_key.description = "Untagged"
+            untagged_key = Tag.addTagToDatastore(untagged_key)
+        budget.tagList.append(untagged_key)
+
+        for tag in tag_list.split(','):
+            if not tag:
+                break
             tag_key = Tag.getTagKeyByName(tag)
             if not tag_key:
                 self.response.write('Unrecognized tag ' + tag)
                 return
             budget.tagList.append(tag_key)
-        for participant in participantList.split(","):
+
+        for participant in participant_list.split(","):
             budgeteer_name = participant.split(":")[0]
             budgeteer_id = str(Budgeteer.getBudgeteerIdByUserName(budgeteer_name.lower()))
             if not budgeteer_id:

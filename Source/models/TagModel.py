@@ -29,6 +29,8 @@ class Tag(ndb.Model):
         :return: key of input tagname.
         '''
         tag = Tag.query(Tag.description == tagname).get()
+        if not tag:
+            return None
         return tag.key
 
     @staticmethod
