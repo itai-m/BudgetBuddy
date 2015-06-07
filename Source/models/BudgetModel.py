@@ -207,16 +207,16 @@ class Budget(ndb.Model):
         :param budget: Budget object.
         :return: budget object id.
         '''
-        participantsListOfDict = Budget.getParticipantsAndPermissionsDict(budget)
-        for budgeteerIdInList in participantsListOfDict:
-            if str(budgeteerId) in budgeteerIdInList:
+        participants_dict = Budget.getParticipantsAndPermissionsDict(budget)
+        for budgeteerIdInDict in participants_dict.keys():
+            if str(budgeteerId) == budgeteerIdInDict:
                 BudgeteerModel.Budgeteer.removeBudgetByKey(budgeteerId, budget.key)
-                participantsListOfDict.remove(budgeteerIdInList)
+                del participants_dict[budgeteerIdInDict]
 
-        dictToStringList = []
-        for budgeteerIdInList in participantsListOfDict:
-            dictToStringList.append(json.dumps(budgeteerIdInList))
-        budget.participantsAndPermission = dictToStringList
+        dict_to_string_list = []
+        for key, value in participants_dict.items():
+            dict_to_string_list.append(json.dumps({key: value}))
+        budget.participantsAndPermission = dict_to_string_list
         budget.put()
         return budget.key.id()
 
