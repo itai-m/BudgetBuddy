@@ -4,10 +4,43 @@
     {{ block.super }}
     <link href="../static/css/budgets.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/budget.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="https://www.google.com/jsapi">
+    </script>
+
 {% endblock %}
 
 {% block content %}
 
+
+    <div style="margin-bottom: 5px; border-radius: 12px;" width="800px" height="100px" class="AnnouncementBox">
+    <span id="AnnouncementBoxTitle" style='font-size:25px;'>Announcement Board</span>
+    <input style="background-color: transparent; float: right;" class="transpImage" type="image" src="../static/images/collapse.png" alt="Submit" width="45" height="45" value='hide/show' onclick="jQuery('#chatContainer').toggle('show');">
+    </div>
+    <div style="display:none; margin-bottom: 5px;" width="800px" height="300px" id="chatContainer" class="AnnouncementBox">
+        <center>
+            <div id="Chatbox" style="height:150px; overflow: auto;" >
+
+                <table class="gradienttable" id="ChatTable" width="100%">
+
+                    {%  for message in chatMessages %}
+                        <tr>
+                            <td width="10%" height="50px">&nbsp;<span id="chatUsernameSpan" style="font-size: 14px;">[{{ message.time|date:'Y-m-d H:i' }}] </span></td>
+                            <td width="7%" height="50px">&nbsp;<span id="chatUsernameSpan" style="font-size: 14px;">[{{ message.sent_by|getUsernameByKey }}] </span></td>
+                            <td width="83%" height="50px">&nbsp;<span id="chatMessageSpan" style="font-size: 14px;">{{ message.text }}</span></td>
+                        </tr>
+                    {%  endfor %}
+                </table>
+                <br>
+                <br>
+            </div><br>
+            <input class="depth" id="ChatMessage" type="text" size="200"/>
+            <input id="hiddenBudgetId" type="hidden" value="{{ budget.key.id }}"/>
+            <button id="SubmitMessage" onclick="sendNewChatMessage();">Send</button>
+            <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+            <script src="../static/js/budgets.js"></script>
+        </center>
+    </div>
+    <br>
     <table class="flatTable">
         <tr class="titleTr">
             <td class="titleTd"><h3>Budget: {{ budget.budgetName }}</h3></td>
@@ -55,9 +88,6 @@
 
     <br><br>
     <center><span id="statistics"><h2>Statistics</h2></span></center>
-    <script type="text/javascript" src="https://www.google.com/jsapi">
-
-    </script>
     <script type="text/javascript">
         var tagsPieDic = {{ budget|getTagPieDic|safe }};
         var usersPieDic = {{ budget|getUsersPieDic|safe }};
@@ -109,31 +139,5 @@
         <div id="piechart_tags"></div>
         <div id="piechart_users"></div>
     </div>
-    <center>
-        <h4>Announcement Board</h4>
-        <div id="Chatbox" width="800px" style="height:300px; overflow: auto;" >
 
-            <table class="gradienttable" id="ChatTable" width="100%">
-
-                <tr>
-                    <th width="10%">Username</th>
-                    <th width="90%">Message</th>
-                </tr>
-
-                {%  for message in chatMessages %}
-                    <tr>
-                        <td height="50px">&nbsp;<span id="chatUsernameSpan" style="font-size: 20px;">{{ message.sent_by|getUsernameByKey }}</span></td>
-                        <td height="50px">&nbsp;<span id="chatMessageSpan" style="font-size: 14px;">{{ message.text }}</span></td>
-                    </tr>
-                {%  endfor %}
-            </table>
-            <br>
-            <br>
-        </div>
-        <input class="depth" id="ChatMessage" type="text" size="200"/>
-        <input id="hiddenBudgetId" type="hidden" value="{{ budget.key.id }}"/>
-        <button id="SubmitMessage" onclick="sendNewChatMessage();">Send</button>
-        <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
-        <script src="../static/js/budgets.js"></script>
-    </center>
 {% endblock %}

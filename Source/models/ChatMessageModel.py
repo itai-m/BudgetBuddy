@@ -14,7 +14,7 @@ class ChatMessage(ndb.Model):
         :return: a list of chat messages object.
         '''
 
-        return ChatMessage.query(ChatMessage.budget_key == Budget.getBudgetById(long(budget_id)).key).order(ChatMessage.time)
+        return ChatMessage.query(ChatMessage.budget_key == Budget.getBudgetById(long(budget_id)).key).order(-ChatMessage.time)
 
 
     @staticmethod

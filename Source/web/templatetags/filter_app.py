@@ -46,6 +46,12 @@ def getUsernameByKey(value):
     budgeteer = Budgeteer.getBudgeteerById(value.id())
     return budgeteer.userName
 
+@register.filter(name='dateTimeToString')
+def dateTimeToString(value):
+    print value
+    print "ASFSAOAKSFOASKF"
+    return value.now().strftime("%Y-%m-%d %H:%M:%S")
+
 @register.filter(name='getEntryAddedByByKey')
 def getEntryAddedByByKey(value):
     entry = Entry.getEntryByKey(value)
