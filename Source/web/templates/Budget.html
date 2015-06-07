@@ -33,6 +33,10 @@
                 <br>
                 <br>
             </div><br>
+            {% if budgetManager %}
+                <button id="SubmitMessage" style="float: left;" onclick="clearChatMessage();">Clean Chat</button>
+            {% endif %}
+
             <input class="depth" id="ChatMessage" type="text" size="200"/>
             <input id="hiddenBudgetId" type="hidden" value="{{ budget.key.id }}"/>
             <button id="SubmitMessage" onclick="sendNewChatMessage();">Send</button>

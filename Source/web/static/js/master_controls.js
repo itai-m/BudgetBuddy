@@ -452,12 +452,12 @@ function sendNewChatMessage()
 {
 	var message = $('#ChatMessage').val();
 	var budgetId = $('#hiddenBudgetId').val();
-
 	$.ajax({
 		url:'/SendChatMessage',
 		type:'POST',
 		dataType:'json',
 		data:{message: message, budgetId: budgetId },
+
 		success:function(data, status, xhr)
 		{
 			setTimeout(reload_page, 2000);
@@ -471,6 +471,25 @@ function sendNewChatMessage()
 		});
 }
 
+function clearChatMessage()
+{
+	var budgetId = $('#hiddenBudgetId').val();
+	$.ajax({
+		url:'/ClearChatMessages',
+		type:'POST',
+		dataType:'json',
+		data:{budgetId: budgetId },
+		success:function(data, status, xhr)
+		{
+			setTimeout(reload_page, 2000);
+		},
+		error:function(xhr, status, error)
+		{
+			alert( xhr.responseText);
+			console.error(xhr, status, error);
+		}
+		});
+}
 function reload_page()
 {
 	location.reload();
