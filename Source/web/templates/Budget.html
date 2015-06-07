@@ -39,7 +39,7 @@
 
             <input class="depth" id="ChatMessage" type="text" size="200"/>
             <input id="hiddenBudgetId" type="hidden" value="{{ budget.key.id }}"/>
-            <button id="SubmitMessage" onclick="sendNewChatMessage();">Send</button>
+            <button id="submitChatMessage" onclick="sendNewChatMessage();" onsubmit="return false;">Send</button>
             <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
             <script src="../static/js/budgets.js"></script>
         </center>

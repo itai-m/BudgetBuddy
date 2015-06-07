@@ -450,6 +450,8 @@ function getParticipants()
 
 function sendNewChatMessage()
 {
+	var button = $('#submitChatMessage');
+	button.attr('disabled', 'disabled');
 	var message = $('#ChatMessage').val();
 	var budgetId = $('#hiddenBudgetId').val();
 	$.ajax({
@@ -460,8 +462,7 @@ function sendNewChatMessage()
 
 		success:function(data, status, xhr)
 		{
-			setTimeout(reload_page, 2000);
-
+			setTimeout(function reload_page(){ 	location.reload(); button.removeAttr('disabled');}, 2000);
 		},
 		error:function(xhr, status, error)
 		{
