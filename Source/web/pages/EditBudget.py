@@ -17,7 +17,6 @@ class EditBudgetHandler(webapp2.RequestHandler):
 
         template.register_template_library('web.templatetags.filter_app')
         template_params = dict()
-<<<<<<< HEAD
         tagObjectList = Tag.getAllTags()
         tagnamePairList = []
 
