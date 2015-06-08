@@ -55,6 +55,7 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
             return
         if len(password)<6:
             self.response.write('password must be at least 6')
+            return
         if not (Email.lower() == budgeteer.email.lower()):
             if Budgeteer.budgeteerEmailExist(Email):
                 self.response.write('Email already exists')
@@ -65,7 +66,7 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
         budgeteer.email = Email
         budgeteer.firstName = self.request.get('FirstName')
         budgeteer.lastName = self.request.get('LastName')
-        budgeteer.password = self.request.get('password')
+        budgeteer.password = password
         BirthMonth = self.request.get("BirthMonth")
         BirthMonth = BirthMonth.zfill(2)
         BirthDay = self.request.get("BirthDay")
