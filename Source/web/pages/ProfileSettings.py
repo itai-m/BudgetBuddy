@@ -49,9 +49,12 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
         BirthYear = self.request.get("BirthYear")
         OldPassword = self.request.get("oldpassword")
         checkpass = Budgeteer.logIn(budgeteer.userName, OldPassword)
+        password = self.request.get('password')
         if not checkpass:
             self.response.write('Old password not currect')
             return
+        if len(password)<6:
+            self.response.write('password must be at least 6')
         if not (Email.lower() == budgeteer.email.lower()):
             if Budgeteer.budgeteerEmailExist(Email):
                 self.response.write('Email already exists')
