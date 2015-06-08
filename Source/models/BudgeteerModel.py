@@ -1,6 +1,7 @@
 from google.appengine.ext import ndb
 import BudgeteerNotificationModel
 import BudgetModel
+import hashlib
 import operator
 '''
     Functionality tests:
@@ -35,11 +36,14 @@ class Budgeteer(ndb.Model):
                           budgeteer, such as name, username, password, email, birthday, notification settings.
         :return: returns the budgeteer key id.
         '''
+        m = hashlib.md5()
+        m.update(budgeteer.password)
+        budgeteer.password = m.digest().decode("iso-8859-1")
         budgeteer.email = budgeteer.email.lower()
         budgeteer.userName = budgeteer.userName.lower()
         budgeteer.put()
         return budgeteer.key.id()
-    
+
     @staticmethod
     def updateBudgeteerAccount(budgeteerToEdit):
         '''
@@ -48,6 +52,9 @@ class Budgeteer(ndb.Model):
         :param budgeteerToEdit: Budgeteer object that contains all the budgeteer updated data.
         :return: budgeteer key id.
         '''
+        m = hashlib.md5()
+        m.update(budgeteerToEdit.password)
+        budgeteerToEdit.password = m.digest().decode("iso-8859-1")
         budgeteerToEdit.email.lower()
         budgeteerToEdit.userName.lower()
         budgeteerToEdit.put()
@@ -113,6 +120,9 @@ class Budgeteer(ndb.Model):
                  Budgeteer key id if the combination is found.
         '''
         userName = userName.lower()
+        m = hashlib.md5()
+        m.update(password)
+        password = m.digest().decode("iso-8859-1")
         budgeteerToReturn = Budgeteer.query(ndb.AND(Budgeteer.userName == userName, Budgeteer.password == password)).get()
         if budgeteerToReturn:
             return budgeteerToReturn.key.id()

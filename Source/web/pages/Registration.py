@@ -24,7 +24,7 @@ class RegistrationCheckHandler(webapp2.RequestHandler):
         UserName = self.request.get('username')
         BirthYear = self.request.get("BirthYear")
         password = self.request.get('password')
-
+        
         if Budgeteer.budgeteerUserNameExist(UserName):
             self.response.write('UserName already exists')
             return
