@@ -52,7 +52,7 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
         if not checkpass:
             self.response.write('Old password not currect')
             return
-        if Email is not budgeteer.email:
+        if not (Email.lower() == budgeteer.email.lower()):
             if Budgeteer.budgeteerEmailExist(Email):
                 self.response.write('Email already exists')
                 return
