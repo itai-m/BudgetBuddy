@@ -12,11 +12,15 @@ def budgeteer_key_to_username(budgeteer_key):
     return Budgeteer.getBudgeteerById(long(json.loads(budgeteer_key).keys()[0])).userName
 
 
-
 @register.filter(name='getMyPermission')
 def getMyPermission(budget, userName):
     budgeteerId = Budgeteer.getBudgeteerIdByUserName(userName)
     return Budget.getPermissionByBudgeteerId(budgeteerId, budget)
+
+@register.filter(name='getMyPermissionById')
+def getMyPermissionById(budget, dicIdAndPermission):
+    return Budget.getPermissionByBudgeteerId(long(json.loads(dicIdAndPermission).keys()[0]), budget)
+
 
 @register.filter(name='integer_to_month_name')
 def integer_to_month_name(value):

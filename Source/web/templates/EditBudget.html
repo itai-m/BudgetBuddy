@@ -15,7 +15,7 @@
                 <label>Budget Name</label>
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" id="budgetName" class="form-control input-lg" placeholder="Budget name" />
+                        <input type="text" id="budgetName" class="form-control input-lg" placeholder="Budget name" value="{{ budgetName }}" />
                     </div>
                 </div>
             </div>
@@ -65,12 +65,17 @@
                                         <th>Permissions</th>
                                         <th>Action</th>
                                     </tr>
-                                <tr>
+                                 {% for dicIdAndPermission in budget.participantsAndPermission %}
+                                    <tr>
                                     <td>1</td>
-                                    <td>{{ userName }}</td>
-                                    <td>Budget Manager</td>
+                                    <td>{{ dicIdAndPermission|budgeteer_key_to_username }}</td>
+                                    <td>Budget {{ budget|getMyPermissionById:dicIdAndPermission }}</td>
                                     <td></td>
-                                </tr>
+                                    <td></td>
+                                    </tr>
+                                 {% endfor %}
+                                 </tr>
+
                                 </thead>
 
                             </table>
