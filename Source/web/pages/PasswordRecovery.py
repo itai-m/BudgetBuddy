@@ -5,6 +5,7 @@ from models.PasswordTokenRecoveryModel import PasswordTokenRecovery
 import webapp2
 import string
 import os
+import time
 
 class MailSender:
     def __init__(self):
@@ -14,9 +15,10 @@ class MailSender:
     def sendTokenInEmail(toFirstName, toLastName, toAddress, toToken):
         body = """
         Hello,
-        Please go to http://budgetbuddy001.appspot.com/PasswordRecovery/%s
+        Please go to http://budgetbuddy001.appspot.com/PasswordRecovery/{0}
         You will get your new password within a minute after click the link
-        """ % toToken
+        """.format(toToken)
+        print body
         mail.send_mail("BudgetBuddy Support <budgetbuddy00@gmail.com>",
                        toFirstName + " " + toLastName + " <" + toAddress + ">",
                        "Password Recovery", body)
@@ -25,10 +27,10 @@ class MailSender:
     def sendNewPasswordToEmail(toFirstName, toLastName, toAddress, toPass):
         body = """
         Hello,
-        Your new password has been set to %s
+        Your new password has been set to {0}
         You can login through http://budgetbuddy001.appspot.com/Login
         with your username and new password
-        """ % toPass
+        """.format(toPass)
         mail.send_mail("BudgetBuddy Support <budgetbuddy00@gmail.com>",
                        toFirstName + " " + toLastName + " <" + toAddress + ">",
                        "Password Recovery", body)
@@ -63,6 +65,8 @@ class IndexHandler(webapp2.RequestHandler):
                                                  " Please wait couple of minutes"
             else:
                 PasswordTokenRecovery.addTokenToDataStore(budgeteerId)
+                while PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId) is None:
+                    time.sleep(0.5)
                 MailSender.sendTokenInEmail(budgeteer.firstName, budgeteer.lastName,
                                             budgeteer.email, PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId))
 
