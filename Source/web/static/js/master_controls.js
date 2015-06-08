@@ -1,7 +1,6 @@
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
     $('#RegistrationSubmit').on('click', submitRegistration);
-	$('#ProfileSettingSubmit').on('click',submitProfile );
 });
 
 
@@ -234,7 +233,7 @@ function submitProfile() {
 	else
 	{
 		$.ajax({
-		url:'/RegistrationCheck',
+		url:'/ProfileSettingsCheck',
 		type:'GET',
 		dataType:'json',
 		data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
