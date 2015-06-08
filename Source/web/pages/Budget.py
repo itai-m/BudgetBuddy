@@ -24,7 +24,10 @@ class IndexHandler(webapp2.RequestHandler):
         template_params['userId'] = budgeteer.key.id()
         template_params['budget'] = budget
         template_params['budgetId'] = budgetId
-
+        if  Budget.getPermissionByBudgeteerId(long(budgeteer.key.id()), budget) == "Manager":
+            template_params['budgetManager'] = True
+        else:
+            template_params['budgetManager'] = False
         html = template.render("web/templates/Budget.html", template_params)
         self.response.write(html)
 

@@ -14,7 +14,7 @@ class ChatMessage(ndb.Model):
         :return: a list of chat messages object.
         '''
 
-        return ChatMessage.query(ChatMessage.budget_key == Budget.getBudgetById(long(budget_id)).key).order(ChatMessage.time)
+        return ChatMessage.query(ChatMessage.budget_key == Budget.getBudgetById(long(budget_id)).key).order(-ChatMessage.time)
 
 
     @staticmethod
@@ -27,3 +27,14 @@ class ChatMessage(ndb.Model):
         return message.put()
 
 
+    @staticmethod
+    def clearChatMessagesForBudgetId(budget_id):
+        '''
+        Clean all messages associated with a budget id.
+        :param message: budget id.
+        :return: None
+        '''
+        msg_list = ChatMessage.query(ChatMessage.budget_key == Budget.getBudgetById(long(budget_id)).key).fetch()
+        for msg in msg_list:
+            msg.key.delete()
+        return None

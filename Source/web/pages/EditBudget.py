@@ -17,6 +17,7 @@ class EditBudgetHandler(webapp2.RequestHandler):
 
         template.register_template_library('web.templatetags.filter_app')
         template_params = dict()
+<<<<<<< HEAD
         tagObjectList = Tag.getAllTags()
         tagnamePairList = []
 
@@ -32,6 +33,7 @@ class EditBudgetHandler(webapp2.RequestHandler):
             else:
                 tagnamePairList.append([tagObjectList[i].description, tagObjectList[i+1].description])
 
+        template.register_template_library('web.templatetags.filter_app')
         template_params['userName'] = budgeteer.userName
         template_params['budget'] = budget
         template_params['budgetName'] = budget.budgetName

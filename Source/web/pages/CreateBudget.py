@@ -4,6 +4,7 @@ from models.BudgeteerModel import Budgeteer
 from models.BudgetModel import Budget
 from models.EntryModel import Entry
 from models.TagModel import Tag
+from models.BudgeteerNotificationModel import BudgeteerNotification
 import json
 import datetime
 
@@ -37,12 +38,11 @@ class IndexHandler(webapp2.RequestHandler):
                 tagname_pair_list.append([tag_object_list[i].description, None])
             else:
                 tagname_pair_list.append([tag_object_list[i].description, tag_object_list[i+1].description])
-
+        template.register_template_library('web.templatetags.filter_app')
         template_params['tagnamePairList'] = tagname_pair_list
         template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/CreateBudget.html", template_params)
         self.response.write(html)
-
 
 class CreateChecksHandler(webapp2.RequestHandler):
     def get(self):
@@ -111,6 +111,18 @@ class SubmitNewBudgetHandler(webapp2.RequestHandler):
                 return
             budget.participantsAndPermission.append(json.dumps({budgeteer_id : budgeteer_perm}))
         Budget.addBudget(budget)
+
+        message_template = " Has Invited You To His Budget {0}".format(budget.budgetName)
+        src_budgeteer_key = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).key
+        src_username = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).userName
+        for participant_budgeteer_id in Budget.getAssociatedBudgeteersId(budget):
+            if long(budgeteer.key.id()) != long(participant_budgeteer_id):
+                dst_budgeteer_key = Budgeteer.getBudgeteerById(long(participant_budgeteer_id)).key
+                new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key, dstBudgeteer=dst_budgeteer_key,
+                                                         message=src_username + message_template,
+                                                         link="/Budget/{0}".format(budget.key.id()))
+                BudgeteerNotification.addNotification(new_notification)
+
         self.response.write(json.dumps({'status':'OK'}))
 
 

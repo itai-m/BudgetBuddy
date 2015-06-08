@@ -29,7 +29,7 @@ class EditEntryHandler(webapp2.RequestHandler):
         tagNameList = []
         for tag in tagList:
             tagNameList += [tag.description]
-
+        template.register_template_library('web.templatetags.filter_app')
         template_params['description'] = entry.description
         template_params['price'] = entry.amount
         template_params['tag'] = Tag.getTagByKey(entry.tagKey).description
@@ -55,7 +55,7 @@ class SubmitEditedEntryHandler(webapp2.RequestHandler):
         budgetId = long(self.request.get('budgetId'))
 
         # Verify that the user has sufficient permissions
-        if not Budget.hasAddEditEntryPermissions(budgeteerId ,budgetId):
+        if not Budget.hasAddEditEntryPermissions(budgeteerId, budgetId):
             self.redirect('/Budgets')
             return
         # Prepare a list of tag names.
