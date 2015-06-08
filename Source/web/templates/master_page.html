@@ -32,32 +32,48 @@
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
-            <ul class="nav navbar-nav">
-                <!-- Notifications Menu -->
-                <li class="dropdown notifications-menu">
-                    <!-- Menu toggle button -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">1</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header">(1) Notifications</li>
-                        <li>
-                            <!-- Inner Menu: contains the notifications -->
-                            <ul class="menu">
+            {% with userName|get_notification_by_username as notificatoinList %}
+                <ul class="nav navbar-nav">
+                    <!-- Notifications Menu -->
+                    <li class="dropdown notifications-menu">
+                        <!-- Menu toggle button -->
+                        <a id="notificationNumberSpan" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">{{ notificatoinList|length }}</span>
+                        </a>
+                        {% if notificatoinList != None %}
+                            <ul class="dropdown-menu">
+
+                                <li class="header" id="headerNotificationNumber">You Have {{ notificatoinList|length }} New Notifications </li>
+
                                 <li>
-                                    <!-- start notification -->
-                                    <a href="#">
-                                        <i class="fa fa-users text-aqua"></i>NadavLu added you to his Budget
-                                    </a>
+                                    <!-- Inner Menu: contains the notifications -->
+                                    <ul class="menu" id="notificationsList">
+                                        <!-- start notification -->
+                                        {% for notification in notificatoinList %}
+                                            <li id="{{ forloop.counter }}">
+                                                <a href="javascript: ShowNotification({{ notification.key.id }},{{ forloop.counter }});">
+                                                    <i class="fa fa-users text-aqua"></i>
+                                                    <marquee behavior="scroll" direction="left" scrollamount="5">
+                                                        {{ notification.message }}
+                                                    </marquee>
+                                                </a>
+                                            </li>
+                                        {%  endfor %}
+
+                                        <!-- end notification -->
+                                    </ul>
                                 </li>
-                                <!-- end notification -->
+
+                                <li class="footer"><a href="javascript: removeAllNotifications();">Clear all</a></li>
+
                             </ul>
-                        </li>
-                        <li class="footer"><a href="#">View all</a></li>
-                    </ul>
-                </li>
-            </ul>
+                        {% endif %}
+                    </li>
+                </ul>
+
+            {% endwith %}
+
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
 
@@ -99,9 +115,9 @@
                 <li id="showAllBudgetsButton"><a href="/Budgets"><i class="fa fa-list-alt"></i><span>Show All Budget</span></a></li>
                 <li id="createBudgetButton"><a href="/CreateBudget"><i class="fa fa-plus"></i><span>Create Budget</span></a></li>
                 <li id="profileSettingsButton"><a href="/ProfileSettings"><i class="fa fa-cogs"></i><span>Profile Settings</span></a></li>
-				<li id="helpButton"><a href="/Help"><i class="fa fa-question fa-fw"></i><span>Help</span></a></li>
+                <li id="helpButton"><a href="/Help"><i class="fa fa-question fa-fw"></i><span>Help</span></a></li>
                 <li id="aboutUsButton"><a href="/AboutUs"><i class="fa fa-info fa-fw"></i><span>About Us</span></a></li>
-				<li><a href="/Logout"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
+                <li><a href="/Logout"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
 
             </ul>
 
@@ -138,7 +154,7 @@
             (155) users connected
         </div>
         <!-- Default to the left -->
-        <strong>Copyright © 2015 <a href="./BudgetBuddy/BudgetBuddy.html">BudgetBuddy</a>.</strong> All rights reserved.
+        <strong>Copyright © 2015 <a href="/AboutUs">BudgetBuddy</a>.</strong> All rights reserved.
     </footer>
 
 </div>

@@ -4,6 +4,7 @@ from models.BudgeteerModel import Budgeteer
 from models.BudgetModel import Budget
 from models.EntryModel import Entry
 from models.TagModel import Tag
+from models.BudgeteerNotificationModel import BudgeteerNotification
 import json
 import calendar
 
@@ -11,6 +12,17 @@ import calendar
 def budgeteer_key_to_username(budgeteer_key):
     return Budgeteer.getBudgeteerById(long(json.loads(budgeteer_key).keys()[0])).userName
 
+@register.filter(name='get_notification_by_username')
+def get_notification_by_username(user_name):
+    notification_list = []
+    budgeteer_id = Budgeteer.getBudgeteerIdByUserName(user_name)
+    if budgeteer_id is None:
+        return None
+    budgeteer = Budgeteer.getBudgeteerById(budgeteer_id)
+    if BudgeteerNotification.getNotificationsByDstKey(budgeteer.key):
+        notification_list = BudgeteerNotification.getNotificationsByDstKey(budgeteer.key)
+        return notification_list
+    return None
 
 
 @register.filter(name='getMyPermission')
