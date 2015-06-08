@@ -1,6 +1,6 @@
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
-    $('#RegistrationSubmit').on('click', submitRegistration);
+	$('#RegistrationSubmit').on('click', submitRegistration);
 	$('#ProfileSettingSubmit').on('click',submitProfile );
 });
 
@@ -221,7 +221,7 @@ function submitProfile() {
 	var BirthYear = $('#BirthYear').val();
 	var gender = $('#gender').val();
 	var password = $('#password').val();
-    var oldpassword = $('#oldpassword').val();
+	var oldpassword = $('#oldpassword').val();
 	if (password == null || password == "")
 	{
 		alert("There appears to be a field missing from the form.");
@@ -229,19 +229,19 @@ function submitProfile() {
 	else
 	{
 		$.ajax({
-		url:'/RegistrationCheck',
-		type:'GET',
-		dataType:'json',
-		data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
-		success:function(data, status, xhr)
-		{
-			document.location.href = '/Budgets';
-		},
-		error:function(xhr, status, error)
-		{
-			alert(xhr.responseText);
-			console.error(xhr, status, error);
-		}
+			url:'/RegistrationCheck',
+			type:'GET',
+			dataType:'json',
+			data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
+			success:function(data, status, xhr)
+			{
+				document.location.href = '/Budgets';
+			},
+			error:function(xhr, status, error)
+			{
+				alert(xhr.responseText);
+				console.error(xhr, status, error);
+			}
 		});
 	}
 }
@@ -401,7 +401,7 @@ function getParticipants()
 	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
 	var rowCount=table.rows.length;
-	var retString = ""
+	var retString = "";
 	for(var i=1;i<rowCount;i++)
 	{
 		var row=table.rows[i];
@@ -506,7 +506,11 @@ function ShowNotification(notification_id,row_number) {
 					}
 				}
 			}
-			//document.location.href = data.link;
+			setTimeout(function reload_page(){
+				if (document.location.href.substring(document.location.href.lastIndexOf("/")+1) != data.link.substring(data.link.lastIndexOf("/")+1)) {
+					document.location.href = data.link;
+				}
+			}, 500);
 		},
 		error:function(xhr, status, error)
 		{

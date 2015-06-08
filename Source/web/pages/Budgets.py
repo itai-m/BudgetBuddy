@@ -2,6 +2,7 @@ from google.appengine.ext.webapp import template
 import webapp2
 from models.BudgeteerModel import Budgeteer
 from models.BudgetModel import Budget
+from models.BudgeteerNotificationModel import BudgeteerNotification
 import json
 
 
@@ -98,6 +99,17 @@ class ExitBudgetHandler(webapp2.RequestHandler):
             self.error(404)
             self.response.write("You can't quit your budget, you have remove it")
             return
+
+        message_template = " Has Exited From Budget {0}".format(budget.budgetName)
+        src_budgeteer_key = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).key
+        src_username = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).userName
+        for participant_budgeteer_id in Budget.getAssociatedBudgeteersId(budget):
+            if long(budgeteer.key.id()) != long(participant_budgeteer_id):
+                dst_budgeteer_key = Budgeteer.getBudgeteerById(long(participant_budgeteer_id)).key
+                new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key, dstBudgeteer=dst_budgeteer_key,
+                                                         message=src_username + message_template,
+                                                         link="/Budget/{0}".format(budgetId))
+                BudgeteerNotification.addNotification(new_notification)
 
         Budget.removeBudgeteerFromBudget(long(budgeteer.key.id()), budget)
         self.response.write(json.dumps({'status':'OK'}))
