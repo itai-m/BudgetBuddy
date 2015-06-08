@@ -14,10 +14,9 @@ class MailSender:
     def sendTokenInEmail(toFirstName, toLastName, toAddress, toToken):
         body = """
         Hello,
-        Please go to %s
-        and then wait for your new password to be sent to your email
+        Please go to http://budgetbuddy001.appspot.com/PasswordRecovery/%s
+        You will get your new password within a minute after click the link
         """ % toToken
-
         mail.send_mail("BudgetBuddy Support <budgetbuddy00@gmail.com>",
                        toFirstName + " " + toLastName + " <" + toAddress + ">",
                        "Password Recovery", body)
@@ -27,8 +26,8 @@ class MailSender:
         body = """
         Hello,
         Your new password has been set to %s
-        You can login through our login http://budgetBuddy00.appspot.com/Login
-        with your username and password
+        You can login through http://budgetbuddy001.appspot.com/Login
+        with your username and new password
         """ % toPass
         mail.send_mail("BudgetBuddy Support <budgetbuddy00@gmail.com>",
                        toFirstName + " " + toLastName + " <" + toAddress + ">",
@@ -36,18 +35,27 @@ class MailSender:
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
+        if self.request.cookies.get('budgeteerIdToken'):
+            budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
+            if budgeteer:
+                self.redirect('/Budgets')
         template_params = dict()
         html = template.render("web/templates/PasswordRecovery.html", template_params)
         self.response.write(html)
 
     def post(self):
+        if self.request.cookies.get('budgeteerIdToken'):
+            budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
+            if budgeteer:
+                self.redirect('/Budgets')
+
         email = self.request.get("emailAddress")
         #check email validation
 
         template_params = dict()
         budgeteerId = Budgeteer.getBudgeteerIdByEmail(email)
 
-        if (budgeteerId):
+        if budgeteerId:
             budgeteer = Budgeteer.getBudgeteerById(budgeteerId)
             tokenForBudgeteerId = PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId)
             if tokenForBudgeteerId:
@@ -57,6 +65,7 @@ class IndexHandler(webapp2.RequestHandler):
                 PasswordTokenRecovery.addTokenToDataStore(budgeteerId)
                 MailSender.sendTokenInEmail(budgeteer.firstName, budgeteer.lastName,
                                             budgeteer.email, PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId))
+
                 template_params['emailStatus'] = "An Email with password has already been sent."
         else:
             template_params['emailStatus'] = "There is no such email."
@@ -74,7 +83,7 @@ class SendNewPasswordHandler(webapp2.RequestHandler):
             MailSender.sendNewPasswordToEmail(budgeteer.firstName, budgeteer.lastName, budgeteer.email, newPass)
             budgeteer.password = newPass
             Budgeteer.updateBudgeteerAccount(budgeteer)
-            self.redirect("/")
+            self.redirect("/Login")
         else:
             self.redirect("/404")
 

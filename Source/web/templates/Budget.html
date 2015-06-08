@@ -1,13 +1,50 @@
 {% extends "master_page.html" %}
 
 {% block head %}
-    {{block.super}}
+    {{ block.super }}
     <link href="../static/css/budgets.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/budget.css" rel="stylesheet" type="text/css"/>
-{%endblock%}
+    <script type="text/javascript" src="https://www.google.com/jsapi">
+    </script>
+
+{% endblock %}
 
 {% block content %}
 
+
+    <div style="margin-bottom: 5px; border-radius: 12px;" width="800px" height="100px" class="AnnouncementBox">
+    <span id="AnnouncementBoxTitle" style='font-size:25px;'>Announcement Board</span>
+    <input style="background-color: transparent; float: right;" class="transpImage" type="image" src="../static/images/collapse.png" alt="Submit" width="45" height="45" value='hide/show' onclick="jQuery('#chatContainer').toggle('show');">
+    </div>
+    <div style="display:none; margin-bottom: 5px;" width="800px" height="300px" id="chatContainer" class="AnnouncementBox">
+        <center>
+            <div id="Chatbox" style="height:150px; overflow: auto;" >
+
+                <table class="gradienttable" id="ChatTable" width="100%">
+
+                    {%  for message in chatMessages %}
+                        <tr>
+                            <td width="10%" height="50px">&nbsp;<span id="chatUsernameSpan" style="font-size: 14px;">[{{ message.time|date:'Y-m-d H:i' }}] </span></td>
+                            <td width="7%" height="50px">&nbsp;<span id="chatUsernameSpan" style="font-size: 14px;">[{{ message.sent_by|getUsernameByKey }}] </span></td>
+                            <td width="83%" height="50px">&nbsp;<span id="chatMessageSpan" style="font-size: 14px;">{{ message.text }}</span></td>
+                        </tr>
+                    {%  endfor %}
+                </table>
+                <br>
+                <br>
+            </div><br>
+            {% if budgetManager %}
+                <button id="SubmitMessage" style="float: left;" onclick="clearChatMessage();">Clean Chat</button>
+            {% endif %}
+
+            <input class="depth" id="ChatMessage" type="text" size="200"/>
+            <input id="hiddenBudgetId" type="hidden" value="{{ budget.key.id }}"/>
+            <button id="submitChatMessage" onclick="sendNewChatMessage();" onsubmit="return false;">Send</button>
+            <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+            <script src="../static/js/budgets.js"></script>
+        </center>
+    </div>
+    <br>
     <table class="flatTable">
         <tr class="titleTr">
             <td class="titleTd"><h3>Budget: {{ budget.budgetName }}</h3></td>
@@ -32,8 +69,12 @@
                     <div class="settingsIcons">
                         {% if entry|getEntryAddedByByKey == userName or budget|getMyPermission:userName == "Manager" %}
                             <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                            <a  id="removeEntry" href="javascript: removeEntry({{ entry.id }},{{ budget.key.id }});" ><span class="settingsIcon"><i class="fa fa-times"></i></span></a>
-                            <a href="/EditEntry/{{ entry.id }}?budgetId={{ budget.key.id }}"><div class="settingsIcon"><i class="fa fa-pencil"></i></div></a>
+                            <a id="removeEntry"
+                               href="javascript: removeEntry({{ entry.id }},{{ budget.key.id }});"><span
+                                    class="settingsIcon"><i class="fa fa-times"></i></span></a>
+                            <a href="/EditEntry/{{ entry.id }}?budgetId={{ budget.key.id }}">
+                                <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
+                            </a>
                         {% endif %}
                     </div>
                 </td>
@@ -43,47 +84,41 @@
     </table>
     <br>
     <center>
-    {% if budget|getMyPermission:userName == "Manager" or budget|getMyPermission:userName == "Partner" %}
-        <a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a>
-    {% endif %}
+        {% if budget|getMyPermission:userName == "Manager" or budget|getMyPermission:userName == "Partner" %}
+            <a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a>
+        {% endif %}
     </center>
 
 
     <br><br>
     <center><span id="statistics"><h2>Statistics</h2></span></center>
-    <script type="text/javascript" src="https://www.google.com/jsapi">
-
-    </script>
     <script type="text/javascript">
         var tagsPieDic = {{ budget|getTagPieDic|safe }};
-        var usersPieDic= {{ budget|getUsersPieDic|safe }};
+        var usersPieDic = {{ budget|getUsersPieDic|safe }};
 
-        google.load("visualization", "1", {packages:["corechart"]});
+        google.load("visualization", "1", {packages: ["corechart"]});
         google.setOnLoadCallback(drawChart);
-        function drawChart()
-        {
+        function drawChart() {
             var data_tags = new google.visualization.DataTable();
-	      	data_tags.addColumn('string', 'Tags');
+            data_tags.addColumn('string', 'Tags');
             data_tags.addColumn('number', 'Total Amount');
-	     	var f,n;
+            var f, n;
 
-	        for(var key in tagsPieDic )
-            {
-	        	f = key
-                n =  tagsPieDic[key]
-	        	data_tags.addRows([[f,n]])
-	        }
+            for (var key in tagsPieDic) {
+                f = key
+                n = tagsPieDic[key]
+                data_tags.addRows([[f, n]])
+            }
 
             var data_users = new google.visualization.DataTable();
-	      	data_users.addColumn('string', 'User');
+            data_users.addColumn('string', 'User');
             data_users.addColumn('number', 'Total Amount');
 
-             for(var key in usersPieDic )
-            {
-	        	f = key
-                n =  usersPieDic[key]
-	        	data_users.addRows([[f,n]])
-	        }
+            for (var key in usersPieDic) {
+                f = key
+                n = usersPieDic[key]
+                data_users.addRows([[f, n]])
+            }
 
             var options_tags = {
                 backgroundColor: '#ecf0f5',
@@ -104,12 +139,9 @@
         }
     </script>
     </head>
-    <div i="piechart_parent">
+    <div i="piechart_parent" width="800px">
         <div id="piechart_tags"></div>
         <div id="piechart_users"></div>
     </div>
 
-    <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
-    <script src="../static/js/budgets.js"></script>
-
-{%endblock%}
+{% endblock %}

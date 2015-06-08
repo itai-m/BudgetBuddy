@@ -240,7 +240,7 @@ function submitProfile() {
 		data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
 		success:function(data, status, xhr)
 		{
-			document.getElementById("errorText").innerHTML = "No tag was selected."
+			document.location.href = '/Budgets';
 		},
 		error:function(xhr, status, error)
 		{
@@ -414,7 +414,7 @@ function getCheckedTags()
 
 function getParticipants()
 {
-		tableID = 'budgeteerTable';
+	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
 	var rowCount=table.rows.length;
 	var retString = ""
@@ -446,4 +446,53 @@ function getParticipants()
 		}
 	}
 	return retString;
+}
+
+
+function sendNewChatMessage()
+{
+	var button = $('#submitChatMessage');
+	button.attr('disabled', 'disabled');
+	var message = $('#ChatMessage').val();
+	var budgetId = $('#hiddenBudgetId').val();
+	$.ajax({
+		url:'/SendChatMessage',
+		type:'POST',
+		dataType:'json',
+		data:{message: message, budgetId: budgetId },
+
+		success:function(data, status, xhr)
+		{
+			setTimeout(function reload_page(){ 	location.reload(); button.removeAttr('disabled');}, 2000);
+		},
+		error:function(xhr, status, error)
+		{
+			alert("error");
+			console.error(xhr, status, error);
+		}
+		});
+}
+
+function clearChatMessage()
+{
+	var budgetId = $('#hiddenBudgetId').val();
+	$.ajax({
+		url:'/ClearChatMessages',
+		type:'POST',
+		dataType:'json',
+		data:{budgetId: budgetId },
+		success:function(data, status, xhr)
+		{
+			setTimeout(reload_page, 2000);
+		},
+		error:function(xhr, status, error)
+		{
+			alert( xhr.responseText);
+			console.error(xhr, status, error);
+		}
+		});
+}
+function reload_page()
+{
+	location.reload();
 }
