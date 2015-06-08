@@ -50,6 +50,7 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
         OldPassword = self.request.get("oldpassword")
         checkpass = Budgeteer.logIn(budgeteer.userName, OldPassword)
         password = self.request.get('password')
+        repassword = self.request.get('repassword')
         if not checkpass:
             self.response.write('Old password not currect')
             return

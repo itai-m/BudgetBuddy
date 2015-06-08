@@ -137,10 +137,16 @@ function submitRegistration() {
 	var gender = $('#gender').val();
 	var username = $('#username').val();
 	var password = $('#password').val();
+    var repassword =$('#repassword').val();
+
 	if (username == null || username == "" || password == null || password == "")
 	{
 		alert("There appears to be a field missing from the form.");
 	}
+    else if (repassword!=password)
+    {
+        alert("passwords don't matching");
+    }
 	else
 	{
 		$.ajax({
@@ -222,7 +228,12 @@ function submitProfile() {
 	var gender = $('#gender').val();
 	var password = $('#password').val();
 	var oldpassword = $('#oldpassword').val();
-	if (password == null || password == "")
+    var repassword =$('#repassword').val();
+    if (repassword!=password)
+    {
+        alert("passwords don't matching");
+    }
+	else if (password == null || password == "")
 	{
 		alert("There appears to be a field missing from the form.");
 	}
