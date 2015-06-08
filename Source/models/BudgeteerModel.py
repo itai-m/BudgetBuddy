@@ -104,7 +104,7 @@ class Budgeteer(ndb.Model):
         :param email: The budgeteer email string.
         :return: budgeteer object id if email exist, None if not.
         '''
-        email = email.lower();
+        email = email.lower()
         budgeteerToReturn = Budgeteer.query(Budgeteer.email == email).get()
         if budgeteerToReturn:
             return budgeteerToReturn.key.id()
