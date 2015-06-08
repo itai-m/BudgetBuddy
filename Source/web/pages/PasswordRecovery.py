@@ -18,7 +18,6 @@ class MailSender:
         Please go to http://budgetbuddy001.appspot.com/PasswordRecovery/{0}
         You will get your new password within a minute after click the link
         """.format(toToken)
-        print body
         mail.send_mail("BudgetBuddy Support <budgetbuddy00@gmail.com>",
                        toFirstName + " " + toLastName + " <" + toAddress + ">",
                        "Password Recovery", body)
