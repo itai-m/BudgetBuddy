@@ -4,7 +4,8 @@ class BudgeteerNotification(ndb.Model):
     #src invited dst to share a budget
     srcBudgeteer = ndb.KeyProperty()
     dstBudgeteer = ndb.KeyProperty()
-    type = ndb.StringProperty()
+    message = ndb.StringProperty()
+    link = ndb.StringProperty()
 
     @staticmethod
     def getNotificationsByDstKey(dstKey):
@@ -13,7 +14,10 @@ class BudgeteerNotification(ndb.Model):
         :param dstKey: The Id of the destination budgeteer.
         :return: List (query) of all the Budgeteer (DstKey) notification that equals to the received dstKey
         '''
-        return BudgeteerNotification.query(BudgeteerNotification.dstBudgeteer == dstKey)
+        notification_list = list()
+        for notification in BudgeteerNotification.query(BudgeteerNotification.dstBudgeteer == dstKey):
+            notification_list.append(notification)
+        return notification_list
 
     @staticmethod
     def addNotification(budgeteerNotification):
@@ -24,3 +28,24 @@ class BudgeteerNotification(ndb.Model):
         '''
         budgeteerNotification.put()
         return budgeteerNotification.key.id()
+
+    @staticmethod
+    def removeNotificationByKey(budgeteer_notification_key):
+        '''
+        Gets a notification key and removes it from the datastore
+        :param budgeteerNotification: notification to remove
+        :return: None
+        '''
+        budgeteer_notification_key.delete()
+        return None
+
+    @staticmethod
+    def removeAllMyNotifications(budgeteer_dst_key):
+        '''
+        gets budgeteer key and removes all his notification (aka clear his list)
+        :param budgeteer_dst_key: budgeteer key
+        :return: None
+        '''
+        for notification in BudgeteerNotification.query(BudgeteerNotification.dstBudgeteer == budgeteer_dst_key):
+            BudgeteerNotification.removeNotificationByKey(notification.key)
+        return None

@@ -13,6 +13,7 @@ class EditBudgetHandler(webapp2.RequestHandler):
             self.redirect('/Login')
             return
         template_params = dict()
+        template.register_template_library('web.templatetags.filter_app')
         template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/EditBudget.html", template_params)
         self.response.write(html)

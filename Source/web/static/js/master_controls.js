@@ -37,7 +37,6 @@ function submitLogin() {
 		});
 	}
 }
-
 function submitEditedEntry()
 {
 	var description = $('#desc-textbox').val();
@@ -60,7 +59,7 @@ function submitEditedEntry()
 		document.getElementById("errorText").innerHTML = "The description field is mandatory.";
 		return;
 	}
-		else
+	else
 	{
 
 		document.getElementById("editBudgetEntry").disabled = true;
@@ -127,7 +126,6 @@ function submitNewEntry()
 
 
 }
-
 function submitRegistration() {
 	var FirstName = $('#FirstName').val();
 	var LastName = $('#LastName').val();
@@ -162,7 +160,6 @@ function submitRegistration() {
 		});
 	}
 }
-
 function removeEntry(entryId,budgetId) {
 	$.ajax({
 		url:'/RemoveEntryFromBudget',
@@ -180,7 +177,6 @@ function removeEntry(entryId,budgetId) {
 		}
 	});
 }
-
 function removeBudget(budgetId) {
 	$.ajax({
 		url:'/RemoveBudgetFromBudget',
@@ -215,7 +211,6 @@ function ExitBudget(budgetId) {
 		}
 	});
 }
-
 function submitProfile() {
 	var FirstName = $('#FirstName').val();
 	var LastName = $('#LastName').val();
@@ -249,11 +244,9 @@ function submitProfile() {
 		});
 	}
 }
-
 function isNumber(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
-
 // Create Budget page functions.
 function usernameExist()
 {
@@ -274,10 +267,8 @@ function usernameExist()
 			document.getElementById("usernameExistField").innerHTML = "Username doesnt exist!"
 			console.error(xhr, status, error);
 		}
-		});
+	});
 }
-
-//
 function addRow()
 {
 
@@ -306,7 +297,7 @@ function addRow()
 			var cell2=row.insertCell(1);
 			cell2.innerHTML = username;
 			var cell3=row.insertCell(2);
-		 	if($('#partner').is(':checked')) { cell3.innerHTML = "Budget Partner"; }
+			if($('#partner').is(':checked')) { cell3.innerHTML = "Budget Partner"; }
 			if($('#viewer').is(':checked')) { cell3.innerHTML = "Budget Viewer"; }
 			var cell4=row.insertCell(3);
 			cell4.innerHTML =  '<button type="button" class="btn btn-danger btn-cons" onclick="delRow(\'' + username + '\');">Remove</button>';
@@ -317,11 +308,10 @@ function addRow()
 			document.getElementById("usernameExistField").innerHTML = "Username doesnt exist!"
 			console.error(xhr, status, error);
 		}
-		});
+	});
 	document.getElementById("Add").disabled = false;
 
 }
-
 function delRow(username){
 	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
@@ -339,7 +329,6 @@ function delRow(username){
 	}
 
 }
-
 function reorderRows()
 {
 	tableID = 'budgeteerTable';
@@ -355,8 +344,6 @@ function reorderRows()
 		row.cells[0].innerHTML = i;
 	}
 }
-
-
 function checkBudgeteerInTable(username){
 	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
@@ -372,12 +359,11 @@ function checkBudgeteerInTable(username){
 	}
 	return false;
 }
-
 function createBudget(){
 	budgetName = $('#budgetName').val();
 	tagList = getCheckedTags(); // [tag],[tag],[tag] string
 	participantList = getParticipants(); // [participant name]:[permission],[participant name][[:permission]
-		$.ajax({
+	$.ajax({
 		url:'/SubmitNewBudget',
 		type:'GET',
 		dataType:'json',
@@ -392,9 +378,8 @@ function createBudget(){
 			document.getElementById("submitError").innerHTML =  xhr.responseText;
 			console.error(xhr, status, error);
 		}
-		});
+	});
 }
-
 function getCheckedTags()
 {
 	tags = $('.tagCheckbox:checkbox:checked');
@@ -410,7 +395,6 @@ function getCheckedTags()
 	}
 	return taglist;
 }
-
 function getParticipants()
 {
 	tableID = 'budgeteerTable';
@@ -446,8 +430,6 @@ function getParticipants()
 	}
 	return retString;
 }
-
-
 function sendNewChatMessage()
 {
 	var button = $('#submitChatMessage');
@@ -469,9 +451,8 @@ function sendNewChatMessage()
 			alert("error");
 			console.error(xhr, status, error);
 		}
-		});
+	});
 }
-
 function clearChatMessage()
 {
 	var budgetId = $('#hiddenBudgetId').val();
@@ -482,16 +463,80 @@ function clearChatMessage()
 		data:{budgetId: budgetId },
 		success:function(data, status, xhr)
 		{
-			setTimeout(reload_page, 2000);
+			setTimeout(function reload_page(){ 	location.reload(); }, 2000);
 		},
 		error:function(xhr, status, error)
 		{
 			alert( xhr.responseText);
 			console.error(xhr, status, error);
 		}
-		});
+	});
 }
-function reload_page()
-{
-	location.reload();
+function ShowNotification(notification_id,row_number) {
+	$.ajax({
+		url:'/RemoveNotification',
+		type:'GET',
+		dataType:'json',
+		data:{notification_id:notification_id},
+		success:function(data, status, xhr)
+		{
+			var ul = document.getElementById("notificationsList");
+			var li_list = ul.getElementsByTagName("li");
+			for(var i=0;i<li_list.length;i++)
+			{
+				if (li_list[i].hasAttribute("id") == true)
+				{
+					if (li_list[i].getAttribute("id") == row_number)
+					{
+						var str = li_list[i].getElementsByTagName("a")[0].getAttribute("href");
+						var js_notification_id = str.substring(str.indexOf("(")+1,str.lastIndexOf(","));
+						if (js_notification_id == notification_id)
+						{
+							li_list[i].remove();
+							var notificationNumber = document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText;
+							var num = parseInt(notificationNumber) - 1;
+							document.getElementById("headerNotificationNumber").innerText = "You Have " + num + " New Notifications";
+							document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = num;
+						}
+						else
+						{
+							return;
+						}
+					}
+				}
+			}
+			//document.location.href = data.link;
+		},
+		error:function(xhr, status, error)
+		{
+			alert(xhr.responseText);
+			console.error(xhr, status, error);
+		}
+	});
+}
+function removeAllNotifications() {
+	var ul = document.getElementById("notificationsList");
+	var li_list = ul.getElementsByTagName("li");
+	for(var i=0;i<li_list.length;i++)
+	{
+		li_list[i].remove();
+	}
+	document.getElementById("headerNotificationNumber").innerText = "You Have 0 New Notifications";
+	document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = 0;
+	$.ajax({
+		url:'/RemoveAllNotifications',
+		type:'GET',
+		dataType:'json',
+		data:{},
+		success:function(data, status, xhr)
+		{
+
+			location.reload();
+		},
+		error:function(xhr, status, error)
+		{
+			alert(xhr.responseText);
+			console.error(xhr, status, error);
+		}
+	});
 }

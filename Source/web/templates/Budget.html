@@ -13,8 +13,8 @@
 
 
     <div style="margin-bottom: 5px; border-radius: 12px;" width="800px" height="100px" class="AnnouncementBox">
-    <span id="AnnouncementBoxTitle" style='font-size:25px;'>Announcement Board</span>
-    <input style="background-color: transparent; float: right;" class="transpImage" type="image" src="../static/images/collapse.png" alt="Submit" width="45" height="45" value='hide/show' onclick="jQuery('#chatContainer').toggle('show');">
+        <span id="AnnouncementBoxTitle" style='font-size:25px;'>Announcement Board</span>
+        <input style="background-color: transparent; float: right;" class="transpImage" type="image" src="../static/images/collapse.png" alt="Submit" width="45" height="45" value='hide/show' onclick="jQuery('#chatContainer').toggle('show');">
     </div>
     <div style="display:none; margin-bottom: 5px;" width="800px" height="300px" id="chatContainer" class="AnnouncementBox">
         <center>
@@ -65,27 +65,31 @@
                 <td>{{ entry|getEntryTagDescriptionByKey }}</td>
                 <td>{{ entry|getEntryAddedByByKey }}</td>
                 <td>{{ entry|getEntryCreationDateByKey }}</td>
-                <td class="controlTd">
-                    <div class="settingsIcons">
-                        {% if entry|getEntryAddedByByKey == userName or budget|getMyPermission:userName == "Manager" %}
+                {% if entry|getEntryAddedByByKey == userName or budget|getMyPermission:userName == "Manager" %}
+                    <td class="controlTd">
+                        <div class="settingsIcons">
                             <span class="settingsIcon"><i class="fa fa-cog"></i></span>
-                            <a id="removeEntry"
-                               href="javascript: removeEntry({{ entry.id }},{{ budget.key.id }});"><span
-                                    class="settingsIcon"><i class="fa fa-times"></i></span></a>
+                            <a id="removeEntry" href="javascript: removeEntry({{ entry.id }},{{ budget.key.id }});"><span class="settingsIcon"><i class="fa fa-times"></i></span></a>
                             <a href="/EditEntry/{{ entry.id }}?budgetId={{ budget.key.id }}">
                                 <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
                             </a>
-                        {% endif %}
-                    </div>
-                </td>
+                        </div>
+                    </td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+
 
             </tr>
         {% endfor %}
+        <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+        <script src="../static/js/budgets.js"></script>
     </table>
     <br>
     <center>
         {% if budget|getMyPermission:userName == "Manager" or budget|getMyPermission:userName == "Partner" %}
-            <a href="../AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a>
+            <a href="/AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a>
         {% endif %}
     </center>
 
@@ -105,8 +109,8 @@
             var f, n;
 
             for (var key in tagsPieDic) {
-                f = key
-                n = tagsPieDic[key]
+                f = key;
+                n = tagsPieDic[key];
                 data_tags.addRows([[f, n]])
             }
 
@@ -115,8 +119,8 @@
             data_users.addColumn('number', 'Total Amount');
 
             for (var key in usersPieDic) {
-                f = key
-                n = usersPieDic[key]
+                f = key;
+                n = usersPieDic[key];
                 data_users.addRows([[f, n]])
             }
 
@@ -138,7 +142,7 @@
             chart_users.draw(data_users, options_users);
         }
     </script>
-    </head>
+
     <div i="piechart_parent" width="800px">
         <div id="piechart_tags"></div>
         <div id="piechart_users"></div>

@@ -37,7 +37,7 @@ class IndexHandler(webapp2.RequestHandler):
                 tagname_pair_list.append([tag_object_list[i].description, None])
             else:
                 tagname_pair_list.append([tag_object_list[i].description, tag_object_list[i+1].description])
-
+        template.register_template_library('web.templatetags.filter_app')
         template_params['tagnamePairList'] = tagname_pair_list
         template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/CreateBudget.html", template_params)
