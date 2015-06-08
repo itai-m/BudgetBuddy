@@ -1,6 +1,6 @@
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
-	$('#RegistrationSubmit').on('click', submitRegistration);
+    $('#RegistrationSubmit').on('click', submitRegistration);
 	$('#ProfileSettingSubmit').on('click',submitProfile );
 });
 
@@ -221,7 +221,7 @@ function submitProfile() {
 	var BirthYear = $('#BirthYear').val();
 	var gender = $('#gender').val();
 	var password = $('#password').val();
-	var oldpassword = $('#oldpassword').val();
+    var oldpassword = $('#oldpassword').val();
 	if (password == null || password == "")
 	{
 		alert("There appears to be a field missing from the form.");
@@ -229,19 +229,19 @@ function submitProfile() {
 	else
 	{
 		$.ajax({
-			url:'/RegistrationCheck',
-			type:'GET',
-			dataType:'json',
-			data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
-			success:function(data, status, xhr)
-			{
-				document.getElementById("errorText").innerHTML = "No tag was selected."
-			},
-			error:function(xhr, status, error)
-			{
-				alert(xhr.responseText);
-				console.error(xhr, status, error);
-			}
+		url:'/RegistrationCheck',
+		type:'GET',
+		dataType:'json',
+		data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
+		success:function(data, status, xhr)
+		{
+			document.location.href = '/Budgets';
+		},
+		error:function(xhr, status, error)
+		{
+			alert(xhr.responseText);
+			console.error(xhr, status, error);
+		}
 		});
 	}
 }
