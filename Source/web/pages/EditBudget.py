@@ -120,6 +120,7 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
                 temp_entry.tagKey = Tag.getTagKeyByName("Untagged")
                 Entry.updateEntry(temp_entry)
 
+
         Budget.addBudget(budget)
         self.response.write(json.dumps({'status':'OK'}))
 

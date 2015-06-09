@@ -200,6 +200,14 @@ class Budgeteer(ndb.Model):
         return Budgeteer.get_by_id(long(budgeteerId))
 
     @staticmethod
+    def getBudgeteerByKey(budgeteer_key):
+        '''
+        Converts a budgeteer ID to a budgeteer object.
+        :param budgeteerID: budgeteer id.
+        :return: budgeteer object associated with that id.
+        '''
+        return budgeteer_key.get()
+    @staticmethod
     def removeBudgetByKey(participantId, budgetKey):
         '''
         Removes budget key from the budget list.

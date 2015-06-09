@@ -18,11 +18,19 @@ class IndexHandler(webapp2.RequestHandler):
         template.register_template_library('web.templatetags.filter_app')
         budget = Budget.getBudgetById(long(budgetId))
         template_params = dict()
+        assoc_budgeteers = Budget.getAssociatedBudgeteersId(budget)
+        for entry in budget.entryList:
+            temp_entry = Entry.getEntryByKey(entry)
+            print temp_entry
+            budgeteer_id = long(Budgeteer.getBudgeteerByKey(temp_entry.addedBy).key.id())
+            print budgeteer_id
+            if  budgeteer_id not in assoc_budgeteers:
+                Budget.removeEntriesByBudgeteerId(budget, budgeteer_id)
 
         template_params['chatMessages'] = ChatMessage.getChatMessagesByBudgetId((budgetId)).fetch()
         template_params['userName'] = budgeteer.userName
         template_params['userId'] = budgeteer.key.id()
-        template_params['budget'] = budget
+        template_params['budget'] = Budget.getBudgetById(long(budgetId))
         template_params['budgetId'] = budgetId
         if  Budget.getPermissionByBudgeteerId(long(budgeteer.key.id()), budget) == "Manager":
             template_params['budgetManager'] = True
