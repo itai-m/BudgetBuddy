@@ -29,7 +29,14 @@ class SendChatMessageHandler(webapp2.RequestHandler):
         ChatMessage.addChatMessage(chat_message)
 
         self.error(200)
-        self.response.write(json.dumps({'status':'OK'}))
+        self.response.write(json.dumps(
+            {
+                'time':str(chat_message.time.strftime("%Y-%m-%d %H:%m")),
+                'username':str(budgeteer.userName),
+                'text':str(chat_message.text),
+                'status':'OK'
+            }
+        ))
         return
 
 class ClearChatMessagesHandler(webapp2.RequestHandler):
@@ -48,6 +55,7 @@ class ClearChatMessagesHandler(webapp2.RequestHandler):
 
         permission = Budget.getPermissionByBudgeteerId(budgeteerId, Budget.getBudgetById(budgetId))
         if permission != "Manager":
+            self.error(403)
             self.response.write('Only budget manager can clean chat.')
             return
         ChatMessage.clearChatMessagesForBudgetId(budgetId)
