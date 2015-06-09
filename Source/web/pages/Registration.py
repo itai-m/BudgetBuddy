@@ -49,7 +49,6 @@ class RegistrationCheckHandler(webapp2.RequestHandler):
         BudgeteerObj.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
         BudgeteerObj.gender = self.request.get("gender")
 
-
         budgeteerId = Budgeteer.registerBudgeteer(BudgeteerObj)
 
         if not budgeteerId:

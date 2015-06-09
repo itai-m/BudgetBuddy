@@ -3,8 +3,6 @@ $(function() {  //this is jQuery's short notation for "fire all this when page i
     $('#RegistrationSubmit').on('click', submitRegistration);
 
 });
-
-
 function submitLogin() {
 	var username = $('#loginUN').val();
 	var password = $('#loginPSW').val();
@@ -139,14 +137,21 @@ function submitRegistration() {
 	var password = $('#password').val();
     var repassword =$('#repassword').val();
 
+	var js_date = new Date(BirthYear,BirthMonth,BirthDay);
+
 	if (username == null || username == "" || password == null || password == "")
 	{
-		alert("There appears to be a field missing from the form.");
+		alert("There appears to be a missing field");
 	}
     else if (repassword!=password)
     {
-        alert("passwords don't matching");
+        alert("Password don't match");
     }
+	/*else if ((js_date.getDay() != BirthDay) || (js_date.getMonth() != BirthMonth) || (js_date.getYear() != BirthYear))
+	{
+		alert("Wrong Date Input");
+		alert(js_date)
+	}*/
 	else
 	{
 		$.ajax({
