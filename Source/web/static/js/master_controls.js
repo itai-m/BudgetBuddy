@@ -339,7 +339,6 @@ function addRow()
 }
 function delAllRowsFromChatTable(tableID){
 	var table=document.getElementById(tableID);
-	var rowCount=table.rows.length;
 	while(table.rows.length >0)
 	{
 		table.deleteRow(0);
@@ -479,7 +478,7 @@ function sendNewChatMessage()
 		success:function(data, status, xhr)
 		{
 			delAllRowsFromChatTable("ChatTable");
-			for(var i=0;i<data.list.length;i++)
+			for(var i=data.list.length-1;i >= 0;i--)
 			{
 
 				$("#ChatTable").prepend("" +
