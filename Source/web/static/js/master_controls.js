@@ -1,10 +1,8 @@
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
-    $('#RegistrationSubmit').on('click', submitRegistration);
+	$('#RegistrationSubmit').on('click', submitRegistration);
 
 });
-
-
 function submitLogin() {
 	var username = $('#loginUN').val();
 	var password = $('#loginPSW').val();
@@ -131,22 +129,37 @@ function submitRegistration() {
 	var FirstName = $('#FirstName').val();
 	var LastName = $('#LastName').val();
 	var email = $('#email').val();
-	var BirthMonth = $('#BirthMonth').val();
+	var BirthMonth = getMonthFromString($('#BirthMonth').val());
 	var BirthDay = $('#BirthDay').val();
 	var BirthYear = $('#BirthYear').val();
 	var gender = $('#gender').val();
 	var username = $('#username').val();
 	var password = $('#password').val();
-    var repassword =$('#repassword').val();
+	var repassword =$('#repassword').val();
+	if (BirthMonth = -1)
+	{
+		alert("Invalid Month Name");
+		return false;
+	}
+	var js_date = new Date(BirthYear,BirthMonth,BirthDay);
 
 	if (username == null || username == "" || password == null || password == "")
 	{
-		alert("There appears to be a field missing from the form.");
+		alert("There appears to be a missing field");
 	}
-    else if (repassword!=password)
-    {
-        alert("passwords don't matching");
-    }
+	else if (repassword != password)
+	{
+		alert("Password don't match");
+	}
+	else if ((js_date.getDay() != BirthDay) || (js_date.getFullYear() != BirthYear) || (js_date.getFullYear() != BirthYear))
+	{
+		alert(BirthDay);
+		alert(js_date.getDay());
+		alert(BirthYear);
+		alert(js_date.getFullYear());
+		alert("Wrong Date Input");
+		alert(js_date)
+	}
 	else
 	{
 		$.ajax({
@@ -228,11 +241,11 @@ function submitProfile() {
 	var gender = $('#gender').val();
 	var password = $('#password').val();
 	var oldpassword = $('#oldpassword').val();
-    var repassword =$('#repassword').val();
-    if (repassword!=password)
-    {
-        alert("passwords don't matching");
-    }
+	var repassword =$('#repassword').val();
+	if (repassword!=password)
+	{
+		alert("passwords don't matching");
+	}
 	else if (password == null || password == "")
 	{
 		alert("There appears to be a field missing from the form.");
@@ -240,19 +253,19 @@ function submitProfile() {
 	else
 	{
 		$.ajax({
-		url:'/ProfileSettingsCheck',
-		type:'GET',
-		dataType:'json',
-		data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
-		success:function(data, status, xhr)
-		{
-			document.location.href = '/Budgets';
-		},
-		error:function(xhr, status, error)
-		{
-			alert(xhr.responseText);
-			console.error(xhr, status, error);
-		}
+			url:'/ProfileSettingsCheck',
+			type:'GET',
+			dataType:'json',
+			data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
+			success:function(data, status, xhr)
+			{
+				document.location.href = '/Budgets';
+			},
+			error:function(xhr, status, error)
+			{
+				alert(xhr.responseText);
+				console.error(xhr, status, error);
+			}
 		});
 	}
 }
@@ -557,3 +570,11 @@ function removeAllNotifications() {
 		}
 	});
 }
+function getMonthFromString(mon){
+
+   var d = Date.parse(mon + "1, 2012");
+   if(!isNaN(d)){
+      return new Date(d).getMonth() + 1;
+   }
+   return -1;
+ }

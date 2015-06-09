@@ -15,9 +15,11 @@ class HelpHandler(webapp2.RequestHandler):
         
         if loggedIn:
             template_params['base_template'] = "master_page.html"
+            template_params['userName'] = budgeteer.userName
+            template.register_template_library('web.templatetags.filter_app')
         else:
             template_params['base_template'] = "guest_master.html"
-        template_params['userName'] = budgeteer.userName
+
         html = template.render("web/templates/Help.html", template_params)
         self.response.write(html)
 
