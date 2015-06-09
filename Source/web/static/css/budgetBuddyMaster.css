@@ -1043,7 +1043,7 @@ a:hover,a:active,a:focus
 {
 	border-bottom: 1px solid #f4f4f4;
 	display: block;
-	white-space: nowrap;
+
 }
 .navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a:hover,.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a:hover,.navbar-nav>.tasks-menu>.dropdown-menu>li .menu>li>a:hover
 {
@@ -1056,7 +1056,7 @@ a:hover,a:active,a:focus
 	overflow: hidden;
 	padding: 10px;
 	text-overflow: ellipsis;
-	white-space: nowrap;
+
 }
 .navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a>.glyphicon,.navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a>.fa,.navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a>.ion
 {
@@ -4338,6 +4338,12 @@ table.text-center,table.text-center td,table.text-center th
 {
 	width: 100%!important;
 }
+.notifications {
+    display:inline;
+    width:100%;
+    word-wrap:break-word;
+}
+
 @media print
 {
 	.no-print,.main-sidebar,.left-side,.main-header,.content-header

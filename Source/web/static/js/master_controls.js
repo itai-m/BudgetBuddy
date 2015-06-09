@@ -154,10 +154,10 @@ function submitRegistration() {
 	{
 		alert("Wrong Date Input");
 	}
-    else if (gender==null)
-    {
-        alert("Wrong Gender Input");
-    }
+	else if (gender==null)
+	{
+		alert("Wrong Gender Input");
+	}
 	else
 	{
 		$.ajax({
@@ -240,13 +240,13 @@ function submitProfile() {
 	var password = $('#password').val();
 	var oldpassword = $('#oldpassword').val();
 	var repassword =$('#repassword').val();
-    var js_date = new Date(parseInt(BirthYear),parseInt(BirthMonth),parseInt(BirthDay),0,0,0,0);
+	var js_date = new Date(parseInt(BirthYear),parseInt(BirthMonth),parseInt(BirthDay),0,0,0,0);
 
-    if (repassword!=password)
+	if (repassword!=password)
 	{
 		alert("passwords don't matching");
 	}
-    else if (!((js_date.getUTCDate() == BirthDay-1)|| (BirthDay==1)) || (js_date.getFullYear() != BirthYear) || (js_date.getFullYear() != BirthYear))
+	else if (!((js_date.getUTCDate() == BirthDay-1)|| (BirthDay==1)) || (js_date.getFullYear() != BirthYear) || (js_date.getFullYear() != BirthYear))
 	{
 		alert("Wrong Date Input");
 	}
@@ -330,12 +330,19 @@ function addRow()
 		error:function(xhr, status, error)
 		{
 			document.getElementById("usernameExistField").style.color = "red";
-			document.getElementById("usernameExistField").innerHTML = "Username doesnt exist!"
+			document.getElementById("usernameExistField").innerHTML = "Username doesnt exist!";
 			console.error(xhr, status, error);
 		}
 	});
 	document.getElementById("Add").disabled = false;
 
+}
+function delAllRowsFromChatTable(tableID){
+	var table=document.getElementById(tableID);
+	while(table.rows.length >0)
+	{
+		table.deleteRow(0);
+	}
 }
 function delRow(username){
 	tableID = 'budgeteerTable';
@@ -459,8 +466,8 @@ function getParticipants()
 function sendNewChatMessage()
 {
 	var button = $('#submitChatMessage');
-	button.attr('disabled', 'disabled');
 	var message = $('#ChatMessage').val();
+	//$('#ChatMessage')[0].value = "";
 	var budgetId = $('#hiddenBudgetId').val();
 	$.ajax({
 		url:'/SendChatMessage',
@@ -470,7 +477,24 @@ function sendNewChatMessage()
 
 		success:function(data, status, xhr)
 		{
-			setTimeout(function reload_page(){ 	location.reload(); button.removeAttr('disabled');}, 2000);
+			delAllRowsFromChatTable("ChatTable");
+			for(var i=data.list.length-1;i >= 0;i--)
+			{
+
+				$("#ChatTable").prepend("" +
+					"<tr>" +
+					"<td width='10%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.list[i].time+"]</span></td>" +
+					"<td width='7%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.list[i].username+"]</span></td>" +
+					"<td width='83%' height='50px'>&nbsp;<span id='chatMessageSpan' style='font-size: 14px;'>"+data.list[i].text+"</span></td>" +
+					"</tr>");
+			}
+			$("#ChatTable").prepend("" +
+				"<tr>" +
+				"<td width='10%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.time+"]</span></td>" +
+				"<td width='7%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.username+"]</span></td>" +
+				"<td width='83%' height='50px'>&nbsp;<span id='chatMessageSpan' style='font-size: 14px;'>"+data.text+"</span></td>" +
+				"</tr>");
+			//setTimeout(function reload_page(){ 	location.reload(); }, 800);
 		},
 		error:function(xhr, status, error)
 		{
@@ -560,7 +584,6 @@ function removeAllNotifications() {
 		data:{},
 		success:function(data, status, xhr)
 		{
-
 			location.reload();
 		},
 		error:function(xhr, status, error)
@@ -570,11 +593,3 @@ function removeAllNotifications() {
 		}
 	});
 }
-function getMonthFromString(mon){
-
-   var d = Date.parse(mon + "1, 2012");
-   if(!isNaN(d)){
-      return new Date(d).getMonth() + 1;
-   }
-   return -1;
- }

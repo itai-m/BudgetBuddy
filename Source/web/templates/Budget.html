@@ -11,39 +11,8 @@
 
 {% block content %}
 
+    {%  include "budget_chat_template.html" %}
 
-    <div style="margin-bottom: 5px; border-radius: 12px;" width="800px" height="100px" class="AnnouncementBox">
-        <span id="AnnouncementBoxTitle" style='font-size:25px;'>Announcement Board</span>
-        <input style="background-color: transparent; float: right;" class="transpImage" type="image" src="../static/images/collapse.png" alt="Submit" width="45" height="45" value='hide/show' onclick="jQuery('#chatContainer').toggle('show');">
-    </div>
-    <div style="display:none; margin-bottom: 5px;" width="800px" height="300px" id="chatContainer" class="AnnouncementBox">
-        <center>
-            <div id="Chatbox" style="height:150px; overflow: auto;" >
-
-                <table class="gradienttable" id="ChatTable" width="100%">
-
-                    {%  for message in chatMessages %}
-                        <tr>
-                            <td width="10%" height="50px">&nbsp;<span id="chatUsernameSpan" style="font-size: 14px;">[{{ message.time|date:'Y-m-d H:i' }}] </span></td>
-                            <td width="7%" height="50px">&nbsp;<span id="chatUsernameSpan" style="font-size: 14px;">[{{ message.sent_by|getUsernameByKey }}] </span></td>
-                            <td width="83%" height="50px">&nbsp;<span id="chatMessageSpan" style="font-size: 14px;">{{ message.text }}</span></td>
-                        </tr>
-                    {%  endfor %}
-                </table>
-                <br>
-                <br>
-            </div><br>
-            {% if budgetManager %}
-                <button id="SubmitMessage" style="float: left;" onclick="clearChatMessage();">Clean Chat</button>
-            {% endif %}
-
-            <input class="depth" id="ChatMessage" type="text" size="200"/>
-            <input id="hiddenBudgetId" type="hidden" value="{{ budget.key.id }}"/>
-            <button id="submitChatMessage" onclick="sendNewChatMessage();" onsubmit="return false;">Send</button>
-            <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
-            <script src="../static/js/budgets.js"></script>
-        </center>
-    </div>
     <br>
     <table class="flatTable">
         <tr class="titleTr">
@@ -143,9 +112,9 @@
         }
     </script>
 
-    <div i="piechart_parent" width="800px">
-        <div id="piechart_tags"></div>
-        <div id="piechart_users"></div>
+    <div id="piechart_parent" style="background-color: #ecf0f5">
+        <div id="piechart_tags"  style="background-color: #ecf0f5"></div>
+        <div id="piechart_users" style="background-color: #ecf0f5"></div>
     </div>
 
 {% endblock %}
