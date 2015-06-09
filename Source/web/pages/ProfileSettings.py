@@ -61,7 +61,7 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
             if Budgeteer.budgeteerEmailExist(Email):
                 self.response.write('Email already exists')
                 return
-        if BirthYear < 1900:
+        if int(BirthYear) < 1900:
             self.response.write('Year of birth is not valid')
             return
         budgeteer.email = Email
@@ -72,7 +72,11 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
         BirthMonth = BirthMonth.zfill(2)
         BirthDay = self.request.get("BirthDay")
         BirthDay = BirthDay.zfill(2)
-        budgeteer.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
+        try:
+            budgeteer.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
+        except ValueError:
+            self.response.write('Wrong Date Input')
+            return
         budgeteer.gender = self.request.get("gender")
 
 

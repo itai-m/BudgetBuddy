@@ -236,13 +236,15 @@ function submitProfile() {
 	var password = $('#password').val();
 	var oldpassword = $('#oldpassword').val();
 	var repassword =$('#repassword').val();
-	if (repassword!=password)
+    var js_date = new Date(parseInt(BirthYear),parseInt(BirthMonth),parseInt(BirthDay),0,0,0,0);
+
+    if (repassword!=password)
 	{
 		alert("passwords don't matching");
 	}
-	else if (password == null || password == "")
+    else if (!((js_date.getUTCDate() == BirthDay-1)|| (BirthDay==1)) || (js_date.getFullYear() != BirthYear) || (js_date.getFullYear() != BirthYear))
 	{
-		alert("There appears to be a field missing from the form.");
+		alert("Wrong Date Input");
 	}
 	else
 	{
