@@ -45,9 +45,9 @@ class Tag(ndb.Model):
     @staticmethod
     def addTagToDatastore(tag):
         '''
-        Adds a tag to the Datastore, and returns the key.
+        Adds a tag to the Data store, and returns the key.
         :param tag: Tag object.
-        :return: Key to the datastore entry of the tag object.
+        :return: Key to the data store entry of the tag object.
         '''
         tag.put()
         return tag.key
@@ -55,7 +55,7 @@ class Tag(ndb.Model):
     @staticmethod
     def removeTag(tag):
         '''
-        Removes a tag from the datastore.
+        Removes a tag from the data store.
         :param tag: Tag object.
         :return: None
         '''

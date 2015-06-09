@@ -1,7 +1,6 @@
 from google.appengine.ext import ndb
 
 class BudgeteerNotification(ndb.Model):
-    #src invited dst to share a budget
     srcBudgeteer = ndb.KeyProperty()
     dstBudgeteer = ndb.KeyProperty()
     message = ndb.StringProperty()

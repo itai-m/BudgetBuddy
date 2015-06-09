@@ -14,7 +14,7 @@ import operator
         [X] Update Budgeteer
         [X] Login
         [X] Get Budget List
-        [ ] Get Notification List
+        [X] Get Notification List
         [X] Add Budget To Budget List
         [X] Remove Budget By Key
 '''
@@ -199,14 +199,14 @@ class Budgeteer(ndb.Model):
         return Budgeteer.get_by_id(long(budgeteerId))
 
     @staticmethod
-    def removeBudgetByKey(particpantId, budgetKey):
+    def removeBudgetByKey(participantId, budgetKey):
         '''
         Removes budget key from the budget list.
         :param particpantId: the Id of the budgeteer whose list we gonna modify.
         :param budgetKey: The key of the budget to remove.
         :return: budgeteer id.
         '''
-        budgeteer = Budgeteer.getBudgeteerById(particpantId)
+        budgeteer = Budgeteer.getBudgeteerById(participantId)
         budgeteer.budgetList.remove(budgetKey)
         budgeteer.put()
         return budgeteer.key.id()

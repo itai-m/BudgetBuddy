@@ -17,9 +17,9 @@ class Entry(ndb.Model):
     @staticmethod
     def addEntryToDatastore(entry):
         '''
-        Receives an entry object, and adds it to the Datastore.
+        Receives an entry object, and adds it to the Data store.
         :param entry: Entry object to be added.
-        :return: Entry key after the submission to datastore.
+        :return: Entry key after the submission to data store.
         '''
         entry.put()
         return entry.key
@@ -55,8 +55,8 @@ class Entry(ndb.Model):
     @staticmethod
     def removeEntry(entryKey):
         '''
-        Removes an Entry from the Datastore.
-        :param entryKey: key of the Entry obejct to remove.
+        Removes an Entry from the Data store.
+        :param entryKey: key of the Entry object to remove.
         :return: returns None
         '''
         entryKey.delete()

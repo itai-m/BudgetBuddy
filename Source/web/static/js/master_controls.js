@@ -380,12 +380,13 @@ function checkBudgeteerInTable(username){
 	}
 	return false;
 }
-function createBudget(){
+function submitBudget(urladdress)
+{
 	budgetName = $('#budgetName').val();
 	tagList = getCheckedTags(); // [tag],[tag],[tag] string
 	participantList = getParticipants(); // [participant name]:[permission],[participant name][[:permission]
 	$.ajax({
-		url:'/SubmitNewBudget',
+		url:urladdress,
 		type:'GET',
 		dataType:'json',
 		data:{tagList: tagList, budgetName: budgetName, participantList: participantList},
