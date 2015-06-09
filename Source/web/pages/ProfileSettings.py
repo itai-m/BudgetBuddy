@@ -47,36 +47,42 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
 
         Email = self.request.get('email')
         BirthYear = self.request.get("BirthYear")
-        OldPassword = self.request.get("oldpassword")
-        checkpass = Budgeteer.logIn(budgeteer.userName, OldPassword)
         password = self.request.get('password')
-        repassword = self.request.get('repassword')
-        if not checkpass:
-            self.response.write('Old password not currect')
-            return
-        if len(password)<6:
-            self.response.write('password must be at least 6')
-            return
+        if len(password) != 0:
+            OldPassword = self.request.get("oldpassword")
+            checkpass = Budgeteer.logIn(budgeteer.userName, OldPassword)
+            if not checkpass:
+                self.response.write('Old password not currect')
+                return
+            if len(password)<6:
+                self.response.write('password must be at least 6')
+                return
+            budgeteer.password = password
         if not (Email.lower() == budgeteer.email.lower()):
             if Budgeteer.budgeteerEmailExist(Email):
                 self.response.write('Email already exists')
                 return
-        if BirthYear < 1900:
+        if int(BirthYear) < 1900:
             self.response.write('Year of birth is not valid')
             return
         budgeteer.email = Email
         budgeteer.firstName = self.request.get('FirstName')
         budgeteer.lastName = self.request.get('LastName')
-        budgeteer.password = password
         BirthMonth = self.request.get("BirthMonth")
         BirthMonth = BirthMonth.zfill(2)
         BirthDay = self.request.get("BirthDay")
         BirthDay = BirthDay.zfill(2)
-        budgeteer.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
+        try:
+            budgeteer.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
+        except ValueError:
+            self.response.write('Wrong Date Input')
+            return
         budgeteer.gender = self.request.get("gender")
 
-
-        budgeteerId = Budgeteer.updateBudgeteerAccount(budgeteer)
+        if len(password) != 0:
+            budgeteerId = Budgeteer.updateBudgeteerAccount(budgeteer)
+        else:
+            budgeteerId = Budgeteer.updateBudgeteerAccount(budgeteer, False)
 
         if not budgeteerId:
             self.error(403)

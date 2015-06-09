@@ -70,12 +70,15 @@
                                     <td>1</td>
                                     <td>{{ dicIdAndPermission|budgeteer_key_to_username }}</td>
                                     <td>Budget {{ budget|getMyPermissionById:dicIdAndPermission }}</td>
-                                    <td></td>
+                                    <td> {% if not budget|getMyPermissionById:dicIdAndPermission == "Manager" %}
+                                        <button type="button" class="btn btn-danger btn-cons" onclick="delRow('{{ dicIdAndPermission|budgeteer_key_to_username }}');">Remove</button>
+                                {% endif %}
+                                    </td>
                                     <td></td>
                                     </tr>
                                  {% endfor %}
                                  </tr>
-
+                                <script language="javascript">reorderRows();</script>
                                 </thead>
 
                             </table>
@@ -100,10 +103,15 @@
                        </tr>
                         {% endfor %}
                     </table>
+
+                    {% for tag in checkedTags %}
+                        <script langage="javascript">document.getElementById("{{tag}}").checked = true;</script>
+                    {% endfor %}
+
                 </div>
             </div>
             <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right"
-                   onsubmit="return false;" onclick="createBudget();">
+                   onsubmit="return false;" onclick="submitBudget('/SubmitEditedBudget/{{ budgetId }}');">
         </br><span id="submitError">&nbsp;</span>
         </div>
 
