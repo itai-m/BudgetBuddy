@@ -337,7 +337,7 @@ function addRow()
 	document.getElementById("Add").disabled = false;
 
 }
-function delAllRows(tableID){
+function delAllRowsFromChatTable(tableID){
 	var table=document.getElementById(tableID);
 	var rowCount=table.rows.length;
 	while(table.rows.length >0)
@@ -345,7 +345,6 @@ function delAllRows(tableID){
 		table.deleteRow(0);
 	}
 }
-
 function delRow(username){
 	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
@@ -479,7 +478,7 @@ function sendNewChatMessage()
 
 		success:function(data, status, xhr)
 		{
-			delAllRows("ChatTable");
+			delAllRowsFromChatTable("ChatTable");
 			for(var i=0;i<data.list.length;i++)
 			{
 
@@ -586,7 +585,6 @@ function removeAllNotifications() {
 		data:{},
 		success:function(data, status, xhr)
 		{
-
 			location.reload();
 		},
 		error:function(xhr, status, error)
