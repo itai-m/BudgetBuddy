@@ -47,16 +47,17 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
 
         Email = self.request.get('email')
         BirthYear = self.request.get("BirthYear")
-        OldPassword = self.request.get("oldpassword")
-        checkpass = Budgeteer.logIn(budgeteer.userName, OldPassword)
         password = self.request.get('password')
-        repassword = self.request.get('repassword')
-        if not checkpass:
-            self.response.write('Old password not currect')
-            return
-        if len(password)<6:
-            self.response.write('password must be at least 6')
-            return
+        if len(password) != 0:
+            OldPassword = self.request.get("oldpassword")
+            checkpass = Budgeteer.logIn(budgeteer.userName, OldPassword)
+            if not checkpass:
+                self.response.write('Old password not currect')
+                return
+            if len(password)<6:
+                self.response.write('password must be at least 6')
+                return
+            budgeteer.password = password
         if not (Email.lower() == budgeteer.email.lower()):
             if Budgeteer.budgeteerEmailExist(Email):
                 self.response.write('Email already exists')
@@ -67,7 +68,6 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
         budgeteer.email = Email
         budgeteer.firstName = self.request.get('FirstName')
         budgeteer.lastName = self.request.get('LastName')
-        budgeteer.password = password
         BirthMonth = self.request.get("BirthMonth")
         BirthMonth = BirthMonth.zfill(2)
         BirthDay = self.request.get("BirthDay")
@@ -79,8 +79,10 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
             return
         budgeteer.gender = self.request.get("gender")
 
-
-        budgeteerId = Budgeteer.updateBudgeteerAccount(budgeteer)
+        if len(password) != 0:
+            budgeteerId = Budgeteer.updateBudgeteerAccount(budgeteer)
+        else:
+            budgeteerId = Budgeteer.updateBudgeteerAccount(budgeteer, False)
 
         if not budgeteerId:
             self.error(403)

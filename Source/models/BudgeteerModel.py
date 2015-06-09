@@ -45,16 +45,17 @@ class Budgeteer(ndb.Model):
         return budgeteer.key.id()
 
     @staticmethod
-    def updateBudgeteerAccount(budgeteerToEdit):
+    def updateBudgeteerAccount(budgeteerToEdit, newPassword = True):
         '''
         Receives a budgeteer and replaces the current object data with the received data.
         (Identical to Register budgeteer function)
         :param budgeteerToEdit: Budgeteer object that contains all the budgeteer updated data.
         :return: budgeteer key id.
         '''
-        m = hashlib.md5()
-        m.update(budgeteerToEdit.password)
-        budgeteerToEdit.password = m.digest().decode("iso-8859-1")
+        if newPassword:
+            m = hashlib.md5()
+            m.update(budgeteerToEdit.password)
+            budgeteerToEdit.password = m.digest().decode("iso-8859-1")
         budgeteerToEdit.email.lower()
         budgeteerToEdit.userName.lower()
         budgeteerToEdit.put()
