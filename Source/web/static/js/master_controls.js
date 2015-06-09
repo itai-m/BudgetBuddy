@@ -460,7 +460,7 @@ function sendNewChatMessage()
 {
 	var button = $('#submitChatMessage');
 	var message = $('#ChatMessage').val();
-	$('#ChatMessage')[0].value = "";
+	//$('#ChatMessage')[0].value = "";
 	var budgetId = $('#hiddenBudgetId').val();
 	$.ajax({
 		url:'/SendChatMessage',
@@ -470,12 +470,13 @@ function sendNewChatMessage()
 
 		success:function(data, status, xhr)
 		{
-			$("#ChatTable").prepend("" +
+			/*$("#ChatTable").prepend("" +
 				"<tr>" +
 				"<td width='10%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.time+"]</span></td>" +
 				"<td width='7%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.username+"]</span></td>" +
 				"<td width='83%' height='50px'>&nbsp;<span id='chatMessageSpan' style='font-size: 14px;'>"+data.text+"</span></td>" +
-				"</tr>");
+				"</tr>");*/
+			setTimeout(function reload_page(){ 	location.reload(); }, 800);
 		},
 		error:function(xhr, status, error)
 		{
@@ -575,11 +576,3 @@ function removeAllNotifications() {
 		}
 	});
 }
-function getMonthFromString(mon){
-
-   var d = Date.parse(mon + "1, 2012");
-   if(!isNaN(d)){
-      return new Date(d).getMonth() + 1;
-   }
-   return -1;
- }

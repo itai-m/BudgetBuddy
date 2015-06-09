@@ -54,9 +54,10 @@
                                             <li id="{{ forloop.counter }}">
                                                 <a href="javascript: ShowNotification({{ notification.key.id }},{{ forloop.counter }});">
                                                     <i class="fa fa-users text-aqua"></i>
-                                                    <marquee behavior="scroll" direction="left" scrollamount="5">
+                                                    <span class="notifications">
                                                         {{ notification.message }}
-                                                    </marquee>
+                                                    </span>
+
                                                 </a>
                                             </li>
                                         {%  endfor %}
