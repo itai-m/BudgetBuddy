@@ -154,6 +154,10 @@ function submitRegistration() {
 	{
 		alert("Wrong Date Input");
 	}
+    else if (gender==null)
+    {
+        alert("Wrong Gender Input");
+    }
 	else
 	{
 		$.ajax({
