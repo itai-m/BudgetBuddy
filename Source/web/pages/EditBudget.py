@@ -4,6 +4,7 @@ from models.BudgeteerModel import Budgeteer
 from models.BudgetModel import Budget
 from models.TagModel import Tag
 from models.EntryModel import Entry
+from models.BudgeteerNotificationModel import BudgeteerNotification
 import datetime
 import json
 
@@ -120,6 +121,16 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
                 temp_entry.tagKey = Tag.getTagKeyByName("Untagged")
                 Entry.updateEntry(temp_entry)
 
+        message_template = " Has Invited You To His Budget {0}".format(budget.budgetName)
+        src_budgeteer_key = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).key
+        src_username = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).userName
+        for participant_budgeteer_id in Budget.getAssociatedBudgeteersId(budget):
+            if long(budgeteer.key.id()) != long(participant_budgeteer_id):
+                dst_budgeteer_key = Budgeteer.getBudgeteerById(long(participant_budgeteer_id)).key
+                new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key, dstBudgeteer=dst_budgeteer_key,
+                                                         message=src_username + message_template,
+                                                         link="/Budget/{0}".format(budget.key.id()))
+                BudgeteerNotification.addNotification(new_notification)
 
         Budget.addBudget(budget)
         self.response.write(json.dumps({'status':'OK'}))

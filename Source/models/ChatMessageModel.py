@@ -14,7 +14,6 @@ class ChatMessage(ndb.Model):
         :param budget_key: Budget id.
         :return: a list of chat messages object.
         '''
-
         return ChatMessage.query(ChatMessage.budget_key == Budget.getBudgetById(long(budget_id)).key).order(-ChatMessage.time)
 
 
@@ -25,7 +24,8 @@ class ChatMessage(ndb.Model):
         :param message: ChatMessage object..
         :return: the key after enter to datastore.
         '''
-        return message.put()
+        message.put()
+        return message.key
 
 
     @staticmethod

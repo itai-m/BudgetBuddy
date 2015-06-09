@@ -477,24 +477,16 @@ function sendNewChatMessage()
 
 		success:function(data, status, xhr)
 		{
-			delAllRowsFromChatTable("ChatTable");
-			for(var i=data.list.length-1;i >= 0;i--)
-			{
 
+			delAllRowsFromChatTable("ChatTable");
+			for(var i=data.list.length-1;i >= 0;i--) {
 				$("#ChatTable").prepend("" +
 					"<tr>" +
-					"<td width='10%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.list[i].time+"]</span></td>" +
-					"<td width='7%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.list[i].username+"]</span></td>" +
-					"<td width='83%' height='50px'>&nbsp;<span id='chatMessageSpan' style='font-size: 14px;'>"+data.list[i].text+"</span></td>" +
+					"<td width='10%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>[" + data.list[i].time + "]</span></td>" +
+					"<td width='7%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>[" + data.list[i].username + "]</span></td>" +
+					"<td width='83%' height='50px'>&nbsp;<span id='chatMessageSpan' style='font-size: 14px;'>" + data.list[i].text + "</span></td>" +
 					"</tr>");
 			}
-			$("#ChatTable").prepend("" +
-				"<tr>" +
-				"<td width='10%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.time+"]</span></td>" +
-				"<td width='7%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>["+data.username+"]</span></td>" +
-				"<td width='83%' height='50px'>&nbsp;<span id='chatMessageSpan' style='font-size: 14px;'>"+data.text+"</span></td>" +
-				"</tr>");
-			//setTimeout(function reload_page(){ 	location.reload(); }, 800);
 		},
 		error:function(xhr, status, error)
 		{

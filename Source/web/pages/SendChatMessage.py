@@ -5,6 +5,7 @@ from models.ChatMessageModel import ChatMessage
 from models.BudgetModel import Budget
 import datetime
 import json
+import time
 
 
 class SendChatMessageHandler(webapp2.RequestHandler):
@@ -30,6 +31,7 @@ class SendChatMessageHandler(webapp2.RequestHandler):
         list_to_write = []
         for chat in  ChatMessage.getChatMessagesByBudgetId(budget_key.id()).fetch():
             list_to_write.append({"time":chat.time.strftime("%Y-%m-%d %H:%m"),"username":Budgeteer.getBudgeteerById(chat.sent_by.id()).userName,"text":chat.text})
+        time.sleep(0.5)
         self.error(200)
         self.response.write(json.dumps(
             {
