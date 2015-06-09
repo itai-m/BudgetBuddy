@@ -51,6 +51,9 @@ handlers:
 - url: /SubmitNewBudget
   script: web.pages.CreateBudget.app
 
+- url: /SubmitEditedBudget/(.*)
+  script: web.pages.EditBudget.app
+
 - url: /EditBudget/(.*)
   script: web.pages.EditBudget.app
 
