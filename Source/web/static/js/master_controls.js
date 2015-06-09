@@ -129,20 +129,19 @@ function submitRegistration() {
 	var FirstName = $('#FirstName').val();
 	var LastName = $('#LastName').val();
 	var email = $('#email').val();
-	var BirthMonth = getMonthFromString($('#BirthMonth').val());
+	var BirthMonth = $('#BirthMonth').val();
 	var BirthDay = $('#BirthDay').val();
 	var BirthYear = $('#BirthYear').val();
 	var gender = $('#gender').val();
 	var username = $('#username').val();
 	var password = $('#password').val();
 	var repassword =$('#repassword').val();
-	if (BirthMonth = -1)
+	if (BirthMonth == -1)
 	{
 		alert("Invalid Month Name");
 		return false;
 	}
-	var js_date = new Date(BirthYear,BirthMonth,BirthDay);
-
+	var js_date = new Date(parseInt(BirthYear),parseInt(BirthMonth),parseInt(BirthDay),0,0,0,0);
 	if (username == null || username == "" || password == null || password == "")
 	{
 		alert("There appears to be a missing field");
@@ -151,14 +150,9 @@ function submitRegistration() {
 	{
 		alert("Password don't match");
 	}
-	else if ((js_date.getDay() != BirthDay) || (js_date.getFullYear() != BirthYear) || (js_date.getFullYear() != BirthYear))
+	else if (!((js_date.getUTCDate() == BirthDay-1)|| (BirthDay==1)) || (js_date.getFullYear() != BirthYear) || (js_date.getFullYear() != BirthYear))
 	{
-		alert(BirthDay);
-		alert(js_date.getDay());
-		alert(BirthYear);
-		alert(js_date.getFullYear());
 		alert("Wrong Date Input");
-		alert(js_date)
 	}
 	else
 	{

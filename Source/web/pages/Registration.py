@@ -34,7 +34,7 @@ class RegistrationCheckHandler(webapp2.RequestHandler):
         if len(password)<6:
             self.response.write('password must be at least 6')
             return
-        if BirthYear < 1900:
+        if int(BirthYear) < 1900:
             self.response.write('Year of birth is not valid')
             return
         BudgeteerObj = Budgeteer()
@@ -46,9 +46,13 @@ class RegistrationCheckHandler(webapp2.RequestHandler):
         BirthMonth = self.request.get("BirthMonth")
         BirthDay = self.request.get("BirthDay")
         BirthDay = BirthDay.zfill(2)
-        BudgeteerObj.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
-        BudgeteerObj.gender = self.request.get("gender")
+        try:
+            BudgeteerObj.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
+        except ValueError:
+            self.response.write('Wrong Date Input')
+            return
 
+        BudgeteerObj.gender = self.request.get("gender")
         budgeteerId = Budgeteer.registerBudgeteer(BudgeteerObj)
 
         if not budgeteerId:
