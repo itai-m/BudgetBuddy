@@ -3,6 +3,7 @@ import TagModel
 import EntryModel
 import BudgeteerModel
 import json
+import BudgetModel
 '''
     Functionality tests:
         [X] Add Budget
@@ -228,3 +229,11 @@ class Budget(ndb.Model):
         '''
         myPermission = Budget.getPermissionByBudgeteerId(budgeteerId,Budget.getBudgetById(budgetId))
         return myPermission == "Manager" or myPermission == "Partner"
+
+    @staticmethod
+    def removeEntriesByBudgeteerId(budget, budgeteerId):
+        for entry in budget.entryList:
+            temp_entry = EntryModel.Entry.getEntryByKey(entry)
+            if BudgeteerModel.Budgeteer.getBudgeteerById(budgeteerId).key == temp_entry.addedBy:
+                Budget.RemoveEntryFromBudget(entry, budget)
+                EntryModel.Entry.removeEntry(entry)
