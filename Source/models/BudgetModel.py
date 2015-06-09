@@ -1,10 +1,8 @@
 from google.appengine.ext import ndb
-
 import TagModel
 import EntryModel
 import BudgeteerModel
 import json
-
 '''
     Functionality tests:
         [X] Add Budget
@@ -34,7 +32,7 @@ class Budget(ndb.Model):
     @staticmethod
     def addBudget(budget):
         '''
-        Receives a Budget, and adds it to the datastore, and also to all the associated budgeteers
+        Receives a Budget, and adds it to the data store, and also to all the associated budgeteers
         :param budget: Budget object
         :return: Budget object id after submission.
         '''
@@ -113,7 +111,7 @@ class Budget(ndb.Model):
     @staticmethod
     def removeBudget(budget):
         '''
-        Deletes a budget from the datastore.
+        Deletes a budget from the data store.
         :param budget: Budget to delete.
         :return: None.
         '''
@@ -124,7 +122,7 @@ class Budget(ndb.Model):
         participantIdList = Budget.getAssociatedBudgeteersId(budget)
         for participantId in participantIdList:
             BudgeteerModel.Budgeteer.removeBudgetByKey(participantId, budget.key)
-        # Remove budget from datastore
+        # Remove budget from data store
         budget.key.delete()
 
     @staticmethod
@@ -180,7 +178,7 @@ class Budget(ndb.Model):
         '''
         Receives a budget and returns a list of the budgeteer ids associated with that budget.
         :param budget: Budget object
-        :return: List of budgeteer ids associated with the buddget.
+        :return: List of budgeteer ids associated with the budget.
         '''
         participantIdList = []
         participantsDictList = Budget.getParticipantsAndPermissionsDict(budget)
@@ -191,7 +189,7 @@ class Budget(ndb.Model):
     @staticmethod
     def getPermissionByBudgeteerId(budgeteerId, budget):
         '''
-        Gets a budgeteer Id and converts its permission on a specificed budget
+        Gets a budgeteer Id and converts its permission on a specified budget
         :param budgeteerId: budgeteer Id stored in the budget list
         :param budget: the budget itself
         :return: permission string if exists, None if not in list

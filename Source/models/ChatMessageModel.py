@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
 from models.BudgetModel import Budget
+
 class ChatMessage(ndb.Model):
     text = ndb.StringProperty()
     sent_by = ndb.KeyProperty()
