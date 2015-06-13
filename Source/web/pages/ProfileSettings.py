@@ -25,7 +25,7 @@ class IndexHandler(webapp2.RequestHandler):
         template_params['email'] = budgeteer.email
         template_params['gender'] = budgeteer.gender
         template_params['birthday'] = budgeteer.birthday
-        html = template.render("web/templates/profileSettings.html", template_params)
+        html = template.render("web/templates/profile_settings.html", template_params)
         self.response.write(html)
 
 

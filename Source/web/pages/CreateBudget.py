@@ -41,7 +41,7 @@ class IndexHandler(webapp2.RequestHandler):
         template.register_template_library('web.templatetags.filter_app')
         template_params['tagnamePairList'] = tagname_pair_list
         template_params['userName'] = budgeteer.userName
-        html = template.render("web/templates/CreateBudget.html", template_params)
+        html = template.render("web/templates/create_budget.html", template_params)
         self.response.write(html)
 
 class CreateChecksHandler(webapp2.RequestHandler):

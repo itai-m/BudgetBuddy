@@ -20,7 +20,7 @@ class AboutUsHandler(webapp2.RequestHandler):
         else:
             template_params['base_template'] = "guest_master.html"
 
-        html = template.render("web/templates/AboutUs.html", template_params)
+        html = template.render("web/templates/about_us.html", template_params)
         self.response.write(html)
 
 app = webapp2.WSGIApplication([('/AboutUs', AboutUsHandler)], debug=True)

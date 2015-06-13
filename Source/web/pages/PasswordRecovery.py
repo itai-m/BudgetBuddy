@@ -41,7 +41,7 @@ class IndexHandler(webapp2.RequestHandler):
             if budgeteer:
                 self.redirect('/Budgets')
         template_params = dict()
-        html = template.render("web/templates/PasswordRecovery.html", template_params)
+        html = template.render("web/templates/password_recovery.html", template_params)
         self.response.write(html)
 
     def post(self):
@@ -73,7 +73,7 @@ class IndexHandler(webapp2.RequestHandler):
         else:
             template_params['emailStatus'] = "There is no such email."
 
-        html = template.render("web/templates/PasswordRecovery.html", template_params)
+        html = template.render("web/templates/password_recovery.htmlc", template_params)
         self.response.write(html)
 
 

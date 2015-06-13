@@ -20,7 +20,7 @@ class HelpHandler(webapp2.RequestHandler):
         else:
             template_params['base_template'] = "guest_master.html"
 
-        html = template.render("web/templates/Help.html", template_params)
+        html = template.render("web/templates/help.html", template_params)
         self.response.write(html)
 
 app = webapp2.WSGIApplication([('/Help', HelpHandler)], debug=True)
