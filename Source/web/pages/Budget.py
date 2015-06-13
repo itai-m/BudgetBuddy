@@ -36,7 +36,7 @@ class IndexHandler(webapp2.RequestHandler):
             template_params['budgetManager'] = True
         else:
             template_params['budgetManager'] = False
-        html = template.render("web/templates/Budget.html", template_params)
+        html = template.render("web/templates/budget.html", template_params)
         self.response.write(html)
 
 class RemoveEntryHandler(webapp2.RequestHandler):

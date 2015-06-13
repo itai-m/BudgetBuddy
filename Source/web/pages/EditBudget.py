@@ -54,7 +54,7 @@ class EditBudgetHandler(webapp2.RequestHandler):
         template_params['checkedTags'] = budget_tag_list
         template_params['budgetId'] = budget_id
 
-        html = template.render("web/templates/EditBudget.html", template_params)
+        html = template.render("web/templates/edit_budget.html", template_params)
         self.response.write(html)
 
 
