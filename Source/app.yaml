@@ -112,6 +112,9 @@ handlers:
 - url: /RemoveAllNotifications
   script: web.pages.Notification.app
 
+- url: /Avatars
+  script: web.pages.Avatars.app
+
 #cacthes everything that wasn't cought until now
 - url: /
   script: web.pages.Budgets.app
