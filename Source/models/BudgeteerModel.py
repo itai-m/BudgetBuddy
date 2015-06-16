@@ -207,6 +207,7 @@ class Budgeteer(ndb.Model):
         :return: budgeteer object associated with that id.
         '''
         return budgeteer_key.get()
+
     @staticmethod
     def removeBudgetByKey(participantId, budgetKey):
         '''

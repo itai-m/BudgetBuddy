@@ -31,7 +31,6 @@ class IndexHandler(webapp2.RequestHandler):
                     reverse_order = True
                 template_params['budgetList'] = Budgeteer.getBudgetList(budgeteer, sort_by = sort_by, reverse = reverse_order)
             else:
-                print sort_by
                 template_params['budgetList'] = Budgeteer.getBudgetList(budgeteer, sort_by = sort_by)
         else:
             template_params['budgetList'] = Budgeteer.getBudgetList(budgeteer)

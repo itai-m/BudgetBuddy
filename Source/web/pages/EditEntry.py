@@ -70,7 +70,6 @@ class SubmitEditedEntryHandler(webapp2.RequestHandler):
         entry.amount = float(price)
 
         entryKey = Entry.updateEntry(entry)
-        print entryKey
         if not entryKey:
             self.error(403)
             self.response.write('Entry was not successfully submitted')

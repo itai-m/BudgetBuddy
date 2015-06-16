@@ -73,7 +73,6 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
         participant_list = self.request.get('participantList')
 
         budget = Budget.getBudgetById(long(budget_id))
-        print budget
         budget.budgetName = budget_name
         budget.creationDate = datetime.datetime.now()
         budget.tagList = []

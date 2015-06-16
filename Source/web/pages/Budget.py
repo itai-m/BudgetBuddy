@@ -5,6 +5,8 @@ from models.BudgetModel import Budget
 from models.EntryModel import Entry
 import json
 from models.ChatMessageModel import ChatMessage
+
+
 class IndexHandler(webapp2.RequestHandler):
     def get(self, budgetId):
         if self.request.cookies.get('budgeteerIdToken'):
@@ -21,9 +23,7 @@ class IndexHandler(webapp2.RequestHandler):
         assoc_budgeteers = Budget.getAssociatedBudgeteersId(budget)
         for entry in budget.entryList:
             temp_entry = Entry.getEntryByKey(entry)
-            print temp_entry
             budgeteer_id = long(Budgeteer.getBudgeteerByKey(temp_entry.addedBy).key.id())
-            print budgeteer_id
             if  budgeteer_id not in assoc_budgeteers:
                 Budget.removeEntriesByBudgeteerId(budget, budgeteer_id)
 
@@ -38,6 +38,7 @@ class IndexHandler(webapp2.RequestHandler):
             template_params['budgetManager'] = False
         html = template.render("web/templates/budget.html", template_params)
         self.response.write(html)
+
 
 class RemoveEntryHandler(webapp2.RequestHandler):
     def get(self):

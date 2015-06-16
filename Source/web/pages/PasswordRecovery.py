@@ -1,38 +1,11 @@
 from google.appengine.ext.webapp import template
-from google.appengine.api import mail
 from models.BudgeteerModel import Budgeteer
 from models.PasswordTokenRecoveryModel import PasswordTokenRecovery
+from api.MailSender import MailSender
 import webapp2
 import string
 import os
-import time
 
-class MailSender:
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def sendTokenInEmail(toFirstName, toLastName, toAddress, toToken):
-        body = """
-        Hello,
-        Please go to http://budgetbuddy001.appspot.com/PasswordRecovery/{0}
-        You will get your new password within a minute after click the link
-        """.format(toToken)
-        mail.send_mail("BudgetBuddy Support <budgetbuddy00@gmail.com>",
-                       toFirstName + " " + toLastName + " <" + toAddress + ">",
-                       "Password Recovery", body)
-
-    @staticmethod
-    def sendNewPasswordToEmail(toFirstName, toLastName, toAddress, toPass):
-        body = """
-        Hello,
-        Your new password has been set to {0}
-        You can login through http://budgetbuddy001.appspot.com/Login
-        with your username and new password
-        """.format(toPass)
-        mail.send_mail("BudgetBuddy Support <budgetbuddy00@gmail.com>",
-                       toFirstName + " " + toLastName + " <" + toAddress + ">",
-                       "Password Recovery", body)
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -51,9 +24,14 @@ class IndexHandler(webapp2.RequestHandler):
                 self.redirect('/Budgets')
 
         email = self.request.get("emailAddress")
-        #check email validation
 
         template_params = dict()
+        if not MailSender.check_if_email_valid(email):
+            template_params['emailStatus'] = "Please insert your email address"
+            html = template.render("web/templates/password_recovery.html", template_params)
+            self.response.write(html)
+            return
+
         budgeteerId = Budgeteer.getBudgeteerIdByEmail(email)
 
         if budgeteerId:
@@ -64,16 +42,14 @@ class IndexHandler(webapp2.RequestHandler):
                                                  " Please wait couple of minutes"
             else:
                 PasswordTokenRecovery.addTokenToDataStore(budgeteerId)
-                while PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId) is None:
-                    time.sleep(0.5)
-                MailSender.sendTokenInEmail(budgeteer.firstName, budgeteer.lastName,
-                                            budgeteer.email, PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId))
-
+                MailSender.send_password_recovery_token(budgeteer.userName,
+                                                        budgeteer.email,
+                                                        PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId))
                 template_params['emailStatus'] = "An Email with password has already been sent."
         else:
             template_params['emailStatus'] = "There is no such email."
 
-        html = template.render("web/templates/password_recovery.htmlc", template_params)
+        html = template.render("web/templates/password_recovery.html", template_params)
         self.response.write(html)
 
 
@@ -82,9 +58,9 @@ class SendNewPasswordHandler(webapp2.RequestHandler):
         budgeteerId = PasswordTokenRecovery.resetPassword(token)
         if budgeteerId:
             budgeteer = Budgeteer.getBudgeteerById(budgeteerId)
-            newPass = ''.join(string.digits[ord(c) % len(string.digits)] for c in os.urandom(16))
-            MailSender.sendNewPasswordToEmail(budgeteer.firstName, budgeteer.lastName, budgeteer.email, newPass)
-            budgeteer.password = newPass
+            new_pass = ''.join(string.digits[ord(c) % len(string.digits)] for c in os.urandom(16))
+            MailSender.send_new_password(budgeteer.userName, budgeteer.email, new_pass)
+            budgeteer.password = new_pass
             Budgeteer.updateBudgeteerAccount(budgeteer)
             self.redirect("/Login")
         else:
@@ -94,6 +70,3 @@ app = webapp2.WSGIApplication([
     ('/PasswordRecovery[\/]?', IndexHandler),
     ('/PasswordRecovery/(.*)', SendNewPasswordHandler)
 ], debug=True)
-
-
-
