@@ -122,4 +122,12 @@ def getCountUserAmountInBudget(budget,budgeteerKey):
         entry = Entry.getEntryByKey(entryKey)
         if(entry.addedBy==budgeteerKey):
            count+=entry.amount
-    return count
+    return
+
+@register.filter(name='username_to_image')
+def username_to_image(user_name):
+    budgeteer_id = Budgeteer.getBudgeteerIdByUserName(user_name)
+    budgeteer = Budgeteer.getBudgeteerById(budgeteer_id)
+    print budgeteer
+    print budgeteer_id
+    return  "../static/images/avatars/budgeteer" + str(budgeteer.avatar) + ".jpeg";

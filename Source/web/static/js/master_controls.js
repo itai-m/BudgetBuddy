@@ -544,3 +544,11 @@ function removeAllNotifications() {
 		}
 	});
 }
+
+function changeAvatar()
+{
+	var avatar_num = 1;
+	avatar_num = $('input[name=radioName]:checked').val();
+	var location = "/ChangeAvatar/" + avatar_num;
+	window.location.href = location;
+}

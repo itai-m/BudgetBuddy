@@ -115,6 +115,8 @@ handlers:
 - url: /Avatars
   script: web.pages.Avatars.app
 
+- url: /ChangeAvatar/(.*)
+  script: web.pages.Avatars.app
 #cacthes everything that wasn't cought until now
 - url: /
   script: web.pages.Budgets.app
