@@ -7,7 +7,6 @@ import json
 class ShowNotificationHandler(webapp2.RequestHandler):
     def get(self):
         budgeteer_id = None
-        notification_id = self.request.get("notification_id")
         if self.request.cookies.get('budgeteerIdToken'):
             budgeteer_id = long(self.request.cookies.get('budgeteerIdToken'))
             budgeteer = Budgeteer.getBudgeteerById(budgeteer_id)
@@ -20,26 +19,14 @@ class ShowNotificationHandler(webapp2.RequestHandler):
             self.redirect('/Login')
             return
 
-        if notification_id is None:
-            self.error(200)
-            return
+        notifications = BudgeteerNotification.getNotificationsByDstKey(budgeteer.key)
+        template.register_template_library('web.templatetags.filter_app')
+        template_params = dict()
+        template_params['notifications'] = notifications
+        template_params['userName'] = budgeteer.userName
+        html = template.render("web/templates/notifications.html", template_params)
 
-        notification_id = long(notification_id)
-        if BudgeteerNotification.get_by_id(notification_id) is None:
-            self.error(200)
-            return
-
-        if BudgeteerNotification.get_by_id(notification_id).dstBudgeteer != \
-                Budgeteer.getBudgeteerById(budgeteer_id).key:
-            self.error(403)
-            self.response.write("You Are Not Authorized to remove this Notification")
-            return
-
-        link = BudgeteerNotification.get_by_id(notification_id).link
-        BudgeteerNotification.removeNotificationByKey(BudgeteerNotification.get_by_id(notification_id).key)
-        self.error(200)
-        self.response.headers.add_header('content-type', 'application/json', charset='utf-8')
-        self.response.out.write(json.dumps({'link': link, 'status': 'OK'}))
+        self.response.write(html)
 
 
 class RemoveAllNotifications(webapp2.RequestHandler):
@@ -62,9 +49,7 @@ class RemoveAllNotifications(webapp2.RequestHandler):
         self.response.write(json.dumps({'status': 'OK'}))
 
 
-
-
 app = webapp2.WSGIApplication([
-    ('/RemoveNotification', ShowNotificationHandler),
+    ('/ShowNotifications', ShowNotificationHandler),
     ('/RemoveAllNotifications', RemoveAllNotifications)
 ], debug=True)

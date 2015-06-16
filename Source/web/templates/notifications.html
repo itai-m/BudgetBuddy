@@ -1,0 +1,41 @@
+{% extends "master_page.html" %}
+
+{% block head %}
+    {{ block.super }}
+    <link href="../static/css/notifications.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div id="notificationsTable">
+        <table>
+            <thead>
+            <tr><th colspan="3">Notifications List</th></tr>
+            <tr>
+                <th>#</th>
+                <th>Notifications</th>
+                <th>Link</th>
+            </tr>
+            </thead>
+            {% with userName|get_notification_by_username as notificatoinList %}
+            <tbody id="notificationstablebody">
+            {% for notification in notificatoinList %}
+                <tr id="{{ forloop.counter }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ notification.message }}</td>
+                    <td><a href={{ notification.link|safe }}>See</a></td>
+                </tr>
+            {%  endfor %}
+            {% endwith %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3">
+                    <a href="javascript:removeAllNotifications();">Clear all</a>
+                </td>
+            </tr>
+
+            </tfoot>
+        </table>
+
+    </div>
+{% endblock %}

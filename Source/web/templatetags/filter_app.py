@@ -20,7 +20,7 @@ def get_notification_by_username(user_name):
         return None
     budgeteer = Budgeteer.getBudgeteerById(budgeteer_id)
     if BudgeteerNotification.getNotificationsByDstKey(budgeteer.key):
-        notification_list = BudgeteerNotification.getNotificationsByDstKey(budgeteer.key)
+        notification_list = BudgeteerNotification.getUnreadNotificationsByDstKey(budgeteer.key)
         return notification_list
     return None
 

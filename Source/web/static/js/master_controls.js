@@ -454,9 +454,7 @@ function sendNewChatMessage(){
 		}
 	});
 }
-
-function refreshChat()
-{
+function refreshChat(){
 	var budgetId = $('#hiddenBudgetId').val();
 	$.ajax({
 		url:'/SendChatMessage',
@@ -484,8 +482,7 @@ function refreshChat()
 		}
 	});
 }
-function clearChatMessage()
-{
+function clearChatMessage(){
 	var budgetId = $('#hiddenBudgetId').val();
 	$.ajax({
 		url:'/ClearChatMessages',
@@ -503,9 +500,7 @@ function clearChatMessage()
 		}
 	});
 }
-
-function toggleChat()
-{
+function toggleChat(){
 	var button = document.getElementById("ToggleChat");
 	var val = button.value;
 	var chatStatus;
@@ -541,8 +536,6 @@ function toggleChat()
 		}
 	});
 }
-
-
 function ShowNotification(notification_id,row_number) {
 	$.ajax({
 		url:'/RemoveNotification',
@@ -590,14 +583,12 @@ function ShowNotification(notification_id,row_number) {
 	});
 }
 function removeAllNotifications() {
-	var ul = document.getElementById("notificationsList");
-	var li_list = ul.getElementsByTagName("li");
-	for(var i=0;i<li_list.length;i++)
+
+	removeAllNotificationFromMenuBar();
+	if (location.href.includes("/ShowNotifications") == true)
 	{
-		li_list[i].remove();
+		removeAllNotificationFromNotificationsPage();
 	}
-	document.getElementById("headerNotificationNumber").innerText = "You Have 0 New Notifications";
-	document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = 0;
 	$.ajax({
 		url:'/RemoveAllNotifications',
 		type:'GET',
@@ -605,7 +596,6 @@ function removeAllNotifications() {
 		data:{},
 		success:function(data, status, xhr)
 		{
-			location.reload();
 		},
 		error:function(xhr, status, error)
 		{
@@ -614,9 +604,23 @@ function removeAllNotifications() {
 		}
 	});
 }
-
-function changeAvatar()
-{
+function removeAllNotificationFromMenuBar(){
+	var ul = document.getElementById("notificationsList");
+	var li_list = ul.getElementsByTagName("li");
+	for (var i=0;i<li_list.length;i++)
+	{
+		li_list[i].remove();
+	}
+	document.getElementById("headerNotificationNumber").innerText = "You Have 0 New Notifications";
+	document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = '';
+}
+function removeAllNotificationFromNotificationsPage() {
+	var table = document.getElementById('notificationstablebody');
+	while (table.rows.length > 0) {
+		table.deleteRow(0);
+	}
+}
+function changeAvatar() {
 	var avatar_num = 1;
 	avatar_num = $('input[name=radioName]:checked').val();
 	var location = "/ChangeAvatar/" + avatar_num;
