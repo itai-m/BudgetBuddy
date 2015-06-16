@@ -23,7 +23,7 @@ class ShowNotificationHandler(webapp2.RequestHandler):
         notifications = BudgeteerNotification.getNotificationsByDstKey(budgeteer.key)
         template.register_template_library('web.templatetags.filter_app')
         template_params = dict()
-        template_params['notifications'] = notifications
+        template_params['NotificationList'] = notifications
         template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/notifications.html", template_params)
 
@@ -76,10 +76,33 @@ class ReadNotificationHandler(webapp2.RequestHandler):
         self.error(200)
         self.response.write(json.dumps(
             {
+                'link': notification.link,
                 'notifications':list_to_write,
                 'status':'OK'
             }
         ))
+
+
+class MarkAllAsReadHandler(webapp2.RequestHandler):
+    def get(self):
+        budgeteer_id = None
+        if self.request.cookies.get('budgeteerIdToken'):
+            budgeteer_id = long(self.request.cookies.get('budgeteerIdToken'))
+            budgeteer = Budgeteer.getBudgeteerById(budgeteer_id)
+            if not budgeteer:
+                self.error(404)
+                self.redirect('/Login')
+                return
+        else:
+            self.error(403)
+            self.redirect('/Login')
+            return
+        notificationsList = Budgeteer.getNotificationList(budgeteer)
+        for notification in notificationsList:
+            if notification.read == False:
+                BudgeteerNotification.setReadNotification(notification.key)
+        self.error(200)
+        self.response.write(json.dumps({'status':'OK'}))
 
 
 class RemoveAllNotifications(webapp2.RequestHandler):
@@ -105,5 +128,6 @@ class RemoveAllNotifications(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/ShowNotifications', ShowNotificationHandler),
     ('/RemoveAllNotifications', RemoveAllNotifications),
-    ('/ReadNotification/(.*)', ReadNotificationHandler)
+    ('/ReadNotification', ReadNotificationHandler),
+    ('/MarkAllAsRead', MarkAllAsReadHandler)
 ], debug=True)

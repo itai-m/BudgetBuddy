@@ -32,14 +32,18 @@
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
-               {% with userName|get_notification_by_username as notificatoinList %}
+            {% with userName|get_notification_by_username as notificatoinList %}
                 <ul class="nav navbar-nav">
                     <!-- Notifications Menu -->
                     <li class="dropdown notifications-menu">
                         <!-- Menu toggle button -->
                         <a id="notificationNumberSpan" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">{{ notificatoinList|length }}</span>
+                            {% if  notificatoinList|length > 0 %}
+                                <span class="label label-warning">{{ notificatoinList|length }}</span>
+                            {% else %}
+                                <span class="label label-warning"></span>
+                            {% endif %}
                         </a>
                         {% if notificatoinList != None %}
                             <ul class="dropdown-menu">
@@ -67,7 +71,7 @@
                                         <!-- end notification -->
                                     </ul>
                                 </li>
-                                <li class="footer"><a href="javascript: removeAllNotifications();">Clear all</a></li>
+                                <li class="footer"><a href="javascript: readAllNotifications();">Mark All as Read</a></li>
 
                             </ul>
                         {% endif %}

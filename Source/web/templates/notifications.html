@@ -17,16 +17,14 @@
 
             </tr>
             </thead>
-            {% with userName|get_notification_by_username as notificatoinList %}
             <tbody id="notificationstablebody">
-            {% for notification in notificatoinList %}
+            {% for notification in NotificationList %}
                 <tr id="{{ forloop.counter }}">
                     <td>{{ forloop.counter }}</td>
                     <td>{{ notification.message }}</td>
                     <td><a href={{ notification.link|safe }}>See</a></td>
                 </tr>
             {%  endfor %}
-            {% endwith %}
             </tbody>
             <tfoot>
             <tr>

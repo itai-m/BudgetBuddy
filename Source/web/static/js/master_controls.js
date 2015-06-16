@@ -544,11 +544,7 @@ function checkNotification(notification_id, index_in_table) {
 		li_list[index_in_table-1].remove();
 	}
 	//update number of notification badge
-	var numOfNotification = parseInt(document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText);
-	if (numOfNotification > 1)
-		document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = numOfNotification-1;
-	else
-		document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = '';
+	decreaseNotificationAmountFromMenuBar();
 	//setAsRead
 	$.ajax({
 		url:'/ReadNotification',
@@ -557,7 +553,7 @@ function checkNotification(notification_id, index_in_table) {
 		data:{notification_id:notification_id},
 		success:function(data, status, xhr)
 		{
-			alert(data.notifications)
+			document.location.href = data.link;
 		},
 		error:function(xhr, status, error)
 		{
@@ -595,7 +591,6 @@ function removeAllNotificationFromMenuBar(){
 	{
 		li_list[i].remove();
 	}
-	document.getElementById("headerNotificationNumber").innerText = "You Have 0 New Notifications";
 	document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = '';
 }
 function removeAllNotificationFromNotificationsPage() {
@@ -603,6 +598,30 @@ function removeAllNotificationFromNotificationsPage() {
 	while (table.rows.length > 0) {
 		table.deleteRow(0);
 	}
+}
+function readAllNotifications() {
+	removeAllNotificationFromMenuBar();
+	$.ajax({
+		url:'/MarkAllAsRead',
+		type:'GET',
+		dataType:'json',
+		data:{},
+		success:function(data, status, xhr)
+		{
+		},
+		error:function(xhr, status, error)
+		{
+			alert(xhr.responseText);
+			console.error(xhr, status, error);
+		}
+	});
+}
+function decreaseNotificationAmountFromMenuBar(){
+	var numOfNotification = parseInt(document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText);
+	if (numOfNotification > 1)
+		document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = numOfNotification-1;
+	else
+		document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = '';
 }
 function changeAvatar() {
 	var avatar_num = 1;
@@ -613,5 +632,5 @@ function changeAvatar() {
 
 function RadionButtonSelectedValueSet(SelectdValue, name)
 {
-    $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
+	$('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
 }
