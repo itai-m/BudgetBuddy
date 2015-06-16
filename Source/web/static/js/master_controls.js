@@ -36,8 +36,7 @@ function submitLogin() {
 		});
 	}
 }
-function submitEditedEntry()
-{
+function submitEditedEntry(){
 	var description = $('#desc-textbox').val();
 	var price = $('#price-textbox').val();
 	var tagname = $('#tag-combobox option:selected').val();
@@ -81,8 +80,7 @@ function submitEditedEntry()
 	}
 
 }
-function submitNewEntry()
-{
+function submitNewEntry(){
 	var description = $('#desc-textbox').val();
 	var price = $('#price-textbox').val();
 	var tagname = $('#tag-combobox option:selected').val();
@@ -210,25 +208,14 @@ function ExitBudget(budgetId) {
 	});
 }
 function submitProfile() {
-	var FirstName = $('#FirstName').val();
-	var LastName = $('#LastName').val();
 	var email = $('#email').val();
-	var BirthMonth = $('#BirthMonth').val();
-	var BirthDay = $('#BirthDay').val();
-	var BirthYear = $('#BirthYear').val();
-	var gender = $('#gender').val();
 	var password = $('#password').val();
 	var oldpassword = $('#oldpassword').val();
 	var repassword =$('#repassword').val();
-	var js_date = new Date(parseInt(BirthYear),parseInt(BirthMonth),parseInt(BirthDay),0,0,0,0);
 
 	if (repassword!=password)
 	{
 		alert("passwords don't matching");
-	}
-	else if (!((js_date.getUTCDate() == BirthDay-1)|| (BirthDay==1)) || (js_date.getFullYear() != BirthYear) || (js_date.getFullYear() != BirthYear))
-	{
-		alert("Wrong Date Input");
 	}
 	else
 	{
@@ -236,7 +223,7 @@ function submitProfile() {
 			url:'/ProfileSettingsCheck',
 			type:'GET',
 			dataType:'json',
-			data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
+			data:{oldpassword:oldpassword, password:password, email:email},
 			success:function(data, status, xhr)
 			{
 				document.location.href = '/Budgets';
@@ -253,8 +240,7 @@ function isNumber(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
 // Create Budget page functions.
-function usernameExist()
-{
+function usernameExist(){
 	var usernameExist = $('#checkUsernameExist').val();
 	$.ajax({
 		url:'/CreateCheck',
@@ -274,8 +260,7 @@ function usernameExist()
 		}
 	});
 }
-function addRow()
-{
+function addRow(){
 
 	var username = $('#checkUsernameExist').val();
 	document.getElementById("Add").disabled = true;
@@ -341,8 +326,7 @@ function delRow(username){
 	}
 
 }
-function reorderRows()
-{
+function reorderRows(){
 	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
 	var rowCount=table.rows.length;
@@ -371,8 +355,7 @@ function checkBudgeteerInTable(username){
 	}
 	return false;
 }
-function submitBudget(urladdress)
-{
+function submitBudget(urladdress){
 	budgetName = $('#budgetName').val();
 	tagList = getCheckedTags(); // [tag],[tag],[tag] string
 	participantList = getParticipants(); // [participant name]:[permission],[participant name][[:permission]
@@ -393,8 +376,7 @@ function submitBudget(urladdress)
 		}
 	});
 }
-function getCheckedTags()
-{
+function getCheckedTags(){
 	tags = $('.tagCheckbox:checkbox:checked');
 	taglist = ""
 	var rowCount=tags.length;
@@ -408,8 +390,7 @@ function getCheckedTags()
 	}
 	return taglist;
 }
-function getParticipants()
-{
+function getParticipants(){
 	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
 	var rowCount=table.rows.length;
@@ -443,8 +424,7 @@ function getParticipants()
 	}
 	return retString;
 }
-function sendNewChatMessage()
-{
+function sendNewChatMessage(){
 	var button = $('#submitChatMessage');
 	var message = $('#ChatMessage').val();
 	//$('#ChatMessage')[0].value = "";
@@ -475,8 +455,7 @@ function sendNewChatMessage()
 		}
 	});
 }
-function clearChatMessage()
-{
+function clearChatMessage(){
 	var budgetId = $('#hiddenBudgetId').val();
 	$.ajax({
 		url:'/ClearChatMessages',
