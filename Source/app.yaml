@@ -106,6 +106,9 @@ handlers:
 - url: /ClearChatMessages
   script: web.pages.SendChatMessage.app
 
+- url: /ToggleChat
+  script: web.pages.SendChatMessage.app
+
 - url: /RemoveNotification
   script: web.pages.Notification.app
 
@@ -119,7 +122,7 @@ handlers:
   script: web.pages.Avatars.app
 #cacthes everything that wasn't cought until now
 - url: /
-  script: web.pages.Budgets.app
+  script: web.pages.Login.app
 
 - url: /(.*)
   script: web.pages.404.app

@@ -128,7 +128,8 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
                 dst_budgeteer_key = Budgeteer.getBudgeteerById(long(participant_budgeteer_id)).key
                 new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key, dstBudgeteer=dst_budgeteer_key,
                                                          message=src_username + message_template,
-                                                         link="/Budget/{0}".format(budget.key.id()))
+                                                         link="/Budget/{0}".format(budget.key.id()),
+                                                         read=False)
                 BudgeteerNotification.addNotification(new_notification)
 
         Budget.addBudget(budget)

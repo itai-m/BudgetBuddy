@@ -5,6 +5,7 @@ class BudgeteerNotification(ndb.Model):
     dstBudgeteer = ndb.KeyProperty()
     message = ndb.StringProperty()
     link = ndb.StringProperty()
+    read = ndb.BooleanProperty()
 
     @staticmethod
     def getNotificationsByDstKey(dstKey):

@@ -1,7 +1,6 @@
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
 	$('#RegistrationSubmit').on('click', submitRegistration);
-
 });
 function submitLogin() {
 	var username = $('#loginUN').val();
@@ -455,7 +454,38 @@ function sendNewChatMessage(){
 		}
 	});
 }
-function clearChatMessage(){
+
+function refreshChat()
+{
+	var budgetId = $('#hiddenBudgetId').val();
+	$.ajax({
+		url:'/SendChatMessage',
+		type:'POST',
+		dataType:'json',
+		data:{budgetId: budgetId },
+
+		success:function(data, status, xhr)
+		{
+
+			delAllRowsFromChatTable("ChatTable");
+			for(var i=data.list.length-1;i >= 0;i--) {
+				$("#ChatTable").prepend("" +
+					"<tr>" +
+					"<td width='10%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>[" + data.list[i].time + "]</span></td>" +
+					"<td width='7%' height='50px'>&nbsp;<span id='chatUsernameSpan' style='font-size: 14px;'>[" + data.list[i].username + "]</span></td>" +
+					"<td width='83%' height='50px'>&nbsp;<span id='chatMessageSpan' style='font-size: 14px;'>" + data.list[i].text + "</span></td>" +
+					"</tr>");
+			}
+		},
+		error:function(xhr, status, error)
+		{
+			alert("error");
+			console.error(xhr, status, error);
+		}
+	});
+}
+function clearChatMessage()
+{
 	var budgetId = $('#hiddenBudgetId').val();
 	$.ajax({
 		url:'/ClearChatMessages',
@@ -473,6 +503,46 @@ function clearChatMessage(){
 		}
 	});
 }
+
+function toggleChat()
+{
+	var button = document.getElementById("ToggleChat");
+	var val = button.value;
+	var chatStatus;
+	if (val.localeCompare("disabled") == 0)
+		chatStatus = true;
+	else
+		chatStatus = false;
+	var budgetId = $('#hiddenBudgetId').val();
+
+	$.ajax({
+		url:'/ToggleChat',
+		type:'POST',
+		dataType:'json',
+		data:{budgetId: budgetId, chatStatus: chatStatus},
+		success:function(data, status, xhr)
+		{
+			if (chatStatus)
+			{
+				// chatStatus = True -> Tell server that chat is now enabled.
+				button.value = "enabled";
+				button.innerHTML= "Disable";
+			}
+			else
+			{
+				button.value = "disabled";
+				button.innerHTML = "Enable";
+			}
+		},
+		error:function(xhr, status, error)
+		{
+			alert( xhr.responseText);
+			console.error(xhr, status, error);
+		}
+	});
+}
+
+
 function ShowNotification(notification_id,row_number) {
 	$.ajax({
 		url:'/RemoveNotification',

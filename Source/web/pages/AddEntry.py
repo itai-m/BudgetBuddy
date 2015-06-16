@@ -85,7 +85,8 @@ class SubmitEntryHandler(webapp2.RequestHandler):
 
                 new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key, dstBudgeteer=dst_budgeteer_key,
                                                          message=src_username + message_template,
-                                                         link="/Budget/{0}".format(budgetId))
+                                                         link="/Budget/{0}".format(budgetId),
+                                                         read=False)
                 BudgeteerNotification.addNotification(new_notification)
 
         entryKey = Budget.addEntryToBudget(entry, Budget.getBudgetById(long(budgetId)))
