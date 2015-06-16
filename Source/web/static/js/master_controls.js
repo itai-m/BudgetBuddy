@@ -630,7 +630,7 @@ function changeAvatar() {
 	window.location.href = location;
 }
 
-function RadionButtonSelectedValueSet(SelectdValue, name)
+function radioButtonSelectedValueSet(selectedValue, name)
 {
-	$('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
+	$('input[name="' + name+ '"][value="' + selectedValue + '"]').prop('checked', true);
 }
