@@ -126,22 +126,10 @@ function submitNewEntry()
 
 }
 function submitRegistration() {
-	var FirstName = $('#FirstName').val();
-	var LastName = $('#LastName').val();
 	var email = $('#email').val();
-	var BirthMonth = $('#BirthMonth').val();
-	var BirthDay = $('#BirthDay').val();
-	var BirthYear = $('#BirthYear').val();
-	var gender = $('#gender').val();
 	var username = $('#username').val();
 	var password = $('#password').val();
 	var repassword =$('#repassword').val();
-	if (BirthMonth == -1)
-	{
-		alert("Invalid Month Name");
-		return false;
-	}
-	var js_date = new Date(parseInt(BirthYear),parseInt(BirthMonth),parseInt(BirthDay),0,0,0,0);
 	if (username == null || username == "" || password == null || password == "")
 	{
 		alert("There appears to be a missing field");
@@ -150,21 +138,13 @@ function submitRegistration() {
 	{
 		alert("Password don't match");
 	}
-	else if (!((js_date.getUTCDate() == BirthDay-1)|| (BirthDay==1)) || (js_date.getFullYear() != BirthYear) || (js_date.getFullYear() != BirthYear))
-	{
-		alert("Wrong Date Input");
-	}
-	else if (gender==null)
-	{
-		alert("Wrong Gender Input");
-	}
 	else
 	{
 		$.ajax({
 			url:'/RegistrationCheck',
 			type:'GET',
 			dataType:'json',
-			data:{username:username, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
+			data:{username:username, password:password, email:email},
 			success:function(data, status, xhr)
 			{
 				document.location.href = '/Budgets';
