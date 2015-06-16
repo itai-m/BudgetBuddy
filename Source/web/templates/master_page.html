@@ -32,48 +32,40 @@
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
-            {% with userName|get_notification_by_username as notificatoinList %}
                 <ul class="nav navbar-nav">
                     <!-- Notifications Menu -->
                     <li class="dropdown notifications-menu">
                         <!-- Menu toggle button -->
                         <a id="notificationNumberSpan" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">{{ notificatoinList|length }}</span>
+                            <span class="label label-warning">1</span>
                         </a>
-                        {% if notificatoinList != None %}
                             <ul class="dropdown-menu">
 
-                                <li class="header" id="headerNotificationNumber">You Have {{ notificatoinList|length }} New Notifications </li>
+                                <li class="header" id="headerNotificationNumber">You Have 1 New Notifications </li>
 
                                 <li>
                                     <!-- Inner Menu: contains the notifications -->
                                     <ul class="menu" id="notificationsList">
                                         <!-- start notification -->
-                                        {% for notification in notificatoinList %}
                                             <li id="{{ forloop.counter }}">
-                                                <a href="javascript: ShowNotification({{ notification.key.id }},{{ forloop.counter }});">
+                                                <a href="#">
                                                     <i class="fa fa-users text-aqua"></i>
                                                     <span class="notifications">
-                                                        {{ notification.message }}
+                                                       " notification.message"
                                                     </span>
 
                                                 </a>
                                             </li>
-                                        {%  endfor %}
-
                                         <!-- end notification -->
                                     </ul>
                                 </li>
 
-                                <li class="footer"><a href="javascript: removeAllNotifications();">Clear all</a></li>
-
+                                <li class="footer"><a href="#">Show all</a></li>
                             </ul>
-                        {% endif %}
                     </li>
                 </ul>
 
-            {% endwith %}
 
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
@@ -88,13 +80,13 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="http://c.dryicons.com/images/icon_sets/shine_icon_set/png/256x256/business_user.png" class="img-circle" alt="User Image">
+                    <img src="{{ userName|username_to_image}}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
 
                     <p><a href="/ProfileSettings">{{ userName }}</a></p>
                     <!-- Status -->
-                    <a href="#"><i class="fa fa-exchange"></i> Change Avatar</a>
+                    <a href="/Avatars"><i class="fa fa-exchange"></i> Change Avatar</a>
                 </div>
             </div>
 

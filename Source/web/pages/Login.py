@@ -41,6 +41,7 @@ class LogoutHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/Login', IndexHandler),
+    ('/', IndexHandler),
     ('/LoginCheck', LoginCheckHandler),
     ('/Logout', LogoutHandler)
 ], debug=True)

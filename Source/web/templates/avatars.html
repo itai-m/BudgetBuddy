@@ -1,0 +1,74 @@
+{% extends "master_page.html" %}
+
+{% block head %}
+    {{ block.super }}
+    <title>BudgetBuddy - Avatars </title>
+{% endblock %}
+
+{% block content %}
+    <center>
+    <div id="avatarBudgetBuddy">
+        <div id="avatarBudgetBuddy">
+            <h1> BudgetBuddy Avatars</h1>
+            <br>
+        </div>
+    <div id="avatarSection" style="padding-top: 20px; padding-bottom: 20px; border-radius: 10px; background-color: white;">
+        <table width="30%">
+            <tr>
+                <td width="100px"><img src="../static/images/avatars/budgeteer1.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer2.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer3.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer4.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer5.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer6.jpeg" height="150" width="150"></td>
+            </tr>
+            <tr>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="1" checked></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="2"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="3"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="4"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="5"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName"   type="radio" value="6"></center> </td>
+            </tr>
+             <tr height="50px"></tr>
+            <tr>
+                <td width="100px"><img src="../static/images/avatars/budgeteer7.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer8.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer9.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer10.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer11.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer12.jpeg" height="150" width="150"></td>
+            </tr>
+            <tr>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="7"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="8"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="9"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="10"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="11"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="12"></center> </td>
+            </tr>
+            <tr height="50px"></tr>
+            <tr>
+                <td width="100px"><img src="../static/images/avatars/budgeteer13.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer14.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer15.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer16.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer17.jpeg" height="150" width="150"></td>
+                <td width="100px"><img src="../static/images/avatars/budgeteer18.jpeg" height="150" width="150"></td>
+            </tr>
+            <tr>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="13"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="14"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="15"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="16"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="17"></center> </td>
+                <td width="100px" class="tdCell"> <center><input name="radioName" type="radio" value="18"></center> </td>
+            </tr>
+            <tr height="50px"></tr>
+        </table>
+
+        <input type="submit" id="submitAvatar" value="Submit" class="btn btn-primary" onclick="changeAvatar();" onsubmit="return false;">
+    </div>
+        </div>
+    </center>
+{% endblock %}

@@ -3,11 +3,19 @@
 {% endblock %}
 
 {% block content %}
+    <!-- Refresh chat segment -->
+    <script type="text/javascript">
+        function codeAddress() {
+             setInterval(refreshChat, 3000);
+        }
+        window.onload = codeAddress;
+        </script>
+    <!-- Endof refresh chat segment -->
     <div style="margin-bottom: 5px; border-radius: 12px;" width="800px" height="100px" class="AnnouncementBox">
         <span id="AnnouncementBoxTitle" style='font-size:25px;'>Announcement Board</span>
         <input style="background-color: transparent; float: right;" class="transpImage" type="image" src="../static/images/collapse.png" alt="Submit" width="45" height="45" value='hide/show' onclick="jQuery('#chatContainer').toggle('show');">
     </div>
-    <div style="display:none; margin-bottom: 5px;" width="800px" height="300px" id="chatContainer" class="AnnouncementBox">
+    <div style="margin-bottom: 5px;" width="800px" height="300px" id="chatContainer" class="AnnouncementBox">
         <center>
             <div id="Chatbox" style="height:150px; overflow: auto;" >
 
@@ -25,12 +33,26 @@
                 <br>
             </div><br>
             {% if budgetManager %}
-                <button id="SubmitMessage" style="float: left;" onclick="clearChatMessage();">Clean Chat</button>
+                <button id="SubmitMessage" style="float: left;" onclick="clearChatMessage();">Clean Messages</button>
+                {% if chatEnabled %}
+                    <button id="ToggleChat" style="float: left;" onclick="toggleChat();" value="enabled">Disable</button>
+                {% else %}
+                    <button id="ToggleChat" style="float: left;" onclick="toggleChat();" value="disabled">Enable</button>
+                {% endif %}
             {% endif %}
 
-            <input class="depth" id="ChatMessage" type="text" width="100%"/>
+              {% if chatEnabled or budgetManager %}
+                            <input class="depth" id="ChatMessage" type="text" size="100%"/>
+             {% else %}
+                            <input class="depth" id="ChatMessage" value="Announcement Box Disabled" type="text" size="100%" disabled/>
+             {% endif %}
+
             <input id="hiddenBudgetId" type="hidden" value="{{ budget.key.id }}"/>
-            <button id="submitChatMessage" onclick="sendNewChatMessage();" onsubmit="return false;">Send</button>
+            {% if chatEnabled or budgetManager %}
+                <button id="submitChatMessage" onclick="sendNewChatMessage();" onsubmit="return false;">Post</button>
+             {% else %}
+                <button id="submitChatMessage" onsubmit="return false;" disabled>Post</button>
+             {% endif %}
             <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
             <script src="../static/js/budgets.js"></script>
         </center>

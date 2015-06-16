@@ -22,7 +22,7 @@ class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
     password = ndb.StringProperty()
     email = ndb.StringProperty()
-    avtar = ndb.IntegerProperty()
+    avatar = ndb.IntegerProperty()
     budgetList = ndb.KeyProperty(kind=BudgetModel.Budget, repeated=True)  # list of budgets related to the user
 
     @staticmethod
@@ -38,7 +38,7 @@ class Budgeteer(ndb.Model):
         budgeteer.password = m.digest().decode("iso-8859-1")
         budgeteer.email = budgeteer.email.lower()
         budgeteer.userName = budgeteer.userName.lower()
-        budgeteer.avtar = 1;
+        budgeteer.avatar = 1;
         budgeteer.put()
         return budgeteer.key.id()
 
