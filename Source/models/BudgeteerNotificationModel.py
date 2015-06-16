@@ -20,6 +20,30 @@ class BudgeteerNotification(ndb.Model):
         return notification_list
 
     @staticmethod
+    def getUnreadNotificationsByDstKey(dstKey):
+        '''
+        Receives a budgeteer id, returns all the unread notifications that has the same destination ID.
+        :param dstKey: The Id of the destination budgeteer.
+        :return: List (query) of all the Budgeteer (DstKey) unread notification that equals to the received dstKey
+        '''
+        notification_list = list()
+        for notification in BudgeteerNotification.query(BudgeteerNotification.read == False, BudgeteerNotification.dstBudgeteer == dstKey):
+            notification_list.append(notification)
+        return notification_list
+
+    @staticmethod
+    def setReadNotification(budgeteer_notification_key):
+        '''
+        this function set the notification as read
+        :param budgeteer_notification_key: the notification's key to change
+        :return: notification read field
+        '''
+        notification = BudgeteerNotification.get_by_id(budgeteer_notification_key.id())
+        notification.read = True
+        notification.put()
+        return notification.read
+
+    @staticmethod
     def addNotification(budgeteerNotification):
         '''
         Gets a notification and inserts it to the datastore.
