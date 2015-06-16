@@ -36,8 +36,7 @@ function submitLogin() {
 		});
 	}
 }
-function submitEditedEntry()
-{
+function submitEditedEntry(){
 	var description = $('#desc-textbox').val();
 	var price = $('#price-textbox').val();
 	var tagname = $('#tag-combobox option:selected').val();
@@ -81,8 +80,7 @@ function submitEditedEntry()
 	}
 
 }
-function submitNewEntry()
-{
+function submitNewEntry(){
 	var description = $('#desc-textbox').val();
 	var price = $('#price-textbox').val();
 	var tagname = $('#tag-combobox option:selected').val();
@@ -242,8 +240,7 @@ function isNumber(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
 // Create Budget page functions.
-function usernameExist()
-{
+function usernameExist(){
 	var usernameExist = $('#checkUsernameExist').val();
 	$.ajax({
 		url:'/CreateCheck',
@@ -263,8 +260,7 @@ function usernameExist()
 		}
 	});
 }
-function addRow()
-{
+function addRow(){
 
 	var username = $('#checkUsernameExist').val();
 	document.getElementById("Add").disabled = true;
@@ -330,8 +326,7 @@ function delRow(username){
 	}
 
 }
-function reorderRows()
-{
+function reorderRows(){
 	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
 	var rowCount=table.rows.length;
@@ -360,8 +355,7 @@ function checkBudgeteerInTable(username){
 	}
 	return false;
 }
-function submitBudget(urladdress)
-{
+function submitBudget(urladdress){
 	budgetName = $('#budgetName').val();
 	tagList = getCheckedTags(); // [tag],[tag],[tag] string
 	participantList = getParticipants(); // [participant name]:[permission],[participant name][[:permission]
@@ -382,8 +376,7 @@ function submitBudget(urladdress)
 		}
 	});
 }
-function getCheckedTags()
-{
+function getCheckedTags(){
 	tags = $('.tagCheckbox:checkbox:checked');
 	taglist = ""
 	var rowCount=tags.length;
@@ -397,8 +390,7 @@ function getCheckedTags()
 	}
 	return taglist;
 }
-function getParticipants()
-{
+function getParticipants(){
 	tableID = 'budgeteerTable';
 	var table=document.getElementById(tableID);
 	var rowCount=table.rows.length;
@@ -432,8 +424,7 @@ function getParticipants()
 	}
 	return retString;
 }
-function sendNewChatMessage()
-{
+function sendNewChatMessage(){
 	var button = $('#submitChatMessage');
 	var message = $('#ChatMessage').val();
 	//$('#ChatMessage')[0].value = "";
@@ -464,8 +455,7 @@ function sendNewChatMessage()
 		}
 	});
 }
-function clearChatMessage()
-{
+function clearChatMessage(){
 	var budgetId = $('#hiddenBudgetId').val();
 	$.ajax({
 		url:'/ClearChatMessages',
