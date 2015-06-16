@@ -5,15 +5,13 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
 
 - url: /static
   static_dir: web/static
-
-- url: /
-  script: web.pages.Home.app
 
 - url: /Budget/(.*)
   script: web.pages.Budget.app
@@ -113,7 +111,11 @@ handlers:
 
 - url: /RemoveAllNotifications
   script: web.pages.Notification.app
+
 #cacthes everything that wasn't cought until now
+- url: /
+  script: web.pages.Budgets.app
+
 - url: /(.*)
   script: web.pages.404.app
 
