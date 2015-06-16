@@ -562,6 +562,10 @@ function checkNotification(notification_id, index_in_table) {
 		}
 	});
 }
+function getNotificationForMenuBar()
+{
+
+}
 function removeAllNotifications() {
 
 	removeAllNotificationFromMenuBar();
@@ -629,8 +633,6 @@ function changeAvatar() {
 	var location = "/ChangeAvatar/" + avatar_num;
 	window.location.href = location;
 }
-
-function radioButtonSelectedValueSet(selectedValue, name)
-{
+function radioButtonSelectedValueSet(selectedValue, name){
 	$('input[name="' + name+ '"][value="' + selectedValue + '"]').prop('checked', true);
 }

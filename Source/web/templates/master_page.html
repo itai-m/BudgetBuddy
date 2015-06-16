@@ -45,13 +45,10 @@
                                 <span class="label label-warning"></span>
                             {% endif %}
                         </a>
-                        {% if notificatoinList != None %}
                             <ul class="dropdown-menu">
-
                                 <li class="header" id="headerNotificationNumber">
                                     <a href="/ShowNotifications">Show All Notifications</a>
                                 </li>
-
                                 <li>
                                     <!-- Inner Menu: contains the notifications -->
                                     <ul class="menu" id="notificationsList">
@@ -67,17 +64,13 @@
                                                 </a>
                                             </li>
                                         {%  endfor %}
-
                                         <!-- end notification -->
                                     </ul>
                                 </li>
                                 <li class="footer"><a href="javascript: readAllNotifications();">Mark All as Read</a></li>
-
                             </ul>
-                        {% endif %}
                     </li>
                 </ul>
-
             {% endwith %}
 
 
