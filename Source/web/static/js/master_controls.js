@@ -610,3 +610,8 @@ function changeAvatar() {
 	var location = "/ChangeAvatar/" + avatar_num;
 	window.location.href = location;
 }
+
+function RadionButtonSelectedValueSet(SelectdValue, name)
+{
+    $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
+}

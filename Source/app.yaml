@@ -123,6 +123,10 @@ handlers:
 
 - url: /ChangeAvatar/(.*)
   script: web.pages.Avatars.app
+
+- url: /InviteFriend/*
+  script: web.pages.InviteFriend.app
+
 #cacthes everything that wasn't cought until now
 - url: /
   script: web.pages.Login.app
