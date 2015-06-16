@@ -210,25 +210,14 @@ function ExitBudget(budgetId) {
 	});
 }
 function submitProfile() {
-	var FirstName = $('#FirstName').val();
-	var LastName = $('#LastName').val();
 	var email = $('#email').val();
-	var BirthMonth = $('#BirthMonth').val();
-	var BirthDay = $('#BirthDay').val();
-	var BirthYear = $('#BirthYear').val();
-	var gender = $('#gender').val();
 	var password = $('#password').val();
 	var oldpassword = $('#oldpassword').val();
 	var repassword =$('#repassword').val();
-	var js_date = new Date(parseInt(BirthYear),parseInt(BirthMonth),parseInt(BirthDay),0,0,0,0);
 
 	if (repassword!=password)
 	{
 		alert("passwords don't matching");
-	}
-	else if (!((js_date.getUTCDate() == BirthDay-1)|| (BirthDay==1)) || (js_date.getFullYear() != BirthYear) || (js_date.getFullYear() != BirthYear))
-	{
-		alert("Wrong Date Input");
 	}
 	else
 	{
@@ -236,7 +225,7 @@ function submitProfile() {
 			url:'/ProfileSettingsCheck',
 			type:'GET',
 			dataType:'json',
-			data:{oldpassword:oldpassword, password:password, FirstName:FirstName, LastName:LastName, email:email, BirthMonth:BirthMonth, BirthDay:BirthDay, BirthYear:BirthYear, gender:gender},
+			data:{oldpassword:oldpassword, password:password, email:email},
 			success:function(data, status, xhr)
 			{
 				document.location.href = '/Budgets';
