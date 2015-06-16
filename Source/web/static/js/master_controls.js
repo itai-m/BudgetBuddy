@@ -477,7 +477,6 @@ function refreshChat(){
 		},
 		error:function(xhr, status, error)
 		{
-			alert("error");
 			console.error(xhr, status, error);
 		}
 	});
@@ -536,44 +535,29 @@ function toggleChat(){
 		}
 	});
 }
-function ShowNotification(notification_id,row_number) {
+function checkNotification(notification_id, index_in_table) {
+	//removes from drop down menu
+	var ul = document.getElementById("notificationsList");
+	var li_list = ul.getElementsByTagName("li");
+	if (index_in_table < li_list.length+1)
+	{
+		li_list[index_in_table-1].remove();
+	}
+	//update number of notification badge
+	var numOfNotification = parseInt(document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText);
+	if (numOfNotification > 1)
+		document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = numOfNotification-1;
+	else
+		document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = '';
+	//setAsRead
 	$.ajax({
-		url:'/RemoveNotification',
+		url:'/ReadNotification',
 		type:'GET',
 		dataType:'json',
 		data:{notification_id:notification_id},
 		success:function(data, status, xhr)
 		{
-			var ul = document.getElementById("notificationsList");
-			var li_list = ul.getElementsByTagName("li");
-			for(var i=0;i<li_list.length;i++)
-			{
-				if (li_list[i].hasAttribute("id") == true)
-				{
-					if (li_list[i].getAttribute("id") == row_number)
-					{
-						var str = li_list[i].getElementsByTagName("a")[0].getAttribute("href");
-						var js_notification_id = str.substring(str.indexOf("(")+1,str.lastIndexOf(","));
-						if (js_notification_id == notification_id)
-						{
-							li_list[i].remove();
-							var notificationNumber = document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText;
-							var num = parseInt(notificationNumber) - 1;
-							document.getElementById("headerNotificationNumber").innerText = "You Have " + num + " New Notifications";
-							document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = num;
-						}
-						else
-						{
-							return;
-						}
-					}
-				}
-			}
-			setTimeout(function reload_page(){
-				if (document.location.href.substring(document.location.href.lastIndexOf("/")+1) != data.link.substring(data.link.lastIndexOf("/")+1)) {
-					document.location.href = data.link;
-				}
-			}, 500);
+			alert(data.notifications)
 		},
 		error:function(xhr, status, error)
 		{

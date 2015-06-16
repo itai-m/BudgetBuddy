@@ -49,7 +49,6 @@ class SendChatMessageHandler(webapp2.RequestHandler):
                 'status':'OK'
             }
         ))
-        return
 
 class ClearChatMessagesHandler(webapp2.RequestHandler):
     def post(self):
@@ -91,7 +90,6 @@ class ToggleChatHandler(webapp2.RequestHandler):
         chatStatus = self.request.get('chatStatus')
 
         permission = Budget.getPermissionByBudgeteerId(budgeteerId, Budget.getBudgetById(budgetId))
-        print budgetId
         if permission != "Manager":
             self.error(403)
             self.response.write('Only budget manager toggle chat.')

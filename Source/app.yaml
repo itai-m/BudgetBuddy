@@ -115,6 +115,9 @@ handlers:
 - url: /RemoveAllNotifications
   script: web.pages.Notification.app
 
+- url: /ReadNotification/(.*)
+  script: web.pages.Notification.app
+
 - url: /Avatars
   script: web.pages.Avatars.app
 

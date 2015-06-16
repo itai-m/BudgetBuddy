@@ -247,6 +247,5 @@ class Budget(ndb.Model):
         else:
             chatEnabled = False
         budget = Budget.getBudgetById(budgetId)
-        print chatEnabled
         budget.chatEnabled = chatEnabled
         budget.put()

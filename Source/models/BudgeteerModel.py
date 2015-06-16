@@ -149,8 +149,6 @@ class Budgeteer(ndb.Model):
         budgetList = []
         for budgetKey in budgeteer.budgetList:
             budgetList.append(BudgetModel.Budget.getBudgetById(budgetKey.id()))
-        print reverse
-        print sort_by
         if sort_by == "name":
             budgetList.sort(key=lambda x: x.budgetName, reverse=reverse)
         elif sort_by == "shared_with":

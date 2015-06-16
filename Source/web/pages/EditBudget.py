@@ -106,7 +106,6 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
                 self.response.write('No such username ' + budgeteer_name)
                 return
             budgeteer_perm = participant.split(":")[1]
-            print budgeteer_perm
             if "Manager" != budgeteer_perm and "Partner" != budgeteer_perm and "Viewer" !=  budgeteer_perm:
                 self.response.write('Unknown permission level ' + budgeteer_perm)
                 return

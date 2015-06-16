@@ -54,7 +54,7 @@
                                         <!-- start notification -->
                                         {% for notification in notificatoinList %}
                                             <li id="{{ forloop.counter }}">
-                                                <a href="javascript: CheckNotification({{ notification.key.id }},{{ forloop.counter }});">
+                                                <a href="javascript: checkNotification({{ notification.key.id }},{{ forloop.counter }});">
                                                     <i class="fa fa-users text-aqua"></i>
                                                     <span class="notifications">
                                                         {{ notification.message }}

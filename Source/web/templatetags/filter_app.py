@@ -64,8 +64,6 @@ def getUsernameByKey(value):
 
 @register.filter(name='dateTimeToString')
 def dateTimeToString(value):
-    print value
-    print "ASFSAOAKSFOASKF"
     return value.now().strftime("%Y-%m-%d %H:%M:%S")
 
 @register.filter(name='getEntryAddedByByKey')
@@ -128,6 +126,4 @@ def getCountUserAmountInBudget(budget,budgeteerKey):
 def username_to_image(user_name):
     budgeteer_id = Budgeteer.getBudgeteerIdByUserName(user_name)
     budgeteer = Budgeteer.getBudgeteerById(budgeteer_id)
-    print budgeteer
-    print budgeteer_id
     return  "../static/images/avatars/budgeteer" + str(budgeteer.avatar) + ".jpeg";
