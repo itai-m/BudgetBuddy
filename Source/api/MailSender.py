@@ -9,6 +9,16 @@ class MailSender:
         pass
 
     @staticmethod
+    def send_invite_friend(from_user_name, to_address):
+        body = """
+        Hello,
+        The user {0} has invited you to join BudgetBuddy!
+        to join please register through the following form:
+        http://budgetbuddy001.appspot.com/Registration
+        """.format(from_user_name)
+        MailSender.__send_email(from_user_name + " <" + to_address + ">", "A friend as invite you", body)
+
+    @staticmethod
     def send_password_recovery_token(to_user_name, to_address, to_token):
         body = """
         Hello,
