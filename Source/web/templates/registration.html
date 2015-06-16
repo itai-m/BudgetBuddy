@@ -19,11 +19,6 @@
 
         <div  class="form">
             <form id="contactform"  onsubmit="return false;">
-                <p class="contact"><label for="name">First Name</label></p>
-                <input id="FirstName" name="FirstName" placeholder="First Name" required="" tabindex="1" type="text">
-
-                <p class="contact"><label for="name">Last Name</label></p>
-                <input id="LastName" name="LastName" placeholder="Last Name" required="" tabindex="2" type="text">
 
 
                 <p class="contact"><label for="email">Email</label></p>
@@ -36,40 +31,6 @@
                 <input type="password" id="password" name="password" required="" tabindex="5">
                 <p class="contact"><label for="repassword">Confirm your password</label></p>
                 <input type="password" id="repassword" name="repassword" required="" tabindex="6">
-
-                <fieldset >  <!-- The incomplete tag is intentional, otherwise the bootstrap css collides with ours and it breaks this section
-										I don't know how to fix this so I'll leave it like this for now -->
-                    <label id="register_label">Birthday</label>
-                    <label class="month">
-                        <select class="select-style" name="BirthMonth" id="BirthMonth" tabindex="7">
-                            <option value="" disabled selected style='display:none;'>Month</option>
-                            <option  value="01">January</option>
-                            <option value="02">February</option>
-                            <option value="03" >March</option>
-                            <option value="04">April</option>
-                            <option value="05">May</option>
-                            <option value="06">June</option>
-                            <option value="07">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12" >December</option>
-                        </select>
-                    </label>
-
-
-                    <label id="register_label">Day<input class="birthday" maxlength="2" name="BirthDay"  id="BirthDay" placeholder="Day" required="" tabindex="8"></label>
-                    <label id="register_label">Year <input class="birthyear" maxlength="4" name="BirthYear" id="BirthYear" placeholder="Year" required="" tabindex="9"></label>
-                </fieldset>
-
-                <p class="contact"><label for="password">Gender</label>
-                    <select class="select-style gender" name="gender" id="gender" tabindex="10">
-                        <option value="" disabled selected style='display:none;'>I am..</option>
-                        <option value="m">Male</option>
-                        <option value="f">Female</option>
-                    </select><br><br>
-                </p>
 
                     <input class="buttom" name="submit" id="RegistrationSubmit" tabindex="11" value="Sign me up" type="submit">
 

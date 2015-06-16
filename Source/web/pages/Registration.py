@@ -22,7 +22,6 @@ class RegistrationCheckHandler(webapp2.RequestHandler):
 
         Email = self.request.get('email')
         UserName = self.request.get('username')
-        BirthYear = self.request.get("BirthYear")
         password = self.request.get('password')
         if Budgeteer.budgeteerUserNameExist(UserName):
             self.response.write('UserName already exists')
@@ -33,25 +32,11 @@ class RegistrationCheckHandler(webapp2.RequestHandler):
         if len(password) < 6:
             self.response.write('password must be at least 6')
             return
-        if int(BirthYear) < 1900:
-            self.response.write('Year of birth is not valid')
-            return
         BudgeteerObj = Budgeteer()
         BudgeteerObj.email = Email
         BudgeteerObj.userName = UserName
-        BudgeteerObj.firstName = self.request.get('FirstName')
-        BudgeteerObj.lastName = self.request.get('LastName')
         BudgeteerObj.password = password
-        BirthMonth = self.request.get("BirthMonth")
-        BirthDay = self.request.get("BirthDay")
-        BirthDay = BirthDay.zfill(2)
-        try:
-            BudgeteerObj.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
-        except ValueError:
-            self.response.write('Wrong Date Input')
-            return
 
-        BudgeteerObj.gender = self.request.get("gender")
         budgeteerId = Budgeteer.registerBudgeteer(BudgeteerObj)
 
         if not budgeteerId:

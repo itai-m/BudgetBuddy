@@ -21,11 +21,7 @@ import operator
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
     password = ndb.StringProperty()
-    firstName = ndb.StringProperty()
-    lastName = ndb.StringProperty()
     email = ndb.StringProperty()
-    birthday = ndb.DateProperty()
-    gender = ndb.StringProperty()  # char. m for male, f for female
     budgetList = ndb.KeyProperty(kind=BudgetModel.Budget, repeated=True)  # list of budgets related to the user
 
     @staticmethod
