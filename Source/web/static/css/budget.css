@@ -129,6 +129,7 @@ table.gradienttable td p {
 	border-right: 0px;
 }
 .transpImage {
+	padding-bottom: 10px;
 	background-color: transparent;
 	border: none;
 }

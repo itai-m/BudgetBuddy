@@ -106,6 +106,9 @@ handlers:
 - url: /ClearChatMessages
   script: web.pages.SendChatMessage.app
 
+- url: /ToggleChat
+  script: web.pages.SendChatMessage.app
+
 - url: /RemoveNotification
   script: web.pages.Notification.app
 

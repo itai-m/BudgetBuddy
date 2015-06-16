@@ -32,6 +32,7 @@ class IndexHandler(webapp2.RequestHandler):
         template_params['userId'] = budgeteer.key.id()
         template_params['budget'] = Budget.getBudgetById(long(budgetId))
         template_params['budgetId'] = budgetId
+        template_params['chatEnabled'] = budget.chatEnabled
         if  Budget.getPermissionByBudgeteerId(long(budgeteer.key.id()), budget) == "Manager":
             template_params['budgetManager'] = True
         else:

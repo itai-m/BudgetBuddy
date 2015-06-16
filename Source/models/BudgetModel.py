@@ -29,6 +29,7 @@ class Budget(ndb.Model):
     tagList = ndb.KeyProperty(kind=TagModel.Tag, repeated=True)  # list of tag id
     entryList = ndb.KeyProperty(kind=EntryModel.Entry, repeated=True)  # list of limited available tags.
     participantsAndPermission = ndb.StringProperty(repeated=True)  # " "liranObjectKey.id()":"Manager" "
+    chatEnabled = ndb.BooleanProperty();
 
     @staticmethod
     def addBudget(budget):
@@ -237,3 +238,14 @@ class Budget(ndb.Model):
             if BudgeteerModel.Budgeteer.getBudgeteerById(budgeteerId).key == temp_entry.addedBy:
                 Budget.RemoveEntryFromBudget(entry, budget)
                 EntryModel.Entry.removeEntry(entry)
+
+    @staticmethod
+    def setChatEnabledDisabledByBudgetId(budgetId, chatEnabled):
+        if chatEnabled == "true":
+            chatEnabled = True
+        else:
+            chatEnabled = False
+        budget = Budget.getBudgetById(budgetId)
+        print chatEnabled
+        budget.chatEnabled = chatEnabled
+        budget.put()
