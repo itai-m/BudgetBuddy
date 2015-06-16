@@ -1,3 +1,4 @@
+from google.appengine.api.files.shuffler import available
 from google.appengine.ext.webapp import template
 import webapp2
 from models.BudgeteerModel import Budgeteer
@@ -30,8 +31,10 @@ class ChangeAvatarHandler(webapp2.RequestHandler):
         if not budgeteer:
             self.redirect('/Login')
             return
-        budgeteer.avatar = int(avatarId)
-        budgeteer.put()
+        if  int(avatarId) > 0 and  int(avatarId) < 19:
+            budgeteer.avatar = int(avatarId)
+            budgeteer.put()
+
         template.register_template_library('web.templatetags.filter_app')
         template_params = {}
         template_params['userName'] = budgeteer.userName

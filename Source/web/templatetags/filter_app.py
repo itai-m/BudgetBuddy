@@ -120,7 +120,7 @@ def getCountUserAmountInBudget(budget,budgeteerKey):
         entry = Entry.getEntryByKey(entryKey)
         if(entry.addedBy==budgeteerKey):
            count+=entry.amount
-    return
+    return count
 
 @register.filter(name='username_to_image')
 def username_to_image(user_name):
