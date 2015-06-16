@@ -483,7 +483,7 @@ a:hover,a:active,a:focus
 .user-panel>.image>img
 {
 	height: auto;
-	max-width: 45px;
+	max-width: 55px;
 	width: 100%;
 }
 .user-panel>.info

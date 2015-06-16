@@ -31,7 +31,7 @@ class ChangeAvatarHandler(webapp2.RequestHandler):
             self.redirect('/Login')
             return
         budgeteer.avatar = int(avatarId)
-        budgeteer.put()     
+        budgeteer.put()
         template.register_template_library('web.templatetags.filter_app')
         template_params = {}
         template_params['userName'] = budgeteer.userName
