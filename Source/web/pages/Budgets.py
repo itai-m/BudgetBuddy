@@ -31,7 +31,6 @@ class IndexHandler(webapp2.RequestHandler):
                     reverse_order = True
                 template_params['budgetList'] = Budgeteer.getBudgetList(budgeteer, sort_by = sort_by, reverse = reverse_order)
             else:
-                print sort_by
                 template_params['budgetList'] = Budgeteer.getBudgetList(budgeteer, sort_by = sort_by)
         else:
             template_params['budgetList'] = Budgeteer.getBudgetList(budgeteer)
@@ -108,7 +107,8 @@ class ExitBudgetHandler(webapp2.RequestHandler):
                 dst_budgeteer_key = Budgeteer.getBudgeteerById(long(participant_budgeteer_id)).key
                 new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key, dstBudgeteer=dst_budgeteer_key,
                                                          message=src_username + message_template,
-                                                         link="/Budget/{0}".format(budgetId))
+                                                         link="/Budget/{0}".format(budgetId),
+                                                         read=False)
                 BudgeteerNotification.addNotification(new_notification)
 
         Budget.removeBudgeteerFromBudget(long(budgeteer.key.id()), budget)

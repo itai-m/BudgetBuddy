@@ -3,7 +3,8 @@ import TagModel
 import EntryModel
 import BudgeteerModel
 import json
-import BudgetModel
+
+
 '''
     Functionality tests:
         [X] Add Budget

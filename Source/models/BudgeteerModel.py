@@ -21,11 +21,8 @@ import operator
 class Budgeteer(ndb.Model):
     userName = ndb.StringProperty()
     password = ndb.StringProperty()
-    firstName = ndb.StringProperty()
-    lastName = ndb.StringProperty()
     email = ndb.StringProperty()
-    birthday = ndb.DateProperty()
-    gender = ndb.StringProperty()  # char. m for male, f for female
+    avtar = ndb.IntegerProperty()
     budgetList = ndb.KeyProperty(kind=BudgetModel.Budget, repeated=True)  # list of budgets related to the user
 
     @staticmethod
@@ -41,6 +38,7 @@ class Budgeteer(ndb.Model):
         budgeteer.password = m.digest().decode("iso-8859-1")
         budgeteer.email = budgeteer.email.lower()
         budgeteer.userName = budgeteer.userName.lower()
+        budgeteer.avtar = 1;
         budgeteer.put()
         return budgeteer.key.id()
 
@@ -207,6 +205,7 @@ class Budgeteer(ndb.Model):
         :return: budgeteer object associated with that id.
         '''
         return budgeteer_key.get()
+
     @staticmethod
     def removeBudgetByKey(participantId, budgetKey):
         '''

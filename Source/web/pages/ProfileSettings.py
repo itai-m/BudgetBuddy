@@ -20,11 +20,7 @@ class IndexHandler(webapp2.RequestHandler):
         template.register_template_library('web.templatetags.filter_app')
         template_params = dict()
         template_params['userName'] = budgeteer.userName
-        template_params['firstName'] = budgeteer.firstName
-        template_params['lastName'] = budgeteer.lastName
         template_params['email'] = budgeteer.email
-        template_params['gender'] = budgeteer.gender
-        template_params['birthday'] = budgeteer.birthday
         html = template.render("web/templates/profile_settings.html", template_params)
         self.response.write(html)
 
@@ -46,7 +42,6 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
             return
 
         Email = self.request.get('email')
-        BirthYear = self.request.get("BirthYear")
         password = self.request.get('password')
         if len(password) != 0:
             OldPassword = self.request.get("oldpassword")
@@ -62,22 +57,7 @@ class ProfileSettingsCheckHandler(webapp2.RequestHandler):
             if Budgeteer.budgeteerEmailExist(Email):
                 self.response.write('Email already exists')
                 return
-        if int(BirthYear) < 1900:
-            self.response.write('Year of birth is not valid')
-            return
         budgeteer.email = Email
-        budgeteer.firstName = self.request.get('FirstName')
-        budgeteer.lastName = self.request.get('LastName')
-        BirthMonth = self.request.get("BirthMonth")
-        BirthMonth = BirthMonth.zfill(2)
-        BirthDay = self.request.get("BirthDay")
-        BirthDay = BirthDay.zfill(2)
-        try:
-            budgeteer.birthday = datetime.strptime('' + BirthDay + ' ' + BirthMonth + ' ' + BirthYear, '%d %m %Y')
-        except ValueError:
-            self.response.write('Wrong Date Input')
-            return
-        budgeteer.gender = self.request.get("gender")
 
         if len(password) != 0:
             budgeteerId = Budgeteer.updateBudgeteerAccount(budgeteer)
