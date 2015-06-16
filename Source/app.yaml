@@ -117,7 +117,7 @@ handlers:
 
 #cacthes everything that wasn't cought until now
 - url: /
-  script: web.pages.Budgets.app
+  script: web.pages.Login.app
 
 - url: /(.*)
   script: web.pages.404.app
