@@ -23,9 +23,15 @@ class IndexHandler(webapp2.RequestHandler):
             self.redirect('/Login')
         template.register_template_library('web.templatetags.filter_app')
         email = self.request.get("emailAddress")
-
         template_params = dict()
         template_params['userName'] = budgeteer.userName
+        budgeteerCheck = Budgeteer.getBudgeteerIdByEmail(email)
+        if budgeteerCheck:
+            template_params['emailStatus'] = "There is a budgeteer with that mail"
+            html = template.render("web/templates/invite_friend.html", template_params)
+            self.response.write(html)
+            return
+
         if not MailSender.check_if_email_valid(email):
             template_params['emailStatus'] = "Please insert your friend email address"
             html = template.render("web/templates/invite_friend.html", template_params)
