@@ -11,6 +11,7 @@ from google.appengine.ext import ndb
 
 class Tag(ndb.Model):
     description = ndb.StringProperty()
+    count = ndb.IntegerProperty()
 
     @staticmethod
     def getTagByKey(tagKey):
@@ -32,6 +33,19 @@ class Tag(ndb.Model):
         if not tag:
             return None
         return tag.key
+
+    @staticmethod
+    def getTagCountByName(tagname):
+        '''
+        Receives a tag name (supposed to be unique), returns the tag key.
+        :param tagname: Tag name.
+        :return: key of input tagname.
+        '''
+        tag = Tag.query(Tag.description == tagname).get()
+        if not tag:
+            return None
+        return tag.count
+
 
     @staticmethod
     def getAllTags():

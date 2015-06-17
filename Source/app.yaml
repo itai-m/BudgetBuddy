@@ -73,9 +73,6 @@ handlers:
 - url: /UserPage
   script: web.pages.UserPage.app
 
-- url: /Tags
-  script: web.pages.Tags.app
-
 - url: /Settings
   script: web.pages.Settings.app
 
