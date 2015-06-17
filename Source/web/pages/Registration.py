@@ -23,14 +23,18 @@ class RegistrationCheckHandler(webapp2.RequestHandler):
         Email = self.request.get('email')
         UserName = self.request.get('username')
         password = self.request.get('password')
+        template_params = dict()
         if Budgeteer.budgeteerUserNameExist(UserName):
+            self.error(403)
             self.response.write('UserName already exists')
             return
         if Budgeteer.budgeteerEmailExist(Email):
+            self.error(403)
             self.response.write('Email already exists')
             return
         if len(password) < 6:
-            self.response.write('password must be at least 6')
+            self.error(403)
+            self.response.write('Password must be at least 6 characters')
             return
         BudgeteerObj = Budgeteer()
         BudgeteerObj.email = Email

@@ -129,11 +129,11 @@ function submitRegistration() {
 	var repassword =$('#repassword').val();
 	if (username == null || username == "" || password == null || password == "")
 	{
-		alert("There appears to be a missing field");
+		document.getElementById("displayError").innerHTML("There appears to be a missing field");
 	}
 	else if (repassword != password)
 	{
-		alert("Password don't match");
+		document.getElementById("displayError").innerHTML = ("Password don't match");
 	}
 	else
 	{
@@ -149,8 +149,7 @@ function submitRegistration() {
 			},
 			error:function(xhr, status, error)
 			{
-				alert(xhr.responseText);
-				console.error(xhr, status, error);
+				document.getElementById("displayError").innerHTML = (xhr.responseText);
 			}
 		});
 	}
