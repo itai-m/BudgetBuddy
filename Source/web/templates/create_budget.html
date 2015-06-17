@@ -3,9 +3,11 @@
 {% block head %}
   {{block.super}}
 <link href="../static/css/create_budget.css" rel="stylesheet" type="text/css"/>
+
 {%endblock%}
 
 {% block content %}
+
 <div class="container">
      <h3>Create a Budget</h3>
     <hr>
@@ -80,22 +82,13 @@
             </div>
                 <br>
             <div>
-                <label>Tags:</label>
-                <div class="checkboxContainer">
-                <table width="100%">
-                        {% for tagNamePair in tagnamePairList %}
-                        <tr>
-                            {% for tagName in tagNamePair %}
-                                {%  if tagName %}
-                              <td width="50%">
-                                <input class="tagCheckbox" value="{{ tagName }}" id="{{ tagName }}" type="checkbox"/> {{ tagName }}
-                                </td>
-                                {% endif %}
-                            {% endfor %}
-                       </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+                <label style="width: 7%">Tags:</label>
+                <select id="TagSelect" style="width: 20%; height: 35px;" >
+                </select>
+                <input type="submit" name="submit" id="submit" value="Remove Tag" class="btn btn-primary"
+                style="width: 30%" onsubmit="return false;" onclick="removeTagFromSelectBox();"><br><br>
+                 <input type="submit" name="submit" id="submit" width="100px" value="Add a New Tag" class="btn btn-primary"
+                style="width: 58%;"onsubmit="return false;" onclick="getNewTagFromUser();">
             </div>
             <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right"
                    onsubmit="return false;" onclick="submitBudget('/SubmitNewBudget');">
@@ -104,6 +97,9 @@
 
     </div>
 </div>
+
+
+
 <script language="javascript">
 document.getElementById("createBudgetButton").className = "active"
 </script>
