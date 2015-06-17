@@ -637,7 +637,7 @@ function radioButtonSelectedValueSet(selectedValue, name){
 
 function getNewTagFromUser()
 {
-	$.msgbox("Insert tagname to add.", {
+	$.msgbox("Insert tag name to add.", {
 		type: "prompt"
 	}, function(result) {
 		if (result) {

@@ -86,16 +86,25 @@ class SubmitNewBudgetHandler(webapp2.RequestHandler):
         if not untagged_key:
             untagged_key = Tag()
             untagged_key.description = "Untagged"
+            untagged_key.count = 1000
             untagged_key = Tag.addTagToDatastore(untagged_key)
         budget.tagList.append(untagged_key)
 
         for tag in tag_list.split(','):
             if not tag:
                 break
+            tag = tag.lower()
             tag_key = Tag.getTagKeyByName(tag)
             if not tag_key:
-                self.response.write('Unrecognized tag ' + tag)
-                return
+                tag_key = Tag()
+                tag_key.description = tag
+                tag_key.count = 1
+                tag_key = tag_key.put()
+            else:
+                tag_key = Tag.getTagByKey(tag_key)
+                tag_key.count += 1
+                tag_key = tag_key.put()
+
             budget.tagList.append(tag_key)
 
         for participant in participant_list.split(","):
