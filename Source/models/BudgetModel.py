@@ -125,6 +125,15 @@ class Budget(ndb.Model):
         participantIdList = Budget.getAssociatedBudgeteersId(budget)
         for participantId in participantIdList:
             BudgeteerModel.Budgeteer.removeBudgetByKey(participantId, budget.key)
+        for tag_key in budget.tagList:
+            tag_object=TagModel.Tag.getTagByKey(tag_key)
+            if tag_object.count == 1:
+               TagModel.Tag.removeTag(tag_object)
+            else:
+                tag_object.count -= 1
+                tag_object.put()
+
+
         # Remove budget from data store
         budget.key.delete()
 

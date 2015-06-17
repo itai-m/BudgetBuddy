@@ -88,27 +88,20 @@
             </div>
                 <br>
             <div>
-                <label>Tags:</label>
-                <div class="checkboxContainer">
-                <table width="100%">
-                        {% for tagNamePair in tagnamePairList %}
-                        <tr>
-                            {% for tagName in tagNamePair %}
-                                {%  if tagName %}
-                              <td width="50%">
-                                <input class="tagCheckbox" value="{{ tagName }}" id="{{ tagName }}" type="checkbox"/> {{ tagName }}
-                                </td>
-                                {% endif %}
-                            {% endfor %}
-                       </tr>
-                        {% endfor %}
-                    </table>
+                <label style="width: 7%">Tags:</label>
+                    <select id="TagSelect" style="width: 20%; height: 35px;" >
 
                     {% for tag in checkedTags %}
-                        <script langage="javascript">document.getElementById("{{tag}}").checked = true;</script>
+                         <option value="{{ tag }}" {% if tag == "Untagged" %}
+                         disabled
+                         {% endif %}>{{ tag }}</option>
                     {% endfor %}
 
-                </div>
+                    </select>
+                <input type="submit" name="submit" id="submit" value="Remove Tag" class="btn btn-primary"
+                style="width: 30%" onsubmit="return false;" onclick="removeTagFromSelectBox();"><br><br>
+                 <input type="submit" name="submit" id="submit" width="100px" value="Add a New Tag" class="btn btn-primary"
+                style="width: 58%;"onsubmit="return false;" onclick="getNewTagFromUser();">
             </div>
             <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right"
                    onsubmit="return false;" onclick="submitBudget('/SubmitEditedBudget/{{ budgetId }}');">

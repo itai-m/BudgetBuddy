@@ -75,6 +75,7 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
         budget = Budget.getBudgetById(long(budget_id))
         budget.budgetName = budget_name
         budget.creationDate = datetime.datetime.now()
+        temp_tagList = budget.tagList
         budget.tagList = []
 
         for participant in Budget.getAssociatedBudgeteersId(budget):
@@ -90,14 +91,51 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
             untagged_key = Tag.addTagToDatastore(untagged_key)
         budget.tagList.append(untagged_key)
 
+        tag_name_list_before =[]
+        for tag_key in temp_tagList:
+            print tag_key
+            tag_name = Tag.getTagByKey(tag_key).description
+            if tag_name and tag_name.lower() != "untagged":
+               tag_name_list_before.append(Tag.getTagByKey(tag_key).description)
+
         for tag in tag_list.split(','):
             if not tag:
                 break
-            tag_key = Tag.getTagKeyByName(tag)
+            tag = tag.lower()
+            if tag not in tag_name_list_before and tag != "untagged":
+                tag_key = Tag.getTagKeyByName(tag)
+                if not tag_key:
+                    tag_object = Tag()
+                    tag_object.description = tag
+                    tag_object.count = 1
+                    tag_object = tag_object.put()
+                else:
+                    tag_object = Tag.getTagByKey(tag_key)
+                    tag_object.count += 1
+                    tag_object = tag_object.put()
+            else:
+                continue
+            tag_check=Tag.getTagByKey(tag_object)
+            if tag_check.description.lower() != "untagged":
+                budget.tagList.append(tag_object)
+
+        for tag_key in temp_tagList:
             if not tag_key:
-                self.response.write('Unrecognized tag ' + tag)
-                return
-            budget.tagList.append(tag_key)
+                break
+            tag_name = Tag.getTagByKey(tag_key).description
+            if tag_name.lower() == "untagged":
+                continue
+            if tag_name in tag_list.split(','):
+                tag_key = Tag.getTagKeyByName(tag_name)
+                budget.tagList.append(tag_key)
+            else:
+                tag_key = Tag.getTagKeyByName(tag_name)
+                tag_object = Tag.getTagByKey(tag_key)
+                if tag_object.count == 1:
+                    Tag.removeTag(tag_object)
+                else:
+                    tag_object.count -= 1
+                    tag_object.put()
 
         for participant in participant_list.split(","):
             budgeteer_name = participant.split(":")[0]
@@ -113,11 +151,16 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
 
         for entry in budget.entryList:
             temp_entry = Entry.getEntryByKey(entry)
-            tag_desc = Tag.getTagByKey(temp_entry.tagKey)
-            tag_desc = tag_desc.description
-            if tag_desc not in tag_list.split(','):
+            tag_object = Tag.getTagByKey(temp_entry.tagKey)
+            if not tag_object:
                 temp_entry.tagKey = Tag.getTagKeyByName("Untagged")
                 Entry.updateEntry(temp_entry)
+
+            else:
+                tag_desc = tag_object.description
+                if tag_desc not in tag_list.split(','):
+                    temp_entry.tagKey = Tag.getTagKeyByName("Untagged")
+                    Entry.updateEntry(temp_entry)
 
         message_template = " Has Invited You To His Budget {0}".format(budget.budgetName)
         src_budgeteer_key = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).key
