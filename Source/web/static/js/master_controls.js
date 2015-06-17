@@ -356,7 +356,7 @@ function checkBudgeteerInTable(username){
 }
 function submitBudget(urladdress){
 	budgetName = $('#budgetName').val();
-	tagList = getCheckedTags(); // [tag],[tag],[tag] string
+	tagList = getTagList(); // [tag],[tag],[tag] string
 	participantList = getParticipants(); // [participant name]:[permission],[participant name][[:permission]
 	$.ajax({
 		url:urladdress,
@@ -375,19 +375,17 @@ function submitBudget(urladdress){
 		}
 	});
 }
-function getCheckedTags(){
-	tags = $('.tagCheckbox:checkbox:checked');
-	taglist = ""
-	var rowCount=tags.length;
-	for(var i=0;i<rowCount;i++)
+function getTagList(){
+	var ret_string = "";
+	var values = $("#TagSelect>option").map(function() { return $(this).val(); }).get();
+	for (var i = 0; i < values.length ; i++)
 	{
-		taglist += tags[i].value;
-		if (i != rowCount-1)
-		{
-			taglist+= ",";
-		}
+		ret_string += values[i] + ","
 	}
-	return taglist;
+	ret_string = ret_string.substring(0, ret_string.length -1 )
+
+	return ret_string;
+
 }
 function getParticipants(){
 	tableID = 'budgeteerTable';
@@ -635,4 +633,21 @@ function changeAvatar() {
 }
 function radioButtonSelectedValueSet(selectedValue, name){
 	$('input[name="' + name+ '"][value="' + selectedValue + '"]').prop('checked', true);
+}
+
+function getNewTagFromUser()
+{
+	$.msgbox("Insert tagname to add.", {
+		type: "prompt"
+	}, function(result) {
+		if (result) {
+			$('#TagSelect').append("<option value="+result+">"+result+"</option>");
+		}
+	});
+}
+
+function removeTagFromSelectBox()
+{
+	var x = document.getElementById("TagSelect");
+	x.remove(x.selectedIndex);
 }
