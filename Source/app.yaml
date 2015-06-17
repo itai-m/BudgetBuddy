@@ -115,6 +115,9 @@ handlers:
 - url: /ReadNotification
   script: web.pages.Notification.app
 
+- url: /GetAllNotification
+  script: web.pages.Notification.app
+
 - url: /MarkAllAsRead
   script: web.pages.Notification.app
 

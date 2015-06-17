@@ -125,9 +125,44 @@ class RemoveAllNotifications(webapp2.RequestHandler):
         self.response.write(json.dumps({'status': 'OK'}))
 
 
+class GetAllNotificationsHandler(webapp2.RequestHandler):
+    def get(self):
+        budgeteer_id = None
+        if self.request.cookies.get('budgeteerIdToken'):
+            budgeteer_id = long(self.request.cookies.get('budgeteerIdToken'))
+            budgeteer = Budgeteer.getBudgeteerById(budgeteer_id)
+            if not budgeteer:
+                self.error(404)
+                self.redirect('/Login')
+                return
+        else:
+            self.error(403)
+            self.redirect('/Login')
+            return
+
+        budgeteer = Budgeteer.getBudgeteerById(budgeteer_id)
+        notifications = BudgeteerNotification.getUnreadNotificationsByDstKey(budgeteer.key)
+        if len(notifications) == 0:
+            self.error(200)
+            self.response.write(json.dumps({'status': 'OK'}))
+
+        list_to_write = []
+        for notification in notifications:
+            list_to_write.append({'message':notification.message,'id':notification.key.id()})
+
+        self.error(200)
+        self.response.write(
+            json.dumps(
+
+                {'notifications': list_to_write},
+                {'status': 'OK'}
+            )
+        )
+
 app = webapp2.WSGIApplication([
     ('/ShowNotifications', ShowNotificationHandler),
     ('/RemoveAllNotifications', RemoveAllNotifications),
     ('/ReadNotification', ReadNotificationHandler),
-    ('/MarkAllAsRead', MarkAllAsReadHandler)
+    ('/MarkAllAsRead', MarkAllAsReadHandler),
+    ('/GetAllNotification', GetAllNotificationsHandler)
 ], debug=True)

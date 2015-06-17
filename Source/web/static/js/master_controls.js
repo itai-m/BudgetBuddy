@@ -562,6 +562,37 @@ function checkNotification(notification_id, index_in_table) {
 }
 function getNotificationForMenuBar()
 {
+	var current_length = document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText;
+	current_length = parseInt(current_length);
+	$.ajax({
+		url:'/GetAllNotification',
+		type:'GET',
+		dataType:'json',
+		data:{},
+		success:function(data, status, xhr) {
+
+			if (data.notifications.length > current_length)
+			{
+				removeAllNotificationFromMenuBar();
+				for (var i = 0; i < data.notifications.length; ++i)
+				{
+					$("#notificationsList").prepend(
+						'<li id=" + i.toString() +">' +
+						'<a href="javascript: checkNotification(' + data.notifications[i].id + ',' + i.toString() + ');">'+
+						'<i class="fa fa-users text-aqua"></i>'+
+						'<span class="notifications">'+data.notifications[i].message +
+						'</span></a><li>'
+					);
+				}
+			}
+			var notification_amount = (data.notifications.length ? data.notifications.length.toString() : "");
+			document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText = notification_amount;
+		},
+		error:function(xhr, status, error)
+		{
+
+		}
+	});
 
 }
 function removeAllNotifications() {

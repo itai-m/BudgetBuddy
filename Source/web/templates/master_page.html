@@ -13,7 +13,9 @@
         <link href="../static/css/budget_buddy_master_blue.css" rel="stylesheet" type="text/css"/>
         <script type="application/javascript" src="../static/js/master_controls.js"></script>
         <link href="../static/css/jquery.msgbox.css" rel="stylesheet" type="text/css"/>
-
+        <script>
+            setInterval(getNotificationForMenuBar, 10000);
+        </script>
     {% endblock %}
 </head>
 
@@ -47,30 +49,30 @@
                                 <span class="label label-warning"></span>
                             {% endif %}
                         </a>
-                            <ul class="dropdown-menu">
-                                <li class="header" id="headerNotificationNumber">
-                                    <a href="/ShowNotifications">Show All Notifications</a>
-                                </li>
-                                <li>
-                                    <!-- Inner Menu: contains the notifications -->
-                                    <ul class="menu" id="notificationsList">
-                                        <!-- start notification -->
-                                        {% for notification in notificatoinList %}
-                                            <li id="{{ forloop.counter }}">
-                                                <a href="javascript: checkNotification({{ notification.key.id }},{{ forloop.counter }});">
-                                                    <i class="fa fa-users text-aqua"></i>
+                        <ul class="dropdown-menu">
+                            <li class="header" id="headerNotificationNumber">
+                                <a href="/ShowNotifications">Show All Notifications</a>
+                            </li>
+                            <li>
+                                <!-- Inner Menu: contains the notifications -->
+                                <ul class="menu" id="notificationsList">
+                                    <!-- start notification -->
+                                    {% for notification in notificatoinList %}
+                                        <li id="{{ forloop.counter }}">
+                                            <a href="javascript: checkNotification({{ notification.key.id }},{{ forloop.counter }});">
+                                                <i class="fa fa-users text-aqua"></i>
                                                     <span class="notifications">
                                                         {{ notification.message }}
                                                     </span>
 
-                                                </a>
-                                            </li>
-                                        {%  endfor %}
-                                        <!-- end notification -->
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="javascript: readAllNotifications();">Mark All as Read</a></li>
-                            </ul>
+                                            </a>
+                                        </li>
+                                    {%  endfor %}
+                                    <!-- end notification -->
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="javascript: readAllNotifications();">Mark All as Read</a></li>
+                        </ul>
                     </li>
                 </ul>
             {% endwith %}
@@ -151,6 +153,9 @@
 
     <!-- Main Footer -->
     <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+
+        </div>
         <!-- To the right -->
 
         <!-- Default to the left -->
@@ -168,9 +173,11 @@
 <script src="../static/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="../static/js/app.min.js" type="text/javascript"></script>
-
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="../static/js/jquery.msgbox.min.js"></script>
+
+
+
 </body>
 
 </html>
