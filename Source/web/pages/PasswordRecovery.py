@@ -45,7 +45,7 @@ class IndexHandler(webapp2.RequestHandler):
                 MailSender.send_password_recovery_token(budgeteer.userName,
                                                         budgeteer.email,
                                                         PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId))
-                template_params['emailStatus'] = "<font color='green'>An Email with password has already been sent.</font>"
+                template_params['emailStatus'] = "<font color='green'>An Email with your password has been sent.</font>"
         else:
             template_params['emailStatus'] = "<font color='red'>There is no such email.</font>"
 
