@@ -19,6 +19,11 @@ class IndexHandler(webapp2.RequestHandler):
             return
         template.register_template_library('web.templatetags.filter_app')
         budget = Budget.getBudgetById(long(budgetId))
+
+        if budget is None:
+            self.redirect('/Budgets')
+            return
+
         template_params = dict()
         assoc_budgeteers = Budget.getAssociatedBudgeteersId(budget)
         for entry in budget.entryList:

@@ -239,6 +239,8 @@ function isNumber(n) {
 // Create Budget page functions.
 function usernameExist(){
 	var usernameExist = $('#checkUsernameExist').val();
+	document.getElementById("usernameExistField").innerHTML = '';
+	document.getElementById("usernameExistField").style.color = '';
 	$.ajax({
 		url:'/CreateCheck',
 		type:'GET',
@@ -252,7 +254,7 @@ function usernameExist(){
 		error:function(xhr, status, error)
 		{
 			document.getElementById("usernameExistField").style.color = "red";
-			document.getElementById("usernameExistField").innerHTML = "Username doesnt exist!"
+			document.getElementById("usernameExistField").innerHTML = "Username doesnt exist!";
 			console.error(xhr, status, error);
 		}
 	});
@@ -445,8 +447,8 @@ function sendNewChatMessage(){
 		},
 		error:function(xhr, status, error)
 		{
-			alert("error");
-			console.error(xhr, status, error);
+			location.reload();
+			//console.error(xhr, status, error);
 		}
 	});
 }
