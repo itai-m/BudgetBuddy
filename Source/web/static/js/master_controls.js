@@ -535,9 +535,9 @@ function checkNotification(notification_id, index_in_table) {
 	//removes from drop down menu
 	var ul = document.getElementById("notificationsList");
 	var li_list = ul.getElementsByTagName("li");
-	if (index_in_table < li_list.length+1)
+	if (index_in_table < li_list.length)
 	{
-		li_list[index_in_table-1].remove();
+		li_list[index_in_table].remove();
 	}
 	//update number of notification badge
 	decreaseNotificationAmountFromMenuBar();
@@ -572,7 +572,7 @@ function getNotificationForMenuBar()
 		dataType:'json',
 		data:{},
 		success:function(data, status, xhr) {
-			if (data.notifications.length > current_length)
+			if ((data.notifications.length > current_length) || (isNaN(current_length) == true))
 			{
 				removeAllNotificationFromMenuBar();
 				for (var i = 0; i < data.notifications.length; ++i)
