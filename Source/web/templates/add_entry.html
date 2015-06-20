@@ -19,9 +19,9 @@
         <form action="javascript:void(0);" method="get">
           <input type="hidden" id="budgetId" value="{{ budgetId }}">
 
-          <input type="text" placeholder="Description" id="desc-textbox"><br><br> <!-- JS because of IE support; better: placeholder="Email" -->
+          <input type="text" placeholder="Description" maxlength="40" id="desc-textbox"><br><br> <!-- JS because of IE support; better: placeholder="Email" -->
 
-          <input type="text" placeholder="Price" id="price-textbox" title="Must be a positive number."> <!-- JS because of IE support; better: placeholder="Password" -->
+          <input type="text" placeholder="Price" maxlength="40" id="price-textbox" title="Must be a positive number."> <!-- JS because of IE support; better: placeholder="Password" -->
 
           <select id="tag-combobox">
             <option value="disabled" selected disabled>Choose tag</option>

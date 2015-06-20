@@ -15,7 +15,7 @@
                 <label>Budget Name</label>
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" id="budgetName" class="form-control input-lg" placeholder="Budget name" value="{{ budgetName }}" />
+                        <input type="text" id="budgetName" class="form-control input-lg" maxlength="40" placeholder="Budget name" value="{{ budgetName }}" />
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <label>Add a Budgeteer</label>
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input  id="checkUsernameExist" type="text" class="form-control input-lg" placeholder="Budgeteer name" />
+                        <input  id="checkUsernameExist" type="text" class="form-control input-lg" maxlength="40" placeholder="Budgeteer name" />
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-lg" type="button" onclick='usernameExist();'>
                                <i class="fa fa-search"></i>
