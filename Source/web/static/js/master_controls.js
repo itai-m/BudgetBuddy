@@ -261,6 +261,21 @@ function usernameExist(){
 function addRow(){
 	usernameExist();
 	var username = $('#checkUsernameExist').val();
+
+	tableID = 'budgeteerTable';
+	var table=document.getElementById(tableID);
+	var rowCount=table.rows.length;
+	for(var i=0;i<rowCount;i++)
+	{
+		var row=table.rows[i];
+		var text=row.cells[1].innerHTML;
+		if(username.localeCompare(text) == 0)
+		{
+			document.getElementById("usernameExistField").innerHTML = "Budgeteer already exist in table!";
+			return;
+		}
+	}
+
 	document.getElementById("Add").disabled = true;
 	if (checkBudgeteerInTable(username))
 	{
