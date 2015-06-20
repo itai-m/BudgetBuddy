@@ -33,8 +33,10 @@ class IndexHandler(webapp2.RequestHandler):
         template_params['budget'] = Budget.getBudgetById(long(budgetId))
         template_params['budgetId'] = budgetId
         template_params['chatEnabled'] = budget.chatEnabled
-        if  Budget.getPermissionByBudgeteerId(long(budgeteer.key.id()), budget) == "Manager":
+        if Budget.getPermissionByBudgeteerId(long(budgeteer.key.id()), budget) == "Manager":
             template_params['budgetManager'] = True
+        elif Budget.getPermissionByBudgeteerId(long(budgeteer.key.id()), budget) is None:
+            self.redirect("/Budgets")
         else:
             template_params['budgetManager'] = False
         html = template.render("web/templates/budget.html", template_params)

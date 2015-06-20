@@ -207,7 +207,10 @@ class Budget(ndb.Model):
         :return: permission string if exists, None if not in list
         '''
         permList = Budget.getParticipantsAndPermissionsDict(budget)
-        return permList[str(budgeteerId)]
+        if str(budgeteerId) in permList.keys():
+            return permList[str(budgeteerId)]
+        else:
+            return None
 
     @staticmethod
     def removeBudgeteerFromBudget(budgeteerId, budget):

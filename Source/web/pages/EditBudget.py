@@ -93,10 +93,9 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
 
         tag_name_list_before =[]
         for tag_key in temp_tagList:
-            print tag_key
             tag_name = Tag.getTagByKey(tag_key).description
             if tag_name and tag_name.lower() != "untagged":
-               tag_name_list_before.append(Tag.getTagByKey(tag_key).description)
+                tag_name_list_before.append(Tag.getTagByKey(tag_key).description)
 
         for tag in tag_list.split(','):
             if not tag:
@@ -162,19 +161,40 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
                     temp_entry.tagKey = Tag.getTagKeyByName("Untagged")
                     Entry.updateEntry(temp_entry)
 
-        message_template = " Has Edited Budget {0}".format(budget.budgetName)
+        Budget.addBudget(budget)
+
         src_budgeteer_key = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).key
         src_username = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).userName
-        for participant_budgeteer_id in Budget.getAssociatedBudgeteersId(budget):
-            if long(budgeteer.key.id()) != long(participant_budgeteer_id):
-                dst_budgeteer_key = Budgeteer.getBudgeteerById(long(participant_budgeteer_id)).key
-                new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key, dstBudgeteer=dst_budgeteer_key,
-                                                         message=src_username + message_template,
-                                                         link="/Budget/{0}".format(budget.key.id()),
-                                                         read=False)
-                BudgeteerNotification.addNotification(new_notification)
+        new_participants_id = Budget.getAssociatedBudgeteersId(budget)
+        for participant_id in new_participants_id:
+            if participant_id != budgeteer.key.id():
+                budgeteer_participant = Budgeteer.get_by_id(participant_id)
+                if participant_id in old_participants_id:
+                    message_template = " Has Edited Budget {0}".format(budget.budgetName)
+                    new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key,
+                                                             dstBudgeteer=budgeteer_participant.key,
+                                                             message=src_username + message_template,
+                                                             link="/Budget/{0}".format(budget.key.id()),
+                                                             read=False)
+                    BudgeteerNotification.addNotification(new_notification)
+                elif participant_id not in old_participants_id:
+                    message_template = " Has Invited You To His Budget {0}".format(budget.budgetName)
+                    new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key,
+                                                             dstBudgeteer=budgeteer_participant.key,
+                                                             message=src_username + message_template,
+                                                             link="/Budget/{0}".format(budget.key.id()),
+                                                             read=False)
+                    BudgeteerNotification.addNotification(new_notification)
+        for removed_participants_id in list(set(old_participants_id)-set(new_participants_id)):
+            budgeteer_participant = Budgeteer.get_by_id(removed_participants_id)
+            message_template = " Has Removed You From His Budget {0}".format(budget.budgetName)
+            new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key,
+                                                     dstBudgeteer=budgeteer_participant.key,
+                                                     message=src_username + message_template,
+                                                     link="/Budget/{0}".format(budget.key.id()),
+                                                     read=False)
+            BudgeteerNotification.addNotification(new_notification)
 
-        Budget.addBudget(budget)
         self.response.write(json.dumps({'status':'OK'}))
 
 

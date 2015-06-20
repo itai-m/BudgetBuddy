@@ -562,13 +562,16 @@ function getNotificationForMenuBar()
 {
 	var current_length = document.getElementById("notificationNumberSpan").getElementsByTagName("Span")[0].innerText;
 	current_length = parseInt(current_length);
+	if (isNaN(current_length) == true)
+	{
+		current_length = 0;
+	}
 	$.ajax({
 		url:'/GetAllNotification',
 		type:'GET',
 		dataType:'json',
 		data:{},
 		success:function(data, status, xhr) {
-
 			if (data.notifications.length > current_length)
 			{
 				removeAllNotificationFromMenuBar();
