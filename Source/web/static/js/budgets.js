@@ -18,7 +18,7 @@ $(function() {
         $(target).hide();
     });
 
-    $('a.popper').mousemove(function(e) {
+    $('a.popper').mouseenter(function(e) {
 
         var target = '#' + ($(this).attr('data-popbox'));
 
