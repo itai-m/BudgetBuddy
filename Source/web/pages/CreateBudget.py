@@ -76,6 +76,9 @@ class SubmitNewBudgetHandler(webapp2.RequestHandler):
 
         budget = Budget()
         budget.budgetName = budget_name
+        if len(budget_name) == 0:
+            self.response.write('Cant submit empty budget name')
+            return
         budget.creationDate = datetime.datetime.now()
         budget.entryList = []
         budget.tagList = []
