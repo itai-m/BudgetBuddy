@@ -675,6 +675,11 @@ function getNewTagFromUser()
 		type: "prompt"
 	}, function(result) {
 		if (result) {
+            if (result.length > 20)
+            {
+                alert("Error: Max letters exceeded");
+                return;
+            }
 			var check_in_list = false;
 			var x = document.getElementById("TagSelect");
 			for (var i = 0; i < x.options.length; ++i) {
