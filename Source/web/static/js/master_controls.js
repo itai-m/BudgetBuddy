@@ -673,7 +673,20 @@ function getNewTagFromUser()
 		type: "prompt"
 	}, function(result) {
 		if (result) {
-			$('#TagSelect').append("<option value="+result+">"+result+"</option>");
+			var check_in_list = false;
+			var x = document.getElementById("TagSelect");
+			for (var i = 0; i < x.options.length; ++i) {
+				if (result.toString() == x.options[i].value.toString())
+				{
+					check_in_list = true;
+					break;
+				}
+			}
+			if (check_in_list == false)
+			{
+				$('#TagSelect').append("<option value="+result+">"+result+"</option>");
+			}
+
 		}
 	});
 }
