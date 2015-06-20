@@ -1,6 +1,5 @@
 $(function() {  //this is jQuery's short notation for "fire all this when page is ready"
 	$('#loginBtn').on('click', submitLogin);
-	$('#RegistrationSubmit').on('click', submitRegistration);
 });
 function submitLogin() {
 	var username = $('#loginUN').val();

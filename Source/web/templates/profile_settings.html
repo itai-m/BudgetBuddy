@@ -14,15 +14,14 @@
     <div class="container">
 
         <header>
-            <h1 style="color:#4b8df9">Edit Acount Information</h1>
+            <h1 style="color:#4b8df9">Edit Account Information</h1>
         </header>
 
-        <div  class="form">
-            <form id="contactform" onsubmit="return false;">
+        <div class="form" onsubmit="submitProfile();">
+            <form id="contactform">
 
                 <p class="contact"><label for="email">Email</label></p>
-                <input id="email" name="email" placeholder="example@domain.com" required="" type="email" maxlength="40" tabindex="3" value="{{ email }}">
-
+                <input id="email" name="email" placeholder="example@domain.com" required type="email" maxlength="40" tabindex="3" value="{{ email }}">
                 <p class="contact"><label for="password">Old password</label></p>
                 <input type="password" id="oldpassword" name="password" maxlength="40" tabindex="4">
                 <p class="contact"><label for="password">New password</label></p>
@@ -30,14 +29,14 @@
                 <p class="contact"><label for="repassword">Confirm your password</label></p>
                 <input type="password" id="repassword" name="repassword" maxlength="40" tabindex="6"> <br>
                 <br>
-                <input class="buttom" name="submit" id="ProfileSettingSubmit" tabindex="11"  value="submit" type="submit" onsubmit="return false;" onclick="submitProfile();">
+                <input class="buttom" name="submit" id="ProfileSettingSubmit" tabindex="11"  value="submit" type="submit">
                 <p class="contact"><font id = "displayError" color="red" size="4" ></font></p>
                 <br>
             </form>
         </div>
     </div>
     <script language="javascript">
-    document.getElementById("profileSettingsButton").className = "active"
+        document.getElementById("profileSettingsButton").className = "active"
     </script>
 
 {%endblock%}
