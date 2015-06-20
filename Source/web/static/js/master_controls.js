@@ -213,7 +213,7 @@ function submitProfile() {
 
 	if (repassword!=password)
 	{
-		alert("passwords don't matching");
+		document.getElementById("displayError").innerHTML = ("passwords don't matching");
 	}
 	else
 	{
@@ -228,8 +228,7 @@ function submitProfile() {
 			},
 			error:function(xhr, status, error)
 			{
-				alert(xhr.responseText);
-				console.error(xhr, status, error);
+				document.getElementById("displayError").innerHTML = (xhr.responseText);
 			}
 		});
 	}
