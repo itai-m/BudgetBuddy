@@ -27,7 +27,7 @@ class IndexHandler(webapp2.RequestHandler):
 
         template_params = dict()
         if not MailSender.check_if_email_valid(email):
-            template_params['emailStatus'] = "Please insert your email address"
+            template_params['emailStatus'] = "<font color='red'>Please insert your email address</font>"
             html = template.render("web/templates/password_recovery.html", template_params)
             self.response.write(html)
             return
@@ -38,16 +38,16 @@ class IndexHandler(webapp2.RequestHandler):
             budgeteer = Budgeteer.getBudgeteerById(budgeteerId)
             tokenForBudgeteerId = PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId)
             if tokenForBudgeteerId:
-                template_params['emailStatus'] = "An Email with password has already been sent." + \
-                                                 " Please wait couple of minutes"
+                template_params['emailStatus'] = "<font color='red'>An Email with password has already been sent." + \
+                                                 " Please check your email inbox</font>"
             else:
                 PasswordTokenRecovery.addTokenToDataStore(budgeteerId)
                 MailSender.send_password_recovery_token(budgeteer.userName,
                                                         budgeteer.email,
                                                         PasswordTokenRecovery.getTokenByBudgeteerId(budgeteerId))
-                template_params['emailStatus'] = "An Email with password has already been sent."
+                template_params['emailStatus'] = "<font color='green'>An Email with password has already been sent.</font>"
         else:
-            template_params['emailStatus'] = "There is no such email."
+            template_params['emailStatus'] = "<font color='red'>There is no such email.</font>"
 
         html = template.render("web/templates/password_recovery.html", template_params)
         self.response.write(html)
@@ -55,6 +55,14 @@ class IndexHandler(webapp2.RequestHandler):
 
 class SendNewPasswordHandler(webapp2.RequestHandler):
     def get(self, token):
+
+        if self.request.cookies.get('budgeteerIdToken'):
+            budgeteer = Budgeteer.getBudgeteerById(long(self.request.cookies.get('budgeteerIdToken')))
+            if budgeteer:
+                self.redirect('/Budgets')
+            else:
+                budgeteer = None
+
         budgeteerId = PasswordTokenRecovery.resetPassword(token)
         if budgeteerId:
             budgeteer = Budgeteer.getBudgeteerById(budgeteerId)
@@ -62,7 +70,9 @@ class SendNewPasswordHandler(webapp2.RequestHandler):
             MailSender.send_new_password(budgeteer.userName, budgeteer.email, new_pass)
             budgeteer.password = new_pass
             Budgeteer.updateBudgeteerAccount(budgeteer)
-            self.redirect("/Login")
+            template_params = dict()
+            html = template.render("web/templates/password_recovery_success.html", template_params)
+            self.response.write(html)
         else:
             self.redirect("/404")
 

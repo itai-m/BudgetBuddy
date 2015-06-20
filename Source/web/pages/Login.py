@@ -3,6 +3,7 @@ import webapp2
 from models.BudgeteerModel import Budgeteer
 import json
 
+
 class IndexHandler(webapp2.RequestHandler):
 
     def get(self):
@@ -16,8 +17,8 @@ class IndexHandler(webapp2.RequestHandler):
         html = template.render("web/templates/login.html", template_params)
         self.response.write(html)
 
-class LoginCheckHandler(webapp2.RequestHandler):
 
+class LoginCheckHandler(webapp2.RequestHandler):
     def get(self):
         username = self.request.get('username')
         password = self.request.get('password')

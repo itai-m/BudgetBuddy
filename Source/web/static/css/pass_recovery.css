@@ -6,8 +6,7 @@ fieldset {
     padding-bottom: 0.625em;
     padding-left: 0.75em;
     padding-right: 0.75em;
-    border: 0px groove;
-    width: 300px;
+    width: 40%;
 }
 
 #form-horizontal
@@ -16,8 +15,3 @@ fieldset {
     width: auto;
 }
 legend {padding:0}
-
-#login-form {
-    width: 800px;
-    margin:0 auto;
-}
