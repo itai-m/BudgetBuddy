@@ -260,7 +260,7 @@ function usernameExist(){
 	});
 }
 function addRow(){
-
+	usernameExist();
 	var username = $('#checkUsernameExist').val();
 	document.getElementById("Add").disabled = true;
 	if (checkBudgeteerInTable(username))
