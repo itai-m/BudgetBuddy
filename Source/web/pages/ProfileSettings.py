@@ -1,10 +1,8 @@
 from google.appengine.ext.webapp import template
 import webapp2
 from models.BudgeteerModel import Budgeteer
-import calendar
-register = template.django.template.Library()
-from datetime import datetime
 import json
+
 
 class IndexHandler(webapp2.RequestHandler):
 
@@ -23,11 +21,6 @@ class IndexHandler(webapp2.RequestHandler):
         template_params['email'] = budgeteer.email
         html = template.render("web/templates/profile_settings.html", template_params)
         self.response.write(html)
-
-
-@register.filter
-def month_name(month_number):
-    return calendar.month_name[month_number]
 
 
 class ProfileSettingsCheckHandler(webapp2.RequestHandler):
