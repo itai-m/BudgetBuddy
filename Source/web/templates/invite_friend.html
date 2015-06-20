@@ -9,50 +9,34 @@
 {% block content %}
     <!-- Begin Wrapper -->
     <center>
-        <div id="wrapper">
+        <form class="form-horizontal" method="post" >
+            <fieldset>
+                <!-- Form Name -->
+                <legend>  Invite a friend</legend>
 
-            <!-- Begin Header -->
-            <div id="header">
-                <br>
+                <p><strong>Enter email address of your friend</strong></p>
 
-            </div>
-            <!-- End Header -->
+                <!-- Text input-->
 
+                <div id ="innerText">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="sizing-addon2"> <i class="fa fa-envelope-o fa-fw"></i> </span>
+                        <input type="email" name="emailAddress" class="form-control" placeholder="Email" aria-describedby="sizing-addon2">
+                    </div>
 
-            <!-- Begin Left Column -->
-            <div id="leftcolumn">
-                <form class="form-horizontal" method="post" >
-                    <fieldset>
-                        <!-- Form Name -->
-                        <legend>  Invite a friend</legend>
-
-                        <p><strong>Enter email address of your friend</strong></p>
-
-                        <!-- Text input-->
-
-                        <div id ="innerText">
-                            <div class="input-group">
-                                <span class="input-group-addon" id="sizing-addon2"> <i class="fa fa-envelope-o fa-fw"></i> </span>
-                                <input type="email" name="emailAddress" class="form-control" placeholder="Email" aria-describedby="sizing-addon2">
-                            </div>
-
-                            <div id="space">
-                                <!-- Button -->
-                                <div class="control-group">
-                                    <label class="control-label" for="Submit"></label>
-                                    <div class="controls">
-                                        <button id="Submit" name="Submit" class="btn btn-primary custom">Submit</button>
-                                    </div>
-                                </div>
+                    <div id="space">
+                        <!-- Button -->
+                        <div class="control-group">
+                            <label class="control-label" for="Submit"></label>
+                            <div class="controls">
+                                <button id="Submit" name="Submit" class="btn btn-primary custom">Submit</button>
                             </div>
                         </div>
-                        {{ emailStatus }}
-                    </fieldset>
-                </form>
+                    </div>
+                </div>
+                {{ emailStatus }}
+            </fieldset>
+        </form>
 
-            </div>
-        </div>
-
-        </div>
     </center>
 {%endblock%}
