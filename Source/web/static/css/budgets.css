@@ -20,6 +20,9 @@
   background: #418a95;
   border: 0px solid;
 }
+.flatTable .titleTr td {
+  padding-left: 40%;
+}
 .flatTable .plusTd {
   background: url(http://i.imgur.com/3hSkhay.png) center center no-repeat, rgba(0, 0, 0, 0.1);
 }
