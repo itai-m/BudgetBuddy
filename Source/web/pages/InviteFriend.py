@@ -2,8 +2,6 @@ from google.appengine.ext.webapp import template
 from models.BudgeteerModel import Budgeteer
 from api.MailSender import MailSender
 import webapp2
-import string
-import os
 
 
 class IndexHandler(webapp2.RequestHandler):
@@ -43,7 +41,6 @@ class IndexHandler(webapp2.RequestHandler):
 
         html = template.render("web/templates/invite_friend.html", template_params)
         self.response.write(html)
-
 
 
 app = webapp2.WSGIApplication([

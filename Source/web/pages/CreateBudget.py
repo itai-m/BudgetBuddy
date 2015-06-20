@@ -8,6 +8,7 @@ from models.BudgeteerNotificationModel import BudgeteerNotification
 import json
 import datetime
 
+
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
         if self.request.cookies.get('budgeteerIdToken'):
@@ -44,6 +45,7 @@ class IndexHandler(webapp2.RequestHandler):
         html = template.render("web/templates/create_budget.html", template_params)
         self.response.write(html)
 
+
 class CreateChecksHandler(webapp2.RequestHandler):
     def get(self):
         if self.request.cookies.get('budgeteerIdToken'):
@@ -59,6 +61,7 @@ class CreateChecksHandler(webapp2.RequestHandler):
             self.response.write('No such username.')
             return
         self.response.write(json.dumps({'status':'OK'}))
+
 
 class SubmitNewBudgetHandler(webapp2.RequestHandler):
     def get(self):
@@ -123,7 +126,7 @@ class SubmitNewBudgetHandler(webapp2.RequestHandler):
             budget.participantsAndPermission.append(json.dumps({budgeteer_id : budgeteer_perm}))
         Budget.addBudget(budget)
 
-        message_template = " Has Invited You To His Budget {0}".format(budget.budgetName)
+        message_template = " has invited you to his budget {0}".format(budget.budgetName)
         src_budgeteer_key = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).key
         src_username = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).userName
         for participant_budgeteer_id in Budget.getAssociatedBudgeteersId(budget):
@@ -136,7 +139,6 @@ class SubmitNewBudgetHandler(webapp2.RequestHandler):
                 BudgeteerNotification.addNotification(new_notification)
 
         self.response.write(json.dumps({'status':'OK'}))
-
 
 
 app = webapp2.WSGIApplication([('/CreateBudget', IndexHandler),

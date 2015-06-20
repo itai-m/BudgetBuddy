@@ -159,6 +159,7 @@ class GetAllNotificationsHandler(webapp2.RequestHandler):
             )
         )
 
+
 app = webapp2.WSGIApplication([
     ('/ShowNotifications', ShowNotificationHandler),
     ('/RemoveAllNotifications', RemoveAllNotifications),

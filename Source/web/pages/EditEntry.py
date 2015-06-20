@@ -6,6 +6,7 @@ from models.TagModel import Tag
 from models.BudgetModel import Budget
 import json
 
+
 class EditEntryHandler(webapp2.RequestHandler):
     def get(self, entryId):
         if self.request.cookies.get('budgeteerIdToken'):
@@ -39,6 +40,7 @@ class EditEntryHandler(webapp2.RequestHandler):
         template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/edit_entry.html", template_params)
         self.response.write(html)
+
 
 class SubmitEditedEntryHandler(webapp2.RequestHandler):
     def get(self):

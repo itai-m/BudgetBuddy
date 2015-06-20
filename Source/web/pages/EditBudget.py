@@ -8,6 +8,7 @@ from models.BudgeteerNotificationModel import BudgeteerNotification
 import datetime
 import json
 
+
 class EditBudgetHandler(webapp2.RequestHandler):
     def get(self,budget_id):
         if self.request.cookies.get('budgeteerIdToken'):
@@ -170,7 +171,7 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
             if participant_id != budgeteer.key.id():
                 budgeteer_participant = Budgeteer.get_by_id(participant_id)
                 if participant_id in old_participants_id:
-                    message_template = " Has Edited Budget {0}".format(budget.budgetName)
+                    message_template = " has edited budget {0}".format(budget.budgetName)
                     new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key,
                                                              dstBudgeteer=budgeteer_participant.key,
                                                              message=src_username + message_template,
@@ -178,7 +179,7 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
                                                              read=False)
                     BudgeteerNotification.addNotification(new_notification)
                 elif participant_id not in old_participants_id:
-                    message_template = " Has Invited You To His Budget {0}".format(budget.budgetName)
+                    message_template = " has invited you to his budget {0}".format(budget.budgetName)
                     new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key,
                                                              dstBudgeteer=budgeteer_participant.key,
                                                              message=src_username + message_template,
@@ -187,7 +188,7 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
                     BudgeteerNotification.addNotification(new_notification)
         for removed_participants_id in list(set(old_participants_id)-set(new_participants_id)):
             budgeteer_participant = Budgeteer.get_by_id(removed_participants_id)
-            message_template = " Has Removed You From His Budget {0}".format(budget.budgetName)
+            message_template = " has removed you from his budget {0}".format(budget.budgetName)
             new_notification = BudgeteerNotification(srcBudgeteer=src_budgeteer_key,
                                                      dstBudgeteer=budgeteer_participant.key,
                                                      message=src_username + message_template,

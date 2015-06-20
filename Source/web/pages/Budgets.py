@@ -99,7 +99,7 @@ class ExitBudgetHandler(webapp2.RequestHandler):
             self.response.write("You can't quit your budget, you have remove it")
             return
 
-        message_template = " Has Exited From Budget {0}".format(budget.budgetName)
+        message_template = " has exited from budget {0}".format(budget.budgetName)
         src_budgeteer_key = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).key
         src_username = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).userName
         for participant_budgeteer_id in Budget.getAssociatedBudgeteersId(budget):

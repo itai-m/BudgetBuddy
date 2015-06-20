@@ -76,6 +76,7 @@ class SendNewPasswordHandler(webapp2.RequestHandler):
         else:
             self.redirect("/404")
 
+
 app = webapp2.WSGIApplication([
     ('/PasswordRecovery[\/]?', IndexHandler),
     ('/PasswordRecovery/(.*)', SendNewPasswordHandler)
