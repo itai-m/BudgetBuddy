@@ -77,7 +77,7 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
         budget.creationDate = datetime.datetime.now()
         temp_tagList = budget.tagList
         budget.tagList = []
-
+        old_participants_id = Budget.getAssociatedBudgeteersId(budget)
         for participant in Budget.getAssociatedBudgeteersId(budget):
             Budget.removeBudgeteerFromBudget(participant, budget)
 
@@ -162,7 +162,7 @@ class SubmitEditedBudgetHandler(webapp2.RequestHandler):
                     temp_entry.tagKey = Tag.getTagKeyByName("Untagged")
                     Entry.updateEntry(temp_entry)
 
-        message_template = " Has Invited You To His Budget {0}".format(budget.budgetName)
+        message_template = " Has Edited Budget {0}".format(budget.budgetName)
         src_budgeteer_key = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).key
         src_username = Budgeteer.getBudgeteerById(long(budgeteer.key.id())).userName
         for participant_budgeteer_id in Budget.getAssociatedBudgeteersId(budget):

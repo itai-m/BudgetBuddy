@@ -126,4 +126,4 @@ def getCountUserAmountInBudget(budget,budgeteerKey):
 def username_to_image(user_name):
     budgeteer_id = Budgeteer.getBudgeteerIdByUserName(user_name)
     budgeteer = Budgeteer.getBudgeteerById(budgeteer_id)
-    return  "../static/images/avatars/budgeteer" + str(budgeteer.avatar) + ".jpeg";
+    return  "../static/images/avatars/budgeteer" + str(budgeteer.avatar) + ".jpeg"

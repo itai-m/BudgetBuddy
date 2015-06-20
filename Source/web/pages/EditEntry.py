@@ -36,6 +36,7 @@ class EditEntryHandler(webapp2.RequestHandler):
         template_params['tagList'] = tagNameList
         template_params['budgetId'] = budgetId
         template_params['entryId'] = entryId
+        template_params['userName'] = budgeteer.userName
         html = template.render("web/templates/edit_entry.html", template_params)
         self.response.write(html)
 
