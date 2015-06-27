@@ -1,0 +1,120 @@
+{% extends "master_page.html" %}
+
+{% block head %}
+  {{block.super}}
+<link href="../static/css/create_budget.css" rel="stylesheet" type="text/css"/>
+{%endblock%}
+
+{% block content %}
+<div class="container">
+     <h3>Edit a Budget</h3>
+    <hr>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Budget Name</label>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" id="budgetName" class="form-control input-lg" maxlength="40" placeholder="Budget name" value="{{ budgetName }}" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+				<br>
+            <div class="form-group">
+                <label>Add a Budgeteer</label>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input  id="checkUsernameExist" type="text" class="form-control input-lg" maxlength="40" placeholder="Budgeteer name" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="button" onclick='usernameExist();'>
+                               <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+
+                    </div>
+                    </div>
+                 <span id="usernameExistField"> &nbsp;</span>                        <br/>
+					</div>
+
+            <div class="form-group">
+                        <label>Permissions:</label>
+                        <div class="funkyradio-default">
+                            <input type="radio" name="radio" id="partner" />
+                            <label for="radio1">Budget Partner</label>
+                            &nbsp;&nbsp;
+                            <input type="radio" name="radio" id="viewer" checked/>
+                            <label for="radio2">Budget Viewer</label>
+                        </div>
+                    <div>
+                        <input type="submit" name="Add" id="Add" value="Add the Budgeteer" class="btn btn-primary" onclick='addRow();'>
+                    </div>
+                </div>
+                    <br>
+                    <div class="container">
+                    <div class="row">
+                        <div class="panel panel-primary filterable">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Budgeteer</h3>
+                            </div>
+                            <table class="table" id="budgeteerTable">
+                                <thead>
+                                    <tr class="filters">
+                                        <th>#</th>
+                                        <th>Budgeteer Name</th>
+                                        <th>Permissions</th>
+                                        <th>Action</th>
+                                    </tr>
+                                 {% for dicIdAndPermission in budget.participantsAndPermission %}
+                                    <tr>
+                                    <td>1</td>
+                                    <td>{{ dicIdAndPermission|budgeteer_key_to_username }}</td>
+                                    <td>Budget {{ budget|getMyPermissionById:dicIdAndPermission }}</td>
+                                    <td> {% if not budget|getMyPermissionById:dicIdAndPermission == "Manager" %}
+                                        <button type="button" class="btn btn-danger btn-cons" onclick="delRow('{{ dicIdAndPermission|budgeteer_key_to_username }}');">Remove</button>
+                                {% endif %}
+                                    </td>
+                                    <td></td>
+                                    </tr>
+                                 {% endfor %}
+                                 </tr>
+                                <script language="javascript">reorderRows();</script>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <br>
+            <div>
+                <label style="width: 7%">Tags:</label>
+                    <select id="TagSelect" style="width: 20%; height: 35px;" >
+
+                    {% for tag in checkedTags %}
+                         <option value="{{ tag }}" {% if tag == "Untagged" %}
+                         disabled
+                         {% endif %}>{{ tag }}</option>
+                    {% endfor %}
+
+                    </select>
+                <input type="submit" name="submit" id="submit" value="Remove Tag" class="btn btn-primary"
+                style="width: 30%" onsubmit="return false;" onclick="removeTagFromSelectBox();"><br><br>
+
+
+                 <input type="submit" name="submit" id="submit" width="100px" value="Add a New Tag" class="btn btn-primary"
+                style="width: 58%;"onsubmit="return false;" onclick="getNewTagFromUser();">
+
+            </div>
+            <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary pull-right"
+                   onsubmit="return false;" onclick="submitBudget('/SubmitEditedBudget/{{ budgetId }}');">
+        </br><span id="submitError">&nbsp;</span>
+        </div>
+
+    </div>
+</div>
+<script language="javascript">
+document.getElementById("createBudgetButton").className = "active"
+</script>
+
+{%endblock%}

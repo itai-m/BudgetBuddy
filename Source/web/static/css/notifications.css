@@ -1,0 +1,35 @@
+table {
+  color: #333;
+  font-family: sans-serif;
+  font-size: .9em;
+  font-weight: 300;
+  text-align: left;
+  line-height: 40px;
+  border-spacing: 0;
+  border: 1px solid #428bca;
+  width: 60%;
+  margin: 20px auto;
+}
+
+thead tr:first-child {
+  background: #428bca;
+  color: #fff;
+  border: none;
+}
+
+th {font-weight: bold;}
+th:first-child, td:first-child {padding: 0 15px 0 20px;}
+
+tbody tr:hover {background-color: #f0fbff;}
+tbody tr:last-child td {border: none;}
+tbody td {border-bottom: 1px solid #ddd;}
+.button {
+  color: #428bca;
+  text-align: center;
+  text-decoration: none;
+  padding-left: 15px;
+}
+.button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

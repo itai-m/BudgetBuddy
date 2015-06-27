@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block head %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>BudgetBuddy</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/budget_buddy_master.css" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/budget_buddy_master_blue.css" rel="stylesheet" type="text/css"/>
+        <script type="application/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script type="application/javascript" src="../static/js/master_controls.js"></script>
+    {% endblock %}
+</head>
+
+<body class="skin-blue sidebar-mini"     style="background-image: url('../static/images/guest_bg.png'); background-repeat: repeat-x;">
+
+    <div class="wrapper">
+
+        <!-- Main Header -->
+        <header class="main-header">
+
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Budget</b>Buddy</span>
+            </a>
+
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <ul class="nav navbar-nav">
+                    <!-- Notifications Menu -->
+				   <li><a href="Login"><i class="fa fa-sign-in fa-fw"></i>&nbsp;Login</a></li>
+				   <li><a href="Registration"><i class="fa fa-pencil fa-fw"></i>&nbsp;Register</a></li>
+                   <li><a href="AboutUs"><i class="fa fa-info fa-fw"></i>&nbsp;About Us</a></li>
+				   <li><a href="Help"><i class="fa fa-question fa-fw"></i>&nbsp;Help</a></li>
+                </ul>
+            </nav>
+        </header>
+	</div>
+		{% block content %}
+		{% endblock %}
+</body>
+
+</html>

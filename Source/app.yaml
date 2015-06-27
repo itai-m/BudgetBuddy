@@ -1,0 +1,142 @@
+application: budgetbuddy001
+version: 1-1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /static
+  static_dir: web/static
+
+- url: /Budget/(.*)
+  script: web.pages.Budget.app
+
+- url: /RemoveEntryFromBudget
+  script: web.pages.Budget.app
+
+- url: /Login
+  script: web.pages.Login.app
+
+- url: /LoginCheck
+  script: web.pages.Login.app
+
+- url: /Logout
+  script: web.pages.Login.app
+
+- url: /Registration
+  script: web.pages.Registration.app
+
+- url: /RegistrationCheck
+  script: web.pages.Registration.app
+
+- url: /CreateBudget
+  script: web.pages.CreateBudget.app
+
+- url: /RemoveBudgetFromBudget
+  script: web.pages.Budgets.app
+
+- url: /ExitBudget
+  script: web.pages.Budgets.app
+
+- url: /CreateCheck
+  script: web.pages.CreateBudget.app
+
+- url: /SubmitNewBudget
+  script: web.pages.CreateBudget.app
+
+- url: /SubmitEditedBudget/(.*)
+  script: web.pages.EditBudget.app
+
+- url: /EditBudget/(.*)
+  script: web.pages.EditBudget.app
+
+- url: /PasswordRecovery[\/]?(.*)
+  script: web.pages.PasswordRecovery.app
+
+- url: /AboutUs
+  script: web.pages.AboutUs.app
+
+- url: /Help
+  script: web.pages.Help.app
+
+- url: /Admin
+  script: web.pages.Admin.app
+
+- url: /Budgets
+  script: web.pages.Budgets.app
+
+- url: /UserPage
+  script: web.pages.UserPage.app
+
+- url: /Settings
+  script: web.pages.Settings.app
+
+- url: /ProfileSettings
+  script: web.pages.ProfileSettings.app
+
+- url: /ProfileSettingsCheck
+  script: web.pages.ProfileSettings.app
+
+- url: /AddEntry/(.*)
+  script: web.pages.AddEntry.app
+
+- url: /EditEntry/(.*)
+  script: web.pages.EditEntry.app
+
+- url: /SubmitEntry
+  script: web.pages.AddEntry.app
+
+- url: /EditEntry
+  script: web.pages.EditEntry.app
+
+- url: /SubmitEditedEntry
+  script: web.pages.EditEntry.app
+
+- url: /SendChatMessage
+  script: web.pages.SendChatMessage.app
+
+- url: /ClearChatMessages
+  script: web.pages.SendChatMessage.app
+
+- url: /ToggleChat
+  script: web.pages.SendChatMessage.app
+
+- url: /ShowNotifications
+  script: web.pages.Notification.app
+
+- url: /RemoveAllNotifications
+  script: web.pages.Notification.app
+
+- url: /ReadNotification
+  script: web.pages.Notification.app
+
+- url: /GetAllNotification
+  script: web.pages.Notification.app
+
+- url: /MarkAllAsRead
+  script: web.pages.Notification.app
+
+- url: /Avatars
+  script: web.pages.Avatars.app
+
+- url: /ChangeAvatar/(.*)
+  script: web.pages.Avatars.app
+
+- url: /InviteFriend/*
+  script: web.pages.InviteFriend.app
+
+#cacthes everything that wasn't cought until now
+- url: /
+  script: web.pages.Login.app
+
+- url: /(.*)
+  script: web.pages.404.app
+
+libraries:
+- name: webapp2
+  version: "2.5.2"

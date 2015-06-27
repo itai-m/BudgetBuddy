@@ -1,0 +1,55 @@
+{% extends "guest_master.html" %}
+
+{% block head %}
+    {{block.super}}
+    <title>BudgetBuddy - Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../static/css/login.css" />
+{%endblock%}
+
+{% block content %}
+    <div id="login-form">
+        <form class="form-horizontal" id="form-horizontal" onsubmit="return false;">
+            <fieldset>
+                <!-- Form Name -->
+                <center><br>
+                    <legend><h2>Log In</h2></legend>
+
+                    <!-- Text input-->
+                    <div class="control-group">
+                        <label class="control-label" for=""></label>
+                        <div class="controls"><i class="fa fa-user fa-2x fa-fw"></i>&nbsp;
+                            <input id="loginUN" name="username" type="text"  maxlength="40" placeholder="User Name" class="input-xlarge">
+                        </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="control-group">
+                        <label class="control-label" for="password "></label>
+                        <div class="controls"><i class="fa fa-lock fa-2x fa-fw"></i>&nbsp;
+                            <input id="loginPSW" name="password" type="password" maxlength="40" placeholder="Password" class="input-xlarge">
+                        </div>
+                    </div>
+                    <!-- Error text -->
+                    <span id="errorText" style="color: red;">&nbsp;</span>
+                    <!-- Button (Double) -->
+                    <div class="control-group">
+                        <label class="control-label" for="Login"></label>
+                        <div class="controls">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button id="loginBtn" name="Login" class="btn btn-success">Log In</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button id="register" name="Register" class="btn btn-info" onclick="document.location.href = '/Registration';">Register</button>
+
+                        </div>
+                    </div>
+
+                    <p></p>
+                    <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="PasswordRecovery">Forgot Password? </a>
+                    </p>
+                </center>
+            </fieldset>
+        </form>
+    </div>
+{%endblock%}

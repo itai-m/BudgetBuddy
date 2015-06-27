@@ -1,0 +1,117 @@
+{% extends "master_page.html" %}
+
+{% block head %}
+    {{ block.super }}
+    <link href="../static/css/budgets.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/budget.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="https://www.google.com/jsapi">
+    </script>
+
+{% endblock %}
+
+{% block content %}
+    {%  include "budget_chat_template.html" %}
+    <br>
+    <table class="flatTable">
+        <tr class="titleTr">
+            <td colspan="6"><cetner><h3>{{ budget.budgetName }}</h3></cetner></td>
+        </tr>
+        <tr class="headingTr">
+            <td>Description</td>
+            <td>Amount</td>
+            <td>Tag</td>
+            <td>Added By</td>
+            <td>Date</td>
+            <td>Actions</td>
+        </tr>
+        {% for entry in budget.entryList %}
+            <tr>
+                <td>{{ entry|getEntryDescriptionByKey }}</td>
+                <td>{{ entry|getEntryAmountByKey }} NIS</td>
+                <td>{{ entry|getEntryTagDescriptionByKey }}</td>
+                <td>{{ entry|getEntryAddedByByKey }}</td>
+                <td>{{ entry|getEntryCreationDateByKey }}</td>
+                {% if entry|getEntryAddedByByKey == userName or budget|getMyPermission:userName == "Manager" %}
+                    <td class="controlTd">
+                        <div class="settingsIcons">
+                            <span class="settingsIcon"><i class="fa fa-cog"></i></span>
+                            <a id="removeEntry" href="javascript: removeEntry({{ entry.id }},{{ budget.key.id }});"><span class="settingsIcon"><i class="fa fa-times"></i></span></a>
+                            <a href="/EditEntry/{{ entry.id }}?budgetId={{ budget.key.id }}">
+                                <div class="settingsIcon"><i class="fa fa-pencil"></i></div>
+                            </a>
+                        </div>
+                    </td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+
+
+            </tr>
+        {% endfor %}
+        <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+        <script src="../static/js/budgets.js"></script>
+    </table>
+    <br>
+    <center>
+        {% if budget|getMyPermission:userName == "Manager" or budget|getMyPermission:userName == "Partner" %}
+            <a href="/AddEntry/{{ budgetId }}" class="myButton">Add New Entry</a>
+        {% endif %}
+    </center>
+
+
+    <br><br>
+    <center><span id="statistics"><h2>Statistics</h2></span></center>
+    <script type="text/javascript">
+        var tagsPieDic = {{ budget|getTagPieDic|safe }};
+        var usersPieDic = {{ budget|getUsersPieDic|safe }};
+
+        google.load("visualization", "1", {packages: ["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data_tags = new google.visualization.DataTable();
+            data_tags.addColumn('string', 'Tags');
+            data_tags.addColumn('number', 'Total Amount');
+            var f, n;
+
+            for (var key in tagsPieDic) {
+                f = key;
+                n = tagsPieDic[key];
+                data_tags.addRows([[f, n]])
+            }
+
+            var data_users = new google.visualization.DataTable();
+            data_users.addColumn('string', 'User');
+            data_users.addColumn('number', 'Total Amount');
+
+            for (var key in usersPieDic) {
+                f = key;
+                n = usersPieDic[key];
+                data_users.addRows([[f, n]])
+            }
+
+            var options_tags = {
+                backgroundColor: '#ecf0f5',
+                titleTextStyle: {fontSize: 18},
+                title: 'Amount by Tags'
+            };
+            var options_users = {
+                backgroundColor: '#ecf0f5',
+                titleTextStyle: {fontSize: 18},
+                title: 'Budgeteer Spendings'
+            };
+
+            var chart_tags = new google.visualization.PieChart(document.getElementById('piechart_tags'));
+            var chart_users = new google.visualization.PieChart(document.getElementById('piechart_users'));
+
+            chart_tags.draw(data_tags, options_tags);
+            chart_users.draw(data_users, options_users);
+        }
+    </script>
+
+    <div id="piechart_parent" style="background-color: #ecf0f5">
+        <div id="piechart_tags"  style="background-color: #ecf0f5"></div>
+        <div id="piechart_users" style="background-color: #ecf0f5"></div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "master_page.html" %}
+
+{% block head %}
+    {{block.super}}
+    <title>BudgetBuddy - Invite a Friend</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/invite_friend.css" />
+{%endblock%}
+
+{% block content %}
+    <!-- Begin Wrapper -->
+    <center>
+        <form class="form-horizontal" method="post" >
+            <fieldset>
+                <!-- Form Name -->
+                <legend>  Invite a friend</legend>
+
+                <p><strong>Enter email address of your friend</strong></p>
+
+                <!-- Text input-->
+
+                <div id ="innerText">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="sizing-addon2"> <i class="fa fa-envelope-o fa-fw"></i> </span>
+                        <input type="email" name="emailAddress" maxlength="40" class="form-control" placeholder="Email" aria-describedby="sizing-addon2">
+                    </div>
+
+                    <div id="space">
+                        <!-- Button -->
+                        <div class="control-group">
+                            <label class="control-label" for="Submit"></label>
+                            <div class="controls">
+                                <button id="Submit" name="Submit" class="btn btn-primary custom">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ emailStatus }}
+            </fieldset>
+        </form>
+
+    </center>
+    <script language="javascript">
+    document.getElementById("inviteFriend").className = "active"
+    </script>
+{%endblock%}

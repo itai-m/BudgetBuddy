@@ -1,0 +1,45 @@
+{% extends "master_page.html" %}
+
+{% block head %}
+    {{block.super}}
+    <link href="../static/css/edit_entry.css" rel="stylesheet" type="text/css"/>
+{%endblock%}
+
+{% block content %}
+
+
+    <div class="container">
+
+        <div id="edit-entry-form">
+
+            <h3>Edit Budget Entry</h3>
+
+            <fieldset>
+
+                <form action="javascript:void(0);" method="get">
+                    <input type="hidden" id="budgetId" value="{{ budgetId }}">
+                    <input type="hidden" id="entryId" value="{{ entryId }}">
+                    <input type="text" placeholder="Description" id="desc-textbox"  maxlength="40" value="{{ description }}"><br><br>
+
+                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'  maxlength="8" placeholder="Price" id="price-textbox" value="{{ price }}">
+
+                    <select id="tag-combobox">
+                        <option value="disabled" selected disabled>Choose tag</option>
+                        {% for tagName in tagList%}
+                            <option value="{{tagName}}">{{tagName}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" id="editBudgetEntry" value="Edit Budget Entry" onsubmit="return false;" onclick="submitEditedEntry();">
+                    <br><span id="errorText" style="color: red">&nbsp;</span>
+                    <br><a href="../Budget/{{ budgetId }}"> <i class="fa fa-arrow-left"></i> Back to Budget Page</a>
+                    <script type="text/javascript">
+                        // Set the select box to the correct tag.
+                        document.getElementById('tag-combobox').value = "{{ tag }}";
+                    </script>
+                </form>
+
+            </fieldset>
+
+        </div>
+    </div>
+{%endblock%}
