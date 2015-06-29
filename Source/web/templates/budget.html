@@ -14,7 +14,11 @@
     <br>
     <table class="flatTable">
         <tr class="titleTr">
-            <td colspan="6"><cetner><h3>{{ budget.budgetName }}</h3></cetner></td>
+            {% if budgetManager %}
+        <td colspan="6"><cetner><h3><a href="/EditBudget/{{ budget.key.id }}"><font color="white">{{ budget.budgetName }}</font></a></h3></cetner></td>
+            {% else %}
+       <td colspan="6"><cetner><h3><font color="white">{{ budget.budgetName }}</font></h3></cetner></td>
+            {% endif %}
         </tr>
         <tr class="headingTr">
             <td>Description</td>
