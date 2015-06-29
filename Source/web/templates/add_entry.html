@@ -21,7 +21,7 @@
 
           <input type="text" placeholder="Description" id="desc-textbox"  maxlength="40" ><br><br>
 
-          <input type="text" placeholder="Price" id="price-textbox" title="Must be a positive number."  maxlength="8" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+          <input type="text" placeholder="Price" id="price-textbox" title="Must be a positive number."  maxlength="8" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'>
 
 
           <select id="tag-combobox">

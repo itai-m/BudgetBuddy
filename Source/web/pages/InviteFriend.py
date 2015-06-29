@@ -36,7 +36,7 @@ class IndexHandler(webapp2.RequestHandler):
             self.response.write(html)
             return
 
-        MailSender.send_invite_friend(budgeteer.userName, budgeteer.email)
+        MailSender.send_invite_friend(budgeteer.userName, email)
         template_params['emailStatus'] = "An Email with invitation has been sent to your friend."
 
         html = template.render("web/templates/invite_friend.html", template_params)
