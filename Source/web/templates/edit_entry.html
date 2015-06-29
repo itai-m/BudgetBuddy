@@ -21,7 +21,7 @@
                     <input type="hidden" id="entryId" value="{{ entryId }}">
                     <input type="text" placeholder="Description" id="desc-textbox"  maxlength="40" value="{{ description }}"><br><br>
 
-                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'  maxlength="8" placeholder="Price" id="price-textbox" value="{{ price }}">
+                    <input type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0 || event.charCode == 46'  maxlength="8" placeholder="Price" id="price-textbox" value="{{ price }}">
 
                     <select id="tag-combobox">
                         <option value="disabled" selected disabled>Choose tag</option>
