@@ -1,6 +1,6 @@
 # BudgetBuddy
 
-[Deployed at](http://budgetbuddypresentation.appspot.com/)
+[BudgetBuddy Link](http://budgetbuddypresentation.appspot.com/)
 
 Budget Management Software [wiki](https://github.com/itai-m/Budget-Buddy/wiki)
 
