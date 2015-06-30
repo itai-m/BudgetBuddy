@@ -25,9 +25,7 @@ class EditEntryHandler(webapp2.RequestHandler):
 
         template_params = dict()
         budgetId = long(self.request.get('budgetId'))
-        if Budget.getPermissionByBudgeteerId(budgeteer.key.id(), Budget.getBudgetById(budgetId)) not in "Manager":
-         self.redirect('/Budgets')
-         return
+
 
         tagList = Budget.getTagList(Budget.getBudgetById(budgetId))
         tagNameList = []
