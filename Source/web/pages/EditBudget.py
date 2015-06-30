@@ -27,7 +27,9 @@ class EditBudgetHandler(webapp2.RequestHandler):
 
         budget=Budget.getBudgetById(long(budget_id))
         budgetBudgeteersId = Budget.getAssociatedBudgeteersId(budget)
-
+        if Budget.getPermissionByBudgeteerId(budgeteer.key.id(), budget) not in "Manager":
+         self.redirect('/Budgets')
+         return
         # Remove the "untagged" tag. the user should not be able to see it.
         temp_object_list = []
         for tag in tag_object_list:
